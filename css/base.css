@@ -1,0 +1,25 @@
+html{
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+html, body {
+  height: 100%;
+  line-height: 1;
+  -webkit-user-select: none;  //禁止用户复制页面文本
+  -webkit-touch-callout: none;
+  -webkit-overflow-scrolling: touch;  //ios滚动效果
+  -webkit-font-smoothing: antialiased;  //mac下字体
+  -webkit-tap-highlight-color: rgba(242, 137, 76, .05); //a标签点击高亮效果
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, span, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  -webkit-text-size-adjust: none;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}

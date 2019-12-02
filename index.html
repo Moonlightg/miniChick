@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>chick</title>
+	<link rel="stylesheet" type="text/css" href="lib/viewui/styles/iview.css">
+    <script type="text/javascript" src="lib/vue/vue.min.js"></script>
+    <script type="text/javascript" src="lib/viewui/iview.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/base.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+	<div id="app">
+		<div class="container" :class="{ beingskin: skinBox }">
+			<!-- 功能菜单 -->
+			<ul class="nav-list">
+				<li @click="showSkin"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-shirt"></i></span><span class="nav-name">换装</span></li>
+				<li><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-basket"></i></span><span class="nav-name">商店</span></li>
+				<li><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-filing"></i></span><span class="nav-name">背包</span></li>
+			</ul>
+			<div class="content">
+				<!-- 太阳光 -->
+				<div class="sunlight">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+				<!-- 山峰 -->
+				<div class="peak-box">
+					<div class="peak-1"></div>
+					<div class="peak-2"></div>
+					<div class="peak-3"></div>
+					<div class="peak-4"></div>
+					<div class="peak-5"></div>
+					<div class="peak-6"></div>
+					<div class="peak-7">
+						<div class="peak-7-1"></div>
+						<div class="peak-7-2"></div>
+					</div>
+					<div class="peak-8"></div>
+					<div class="peak-9"></div>
+					<!-- 风车塔 -->
+					<div class="windmill">
+						<div class="windmill-1"></div>
+						<div class="windmill-2"></div>
+						<div class="windmill-3"></div>
+						<div class="windmill-4"></div>
+						<div class="windmill-5">
+							<div class="windmill-5-1"></div>
+							<div class="windmill-5-2"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 白云 -->
+				<div class="clouds">
+				  <div class="cloud x1"></div>
+				  <div class="cloud x2"></div>
+				  <div class="cloud x3"></div>
+				</div> 
+				<div class="grass-1">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<!-- 房子 -->
+					<div class="house">
+						<div class="house-1"></div>
+						<div class="house-2-1"></div>
+						<div class="house-2-2"></div>
+						<div class="house-2"></div>
+						<div class="house-3-1"></div>
+						<div class="house-3-2"></div>
+						<div class="house-3"></div>
+						<div class="house-4"></div>
+						<div class="house-5"></div>
+						<div class="house-6"></div>
+						<div class="house-7"></div>
+						<div class="house-8"></div>
+						<!-- 屋前草地 -->
+						<div class="house-9"></div>
+					</div>
+					<!-- 护栏 -->
+					<div class="fence">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+					<!-- 蜜蜂鲜花 -->
+					<div class="bee-box">
+						<div class="soil two"></div>
+						<div class="soil"></div>
+						<div class="flowerpot">
+							<div class="flowerpot-top"></div>
+							<div class="flowerpot-bottom"></div>
+						</div>
+						<div class="flower">
+							<div class="flower-top">
+								<p></p>
+								<p></p>
+								<p></p>
+								<p></p>
+							</div>
+							<div class="flower-head"></div>
+						</div>
+						<div class="bee">
+							<div class="bee-body"></div>
+						</div>
+						<div class="bee bee-2">
+							<div class="bee-body"></div>
+						</div>
+						<div class="triangle-box two">
+							<div class="item"></div>
+							<div class="item"></div>
+							<div class="item"></div>
+						</div>
+					</div>
+					<!-- 鸡蛋 -->
+					<div class="egg-wrapper">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<div class="egg infinite">
+							<div class="heart"></div>
+						</div>
+					</div>
+					<!-- 三角形 -->
+					<div class="triangle-box">
+						<div class="item"></div>
+						<div class="item"></div>
+						<div class="item"></div>
+						<div class="item"></div>
+					</div>
+				</div>
+
+				<!-- 叶子 -->
+				<div class="leaf-box">
+					<div class="leaf-item leaf-1"></div>
+					<div class="leaf-item leaf-2"></div>
+					<div class="leaf-item leaf-3"></div>
+					<div class="leaf-item leaf-4"></div>
+				</div>
+				<!-- 鸡饭碗 -->
+				<div class="trough">
+					<span></span>
+					<span></span>
+					<div class="fodder"></div>
+					<div class="trough-l">
+						<p></p>
+						<p></p>
+						<p></p>
+					</div>
+				</div>
+				<!-- chick -->
+				<div class="chick">
+					<!-- 装扮-帽子 -->
+					<div class="skin-hat">
+						<!-- 青蛙帽子 -->
+						<div class="hat-frog">
+							<span class="hat-frog-eye el"></span>
+							<span class="hat-frog-eye er"></span>
+							<span class="sun-cured"></span>
+						</div>
+					</div>
+					<div class="chick-head"></div>
+					<div class="chick-body">
+						<!-- 装扮-衣服 -->
+						<!-- 青蛙衣服 -->
+						<div class="jacket-frog">
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+					</div>
+					<div class="eye">
+						<span></span>
+						<span></span>
+					</div>
+					<div class="blusher">
+						<span></span>
+						<span></span>
+					</div>
+					<div class="face"></div>
+					<div class="wing-left"></div>
+					<div class="wing-content">
+						<span></span>
+					</div>
+					<div class="wing-right">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<div class="food">
+							<p></p>
+							<div class="dot-box">
+								<span></span>
+								<span></span>
+							</div>
+						</div>
+					</div>
+					<div class="mouth">
+						<span></span>
+						<span></span>
+						<p></p>
+					</div>
+					<div class="foot">
+						<span></span>
+						<span></span>
+					</div>
+				</div>
+				<!-- 换装弹窗遮罩层 -->
+				<div class="skin-mask" v-show="skinBox" @click="hideSkin"></div>
+			</div>
+			<div class="skin-popup">
+				<div class="skin-head border-bottom-1px">
+					<span class="popup-title fl">换装</span>
+					<i class="ivu-icon ivu-icon-md-close-circle" @click="hideSkin"></i>
+				</div>
+				<div class="skin-content">
+					<!-- 换装内容 -->
+					<tabs :animated="false">
+				        <tab-pane label="" icon="ios-egg">全套1998</tab-pane>
+				        <tab-pane label="" icon="ios-school">半套600</tab-pane>
+				        <tab-pane label="" icon="ios-shirt">快餐400</tab-pane>
+				        <tab-pane label="" icon="md-rose">标签4的内容</tab-pane>
+				        <tab-pane label="" icon="md-glasses">标签5的内容</tab-pane>
+				    </tabs>
+				</div>
+			</div>		
+		</div>
+		<div class="loading">
+			<div class="pic">
+				<div class="egg-wrapper">
+					<div class="egg infinite">
+					</div>
+				</div>
+				<p>我是一只鸡</p>
+			</div>
+		</div>
+	</div>
+	<script  src="https://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		new Vue({
+	        el: '#app',
+	        data: {
+	            skinBox: false
+	        },
+	        methods: {
+	        	// 点击换装按钮
+	            showSkin: function () {
+	                this.skinBox = true;
+	            },
+	            // 关闭换装弹窗
+	            hideSkin: function () {
+					this.skinBox = false;
+	            }
+	        }
+	    });
+		// 定时器
+		$(function(){
+		  //定义3秒后隐藏loading
+		  setInterval(function(){
+		    $(".loading").fadeOut();
+		  },2000)
+		})
+	</script>
+</body>
+</html>
