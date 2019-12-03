@@ -2223,6 +2223,42 @@
   width: 10px;
 }
 
+/* 换装选择列表 */ 
+.opt-list {
+  display: flex;
+}
+.opt-list li {
+  position: relative;
+  width: 22%;
+  height: 5rem;
+  margin: 0 1%;
+  border: 1px solid #e7e7e7;
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.opt-mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 5px;
+  background: rgba(0,0,0,.7);
+  z-index: 2;
+  line-height: 5rem;
+  display: none;
+}
+.opt-mask i {
+  color: #b1e837;
+  font-size: 1.6rem;
+}
+.opt-list li.active .opt-mask {
+  display: block;
+}
+
 /* view ui 重置 */
 .ivu-tabs {
   height: 100%;

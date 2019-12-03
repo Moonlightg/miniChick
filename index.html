@@ -161,24 +161,20 @@
 				<div class="chick">
 					<!-- 装扮-帽子 -->
 					<div class="skin-hat">
-						<!-- 青蛙帽子 -->
-						<div class="hat-frog">
-							<span class="hat-frog-eye el"></span>
-							<span class="hat-frog-eye er"></span>
-							<span class="sun-cured"></span>
-						</div>
+						<keep-alive>
+							<component
+								:is="currentHatComponent"></component>
+						</keep-alive>
 					</div>
 					<div class="chick-head"></div>
 					<div class="chick-body">
 						<!-- 装扮-衣服 -->
+						<keep-alive>
+							<component
+								:is="currentClothesComponent"></component>
+						</keep-alive>
 						<!-- 青蛙衣服 -->
-						<div class="jacket-frog">
-							<span></span>
-							<span></span>
-							<span></span>
-							<span></span>
-							<span></span>
-						</div>
+						
 					</div>
 					<div class="eye">
 						<span></span>
@@ -231,9 +227,42 @@
 				<div class="skin-content">
 					<!-- 换装内容 -->
 					<tabs :animated="false">
-				        <tab-pane label="" icon="ios-egg">全套1998</tab-pane>
-				        <tab-pane label="" icon="ios-school">半套600</tab-pane>
-				        <tab-pane label="" icon="ios-shirt">快餐400</tab-pane>
+				        <tab-pane label="" icon="ios-egg">
+				        	<ul class="opt-list">
+				        		<li 
+				        		v-for="suit in suits"
+				        		:key="suit"
+				        		:class="['opt-btn', { active: currentSuit === suit.id}]"
+				        		@click="setSuit(suit.id)">
+					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
+					        		{{ suit.name }}
+				        		</li>
+				        	</ul>
+				        </tab-pane>
+				        <tab-pane label="" icon="ios-school">
+				        	<ul class="opt-list">
+				        		<li 
+				        		v-for="hat in hats"
+				        		:key="hat"
+				        		:class="['opt-btn', { active: currentHat === hat.id}]"
+				        		@click="currentHat = hat.id">
+					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
+					        		{{ hat.name }}
+				        		</li>
+				        	</ul>
+				        </tab-pane>
+				        <tab-pane label="" icon="ios-shirt">
+				        	<ul class="opt-list">
+				        		<li
+				        		v-for="clothe in clothes"
+				        		:key="clothe"
+				        		:class="['opt-btn', { active: currentClothes === clothe.id}]"
+				        		@click="currentClothes = clothe.id">
+					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
+					        		{{ clothe.name }}
+				        		</li>
+				        	</ul>
+				        </tab-pane>
 				        <tab-pane label="" icon="md-rose">标签4的内容</tab-pane>
 				        <tab-pane label="" icon="md-glasses">标签5的内容</tab-pane>
 				    </tabs>
@@ -252,10 +281,66 @@
 	</div>
 	<script  src="https://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
 	<script type="text/javascript">
+		// 组件
+		// 青蛙衣服
+		Vue.component('clothes-forg', {
+			template: `
+				<div class="jacket-frog">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			`
+		});
+		// 青蛙帽子
+		Vue.component('hat-forg', {
+			template: `
+				<div class="hat-frog">
+					<span class="hat-frog-eye el"></span>
+					<span class="hat-frog-eye er"></span>
+					<span class="sun-cured"></span>
+				</div>
+			`
+		});
 		new Vue({
 	        el: '#app',
 	        data: {
-	            skinBox: false
+	            skinBox: false,
+	            currentSuit: 'default', // 当前套装
+	            currentHat: 'default', 		// 当前帽子
+	            currentClothes: 'default', 	// 当前衣服
+	            clothes: [ // 衣服列表
+	            	{
+	            		id: 'default',
+	            		name: '默认上衣'
+	            	},
+	            	{
+	            		id: 'Forg',
+	            		name: '青蛙上衣'
+	            	}
+	            ], 
+	            hats: [ // 帽子列表
+	            	{
+	            		id: 'default',
+	            		name: '默认帽子'
+	            	},
+	            	{
+	            		id: 'Forg',
+	            		name: '青蛙帽子'
+	            	}
+	            ],
+	            suits: [ // 套装列表
+	            	{
+	            		id: 'default',
+	            		name: '默认套装'
+	            	},
+	            	{
+	            		id: 'Forg',
+	            		name: '青蛙套装'
+	            	}
+	            ]
 	        },
 	        methods: {
 	        	// 点击换装按钮
@@ -265,7 +350,21 @@
 	            // 关闭换装弹窗
 	            hideSkin: function () {
 					this.skinBox = false;
+	            },
+	            setSuit: function(pid) {
+	            	console.log("当前套装："+pid);
+	            	this.currentSuit = pid;
+	            	this.currentClothes = pid;
+	            	this.currentHat = pid;
 	            }
+	        },
+	        computed: {
+	        	currentClothesComponent: function() {
+	        		return 'clothes-' + this.currentClothes.toLowerCase()
+	        	},
+	        	currentHatComponent: function() {
+	        		return 'hat-' + this.currentHat.toLowerCase()
+	        	}
 	        }
 	    });
 		// 定时器
