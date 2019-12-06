@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<title>chick</title>
 	<link rel="stylesheet" type="text/css" href="lib/viewui/styles/iview.css">
-    <script type="text/javascript" src="lib/vue/vue.min.js"></script>
+    <script type="text/javascript" src="lib/vue/vue.js"></script>
     <script type="text/javascript" src="lib/viewui/iview.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/base.css">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
@@ -14,6 +14,18 @@
 <body>
 	<div id="app">
 		<div class="container" :class="{ beingskin: skinBox }">
+			<div class="user-box">
+				<div class="user-logo">
+					<Icon type="md-contact" />
+				</div>
+				<div class="user-info">
+					<div class="user-name">养鸡大户007</div>
+					<div class="user-money">
+						<div class="user-mi"><Icon type="logo-usd" /></div>
+						<p>3000</p>
+					</div>
+				</div>
+			</div>
 			<!-- 功能菜单 -->
 			<ul class="nav-list">
 				<li @click="showSkin"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-shirt"></i></span><span class="nav-name">换装</span></li>
@@ -231,7 +243,7 @@
 				        	<ul class="opt-list">
 				        		<li 
 				        		v-for="suit in suits"
-				        		:key="suit"
+				        		:key="suit.name"
 				        		:class="['opt-btn', { active: currentSuit === suit.id}]"
 				        		@click="setSuit(suit.id)">
 					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
@@ -243,7 +255,7 @@
 				        	<ul class="opt-list">
 				        		<li 
 				        		v-for="hat in hats"
-				        		:key="hat"
+				        		:key="hat.name"
 				        		:class="['opt-btn', { active: currentHat === hat.id}]"
 				        		@click="currentHat = hat.id">
 					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
@@ -255,7 +267,7 @@
 				        	<ul class="opt-list">
 				        		<li
 				        		v-for="clothe in clothes"
-				        		:key="clothe"
+				        		:key="clothe.name"
 				        		:class="['opt-btn', { active: currentClothes === clothe.id}]"
 				        		@click="currentClothes = clothe.id">
 					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
@@ -279,31 +291,10 @@
 			</div>
 		</div>
 	</div>
-	<script  src="https://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
-	<script type="text/javascript">
-		// 组件
-		// 青蛙衣服
-		Vue.component('clothes-forg', {
-			template: `
-				<div class="jacket-frog">
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
-			`
-		});
-		// 青蛙帽子
-		Vue.component('hat-forg', {
-			template: `
-				<div class="hat-frog">
-					<span class="hat-frog-eye el"></span>
-					<span class="hat-frog-eye er"></span>
-					<span class="sun-cured"></span>
-				</div>
-			`
-		});
+	<script src="https://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
+	<script src="lib/vuex/vuex.min.js"></script>
+	<script src="component.js"></script>
+	<script>
 		new Vue({
 	        el: '#app',
 	        data: {

@@ -2314,3 +2314,47 @@
 .el-dialog__wrapper:has(div.load-box){
   color: #F90;
 }
+
+/* user 用户*/
+.user-box {
+  position: fixed;
+  top: .5rem;
+  left: .5rem;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+}
+.user-logo {
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-right: .5rem;
+  border-radius: 50%;
+  text-align: center;
+  color: #ffbb38;
+  background: #8c3530;
+  border: 2px solid #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+}
+.user-money {
+  display: flex;
+  color: #ffb304;
+}
+.user-name {
+  margin-bottom: .25rem;
+  margin-top: .2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #8c3530;
+}
+.user-mi {
+  line-height: 1;
+  color: #F90;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -1px;
+}
+
+
