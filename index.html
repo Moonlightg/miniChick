@@ -14,7 +14,7 @@
 <body>
 	<div id="app">
 		<div class="container" :class="{ beingskin: skinBox }">
-			<div class="user-box">
+			<div class="user-box" @click="modal12 = true">
 				<div class="user-logo">
 					<Icon type="md-contact" />
 				</div>
@@ -175,7 +175,7 @@
 					<div class="skin-hat">
 						<keep-alive>
 							<component
-								:is="currentHatComponent"></component>
+								:is="componentHat"></component>
 						</keep-alive>
 					</div>
 					<div class="chick-head"></div>
@@ -183,7 +183,7 @@
 						<!-- 装扮-衣服 -->
 						<keep-alive>
 							<component
-								:is="currentClothesComponent"></component>
+								:is="componentClothes"></component>
 						</keep-alive>
 						<!-- 青蛙衣服 -->
 						
@@ -257,7 +257,7 @@
 				        		v-for="hat in hats"
 				        		:key="hat.name"
 				        		:class="['opt-btn', { active: currentHat === hat.id}]"
-				        		@click="currentHat = hat.id">
+				        		@click="setHat(hat.id)">
 					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
 					        		{{ hat.name }}
 				        		</li>
@@ -269,7 +269,7 @@
 				        		v-for="clothe in clothes"
 				        		:key="clothe.name"
 				        		:class="['opt-btn', { active: currentClothes === clothe.id}]"
-				        		@click="currentClothes = clothe.id">
+				        		@click="setClothes(clothe.id)">
 					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
 					        		{{ clothe.name }}
 				        		</li>
@@ -290,6 +290,10 @@
 				<p>我是一只鸡</p>
 			</div>
 		</div>
+
+		<Modal v-model="modal12">
+	        <div><p>等级：{{chick.level}}级，经验：{{chick.exp}}，升级所需：{{chick.upgradeExp}}</p></div>
+	    </Modal>
 	</div>
 	<script src="https://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
 	<script src="lib/vuex/vuex.min.js"></script>
@@ -299,17 +303,20 @@
 		new Vue({
 	        el: '#app',
 	        data: {
+	        	modal12: false,
 	            skinBox: false,
 	            currentSuit: 'default', // 当前套装
 	            currentHat: 'default', 		// 当前帽子
 	            currentClothes: 'default', 	// 当前衣服
+	            componentHat: 'hat-default',
+	            componentClothes: 'clothes-default',
 	            clothes: [ // 衣服列表
 	            	{
 	            		id: 'default',
 	            		name: '默认上衣'
 	            	},
 	            	{
-	            		id: 'Forg',
+	            		id: 'forg',
 	            		name: '青蛙上衣'
 	            	}
 	            ], 
@@ -319,7 +326,7 @@
 	            		name: '默认帽子'
 	            	},
 	            	{
-	            		id: 'Forg',
+	            		id: 'forg',
 	            		name: '青蛙帽子'
 	            	}
 	            ],
@@ -329,21 +336,13 @@
 	            		name: '默认套装'
 	            	},
 	            	{
-	            		id: 'Forg',
+	            		id: 'forg',
 	            		name: '青蛙套装'
 	            	}
 	            ]
 	        },
 	        store, // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
-	        computed: {
-		        lcurrentClothesComponent: function() {
-	        		return 'clothes-' + this.currentClothes.toLowerCase()
-	        	},
-	        	currentHatComponent: function() {
-	        		return 'hat-' + this.currentHat.toLowerCase()
-	        	},
-				// 使用对象展开运算符将此对象混入到外部对象中
-				Vuex.mapState([
+	        computed: Vuex.mapState([
 		          // 映射 this.setTime 为 store.state.setTime
 		          'chick',
 		          'foods',
@@ -355,19 +354,18 @@
 		          'currFood',
 		          'modalLecel',
 		          'value'
-		        ])
-	        },
+		    ]),
 	        mounted () {
 	          this.init() // 初始化
 	        },
 	        methods: {
 				// 初始化
 				init () {
-				this.$nextTick(function () {
-				  	// 页面加载读取缓存
-				  	this.$store.commit('load');
-				  	this.$store.commit('eat'); // 判断是否进食
-				})
+					this.$nextTick(function () {
+					  	// 页面加载读取缓存
+					  	this.$store.commit('load');
+					  	this.$store.commit('eat'); // 判断是否进食
+					})
 				},
 				// 点击食物进行喂食
 				feedClick: function (val) {
@@ -386,10 +384,19 @@
 					this.skinBox = false;
 		        },
 		        setSuit: function(pid) {
-		        	console.log("当前套装："+pid);
 		        	this.currentSuit = pid;
 		        	this.currentClothes = pid;
 		        	this.currentHat = pid;
+		        	this.componentHat = 'hat-' + pid;
+		        	this.componentClothes = 'clothes-' + pid;
+		        },
+		        setHat: function(pid) {
+		        	this.currentHat = pid;
+		        	this.componentHat = 'hat-' + pid;
+		        },
+		        setClothes: function(pid) {
+		        	this.currentClothes = pid;
+		        	this.componentClothes = 'clothes-' + pid;
 		        }
 	        },
 	        // 过滤器

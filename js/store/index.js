@@ -165,6 +165,7 @@ const store = new Vuex.Store({
             state.endDate = data.endDate,
             state.currFood = data.currFood,
             state.chick = data.chick
+            console.log(data.chick);
             //state.eat = data.eat
         }
     }
