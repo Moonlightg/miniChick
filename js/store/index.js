@@ -1,5 +1,9 @@
 const store = new Vuex.Store({
     state: {
+        user: {
+          name: '养鸡大户006',
+          money: 3000
+        },
         // 小鸡信息
         chick: {
           exp: 0,         // 经验值
@@ -148,14 +152,22 @@ const store = new Vuex.Store({
               },1000)
             }
         },
+        // 保存修改用户信息
+        keepUser (state) {
+          let self = this;
+          console.log(state.user);
+          self.commit('save');
+        },
         // 存档
         save (state) {
             let data = {
               endDate: state.endDate,
               currFood: state.currFood,
-              chick: state.chick
+              chick: state.chick,
+              user: state.user
               //eat: state.eat
             };
+            console.log(data);
             localStorage.setItem('farmDate', JSON.stringify(data))
         },
           // 读档
@@ -164,8 +176,8 @@ const store = new Vuex.Store({
             if (!data) return
             state.endDate = data.endDate,
             state.currFood = data.currFood,
-            state.chick = data.chick
-            console.log(data.chick);
+            state.chick = data.chick,
+            state.user = data.user
             //state.eat = data.eat
         }
     }

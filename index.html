@@ -14,15 +14,15 @@
 <body>
 	<div id="app">
 		<div class="container" :class="{ beingskin: skinBox }">
-			<div class="user-box" @click="modal12 = true">
+			<div class="user-box" @click="showUser">
 				<div class="user-logo">
 					<Icon type="md-contact" />
 				</div>
 				<div class="user-info">
-					<div class="user-name">养鸡大户007</div>
+					<div class="user-name">{{user.name}}</div>
 					<div class="user-money">
 						<div class="user-mi"><Icon type="logo-usd" /></div>
-						<p>3000</p>
+						<p>{{user.money}}</p>
 					</div>
 				</div>
 			</div>
@@ -291,8 +291,15 @@
 			</div>
 		</div>
 
-		<Modal v-model="modal12">
-	        <div><p>等级：{{chick.level}}级，经验：{{chick.exp}}，升级所需：{{chick.upgradeExp}}</p></div>
+		<Modal v-model="modal12" @on-ok="keepUser">
+			<div class="user-form">
+				<i-form :model="user" :label-width="80">
+			        <form-item label="用户名称">
+			            <i-input v-model="user.name" placeholder="设置用户名称..."></i-input>
+			        </form-item>
+			    </i-form>
+		        <div><p>等级：{{chick.level}}级，经验：{{chick.exp}}，升级所需：{{chick.upgradeExp}}</p></div>
+	        </div>
 	    </Modal>
 	</div>
 	<script src="https://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
@@ -308,8 +315,12 @@
 	            currentSuit: 'default', // 当前套装
 	            currentHat: 'default', 		// 当前帽子
 	            currentClothes: 'default', 	// 当前衣服
-	            componentHat: 'hat-default',
-	            componentClothes: 'clothes-default',
+	            componentHat: 'hat-default', // 默认帽子组件
+	            componentClothes: 'clothes-default', // 默认衣服组件
+	            formUser: { // 用户信息填写表单
+	            	name: ''
+
+	            },
 	            clothes: [ // 衣服列表
 	            	{
 	            		id: 'default',
@@ -344,6 +355,7 @@
 	        store, // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
 	        computed: Vuex.mapState([
 		          // 映射 this.setTime 为 store.state.setTime
+		          'user',
 		          'chick',
 		          'foods',
 		          'eat',
@@ -375,13 +387,17 @@
 				ok () {
 					this.$store.commit('popupLevel');
 	          	},
-	          	// 点击换装按钮
+	          	// 打开换装弹窗
 		        showSkin: function () {
 		            this.skinBox = true;
 		        },
 		        // 关闭换装弹窗
 		        hideSkin: function () {
 					this.skinBox = false;
+		        },
+		        // 打开用户信息面板
+		        showUser: function () {
+		        	this.modal12 = true;
 		        },
 		        setSuit: function(pid) {
 		        	this.currentSuit = pid;
@@ -397,6 +413,9 @@
 		        setClothes: function(pid) {
 		        	this.currentClothes = pid;
 		        	this.componentClothes = 'clothes-' + pid;
+		        },
+		        keepUser: function() {
+		        	this.$store.commit('keepUser');
 		        }
 	        },
 	        // 过滤器
