@@ -1915,6 +1915,18 @@
   75% {transform: scale(1,1)}
   100% { transform: scale(.8,.8)}
 }
+/* 没有进食状态 */
+.noeat .face,
+.noeat .food,
+.noeat .wing-right {
+  display: none;
+}
+.noeat .blusher,
+.noeat .mouth span,
+.noeat .mouth span:nth-child(2),
+.noeat .mouth p {
+  animation: none;
+}
 
 /* 功能菜单 */
 .nav-list {
@@ -2369,11 +2381,29 @@
   text-align: center;
 }
 .countdown-text {
+  position: relative;
   display: inline-block;
   padding: 10px;
   background: #F90;
   border-radius: 15px;
   color: #fff;
+}
+.countdown-text:before {
+  position: absolute;
+  bottom: -9px;
+  left: 16px;
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 10px solid #ff9901;
+  border-left: 10px solid transparent;
+  display: none;
+}
+.countdown-text.active {
+  margin-top: 15px;
+}
+.countdown-text.active:before {
+  display: block;
 }
 .progress {
     width: 100%;

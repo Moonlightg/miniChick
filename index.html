@@ -170,10 +170,10 @@
 					</div>
 				</div>
 				<!-- chick -->
-				<div class="chick">
+				<div class="chick" :class="{noeat:!chick.eat}">
 					<!-- 进食倒计 -->
 					<div class="countdown-box">
-						<p class="countdown-text">{{content}}{{setTime}}</p>
+						<p class="countdown-text" :class="{active : !chick.eat }">{{content}}{{setTime}}</p>
 						<!-- 进食进度条 -->
 						<div class="progress" v-if="value != 0 && value < 100">
 							<div class="progress-content" :style="'width:' + value + '%' "></div>
@@ -183,7 +183,7 @@
 					<div class="skin-hat">
 						<keep-alive>
 							<component
-								:is="componentHat"></component>
+								:is="chick.componentHat"></component>
 						</keep-alive>
 					</div>
 					<div class="chick-head"></div>
@@ -191,7 +191,7 @@
 						<!-- 装扮-衣服 -->
 						<keep-alive>
 							<component
-								:is="componentClothes"></component>
+								:is="chick.componentClothes"></component>
 						</keep-alive>
 						<!-- 青蛙衣服 -->
 						
@@ -254,7 +254,7 @@
 					        		<li 
 					        		v-for="suit in suits"
 					        		:key="suit.name"
-					        		:class="['opt-btn', { active: currentSuit === suit.id}]"
+					        		:class="['opt-btn', { active: chick.currentSuit === suit.id && chick.currentHat === suit.id && chick.currentClothes === suit.id}]"
 					        		@click="setSuit(suit.id)">
 						        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
 						        		{{ suit.name }}
@@ -266,7 +266,7 @@
 					        		<li 
 					        		v-for="hat in hats"
 					        		:key="hat.name"
-					        		:class="['opt-btn', { active: currentHat === hat.id}]"
+					        		:class="['opt-btn', { active: chick.currentHat === hat.id}]"
 					        		@click="setHat(hat.id)">
 						        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
 						        		{{ hat.name }}
@@ -278,7 +278,7 @@
 					        		<li
 					        		v-for="clothe in clothes"
 					        		:key="clothe.name"
-					        		:class="['opt-btn', { active: currentClothes === clothe.id}]"
+					        		:class="['opt-btn', { active: chick.currentClothes === clothe.id}]"
 					        		@click="setClothes(clothe.id)">
 						        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
 						        		{{ clothe.name }}
@@ -341,7 +341,6 @@
 		        <div><p>等级：{{chick.level}}级，经验：{{chick.exp}}，升级所需：{{chick.upgradeExp}}</p></div>
 	        </div>
 	    </Modal>
-
 	    <!-- 背包 -->
 
 	</div>
@@ -361,11 +360,6 @@
 	            isSkin: false,
 	            isShop: false,
 	            isBag: false,
-	            currentSuit: 'default', // 当前套装
-	            currentHat: 'default', 		// 当前帽子
-	            currentClothes: 'default', 	// 当前衣服
-	            componentHat: 'hat-default', // 默认帽子组件
-	            componentClothes: 'clothes-default', // 默认衣服组件
 	            formUser: { // 用户信息填写表单
 	            	name: ''
 
@@ -462,19 +456,13 @@
 		        	this.modal12 = true;
 		        },
 		        setSuit: function(pid) {
-		        	this.currentSuit = pid;
-		        	this.currentClothes = pid;
-		        	this.currentHat = pid;
-		        	this.componentHat = 'hat-' + pid;
-		        	this.componentClothes = 'clothes-' + pid;
+		        	this.$store.commit('setSuit',pid);
 		        },
 		        setHat: function(pid) {
-		        	this.currentHat = pid;
-		        	this.componentHat = 'hat-' + pid;
+		        	this.$store.commit('setHat',pid);
 		        },
 		        setClothes: function(pid) {
-		        	this.currentClothes = pid;
-		        	this.componentClothes = 'clothes-' + pid;
+		        	this.$store.commit('setClothes',pid);
 		        },
 		        keepUser: function() {
 		        	this.$store.commit('keepUser',);

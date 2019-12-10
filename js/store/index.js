@@ -11,6 +11,11 @@ const store = new Vuex.Store({
           level: 1,       // 等级
           eat: false,     // 是否在进食
           setTime: 300,   // 喂食时长 300s
+          currentSuit: 'default', // 当前套装
+          currentHat: 'default',    // 当前帽子
+          currentClothes: 'default',  // 当前衣服
+          componentHat: 'hat-default', // 默认帽子组件
+          componentClothes: 'clothes-default', // 默认衣服组件
         },
         // 食物信息
         foods: [{
@@ -82,6 +87,9 @@ const store = new Vuex.Store({
             this.commit('settleExp');
             this.commit('save');          // 存档
             state.content = '喂食结束';
+            setTimeout (function() {
+              state.content = '阴公，好嗨饿！';
+            },2000)
         },
         // 经验结算
         settleExp (state) {
@@ -156,6 +164,30 @@ const store = new Vuex.Store({
         keepUser (state) {
           let self = this;
           console.log(state.user);
+          self.commit('save');
+        },
+        // 设置套装
+        setSuit (state,pid) {
+          let self = this;
+          state.chick.currentSuit = pid;
+          state.chick.currentClothes = pid;
+          state.chick.currentHat = pid;
+          state.chick.componentHat = 'hat-' + pid;
+          state.chick.componentClothes = 'clothes-' + pid;
+          self.commit('save');
+        },
+        // 设置帽子
+        setHat (state,pid) {
+          let self = this;
+          state.chick.currentHat = pid;
+          state.chick.componentHat = 'hat-' + pid;
+          self.commit('save');
+        },
+        // 设置衣服
+        setClothes (state,pid) {
+          let self = this;
+          state.chick.currentClothes = pid;
+          state.chick.componentClothes = 'clothes-' + pid;
           self.commit('save');
         },
         // 存档
