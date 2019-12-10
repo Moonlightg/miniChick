@@ -1991,13 +1991,14 @@
 }
 
 /* 换装场景 */
-.skin-mask {
+.popup-mask {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 12;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 199;
 }
 .beingskin .sunlight span {
   z-index: 10;
@@ -2005,7 +2006,7 @@
 .beingskin .content {
   bottom: 50%;
 }
-.skin-popup {
+.page-popup {
   position: absolute;
   top: 100%;
   width: 100%;
@@ -2013,12 +2014,12 @@
   padding-top: 60px;
   overflow: hidden;
   transition: all .4s;
-  z-index: 12;
+  z-index: 200;
 }
-.beingskin .skin-popup {
+.beingskin .page-popup {
   top: 40%;
 }
-.skin-head {
+.popup-head {
   position: absolute;
   top: 0;
   left: 0;
@@ -2032,11 +2033,11 @@
   justify-content: space-between;
   font-size: 16px;
 }
-.skin-head i {
+.popup-head i {
   font-size: 26px;
   color: #999;
 }
-.skin-content {
+.popup-content {
   height: 100%;
   background: #fff;
 }
@@ -2358,5 +2359,36 @@
 }
 .user-form {
   margin-top: 30px;
+}
+
+/* 倒计时组件 */
+.countdown-box {
+  position: absolute;
+  top: -5rem;
+  width: 100%;
+  text-align: center;
+}
+.countdown-text {
+  display: inline-block;
+  padding: 10px;
+  background: #F90;
+  border-radius: 15px;
+  color: #fff;
+}
+.progress {
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #ddd;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 5px #d1d2d1;
+}
+.progress .progress-content {
+    width: 0%;
+    height: 100%;
+    background-color: #ffa446;
 }
 

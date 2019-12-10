@@ -28,9 +28,9 @@
 			</div>
 			<!-- 功能菜单 -->
 			<ul class="nav-list">
-				<li @click="showSkin"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-shirt"></i></span><span class="nav-name">换装</span></li>
-				<li><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-basket"></i></span><span class="nav-name">商店</span></li>
-				<li><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-filing"></i></span><span class="nav-name">背包</span></li>
+				<li @click="showPopup(skin)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-shirt"></i></span><span class="nav-name">换装</span></li>
+				<li @click="showPopup(shop)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-basket"></i></span><span class="nav-name">商店</span></li>
+				<li @click="showPopup(bag)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-filing"></i></span><span class="nav-name">背包</span></li>
 			</ul>
 			<div class="content">
 				<!-- 太阳光 -->
@@ -171,6 +171,14 @@
 				</div>
 				<!-- chick -->
 				<div class="chick">
+					<!-- 进食倒计 -->
+					<div class="countdown-box">
+						<p class="countdown-text">{{content}}{{setTime}}</p>
+						<!-- 进食进度条 -->
+						<div class="progress" v-if="value != 0 && value < 100">
+							<div class="progress-content" :style="'width:' + value + '%' "></div>
+						</div>
+					</div>
 					<!-- 装扮-帽子 -->
 					<div class="skin-hat">
 						<keep-alive>
@@ -228,56 +236,87 @@
 						<span></span>
 					</div>
 				</div>
-				<!-- 换装弹窗遮罩层 -->
-				<div class="skin-mask" v-show="skinBox" @click="hideSkin"></div>
+				<!-- 弹窗遮罩层 -->
+				<div class="popup-mask" v-show="skinBox" @click="hideSkin"></div>
 			</div>
-			<div class="skin-popup">
-				<div class="skin-head border-bottom-1px">
-					<span class="popup-title fl">换装</span>
-					<i class="ivu-icon ivu-icon-md-close-circle" @click="hideSkin"></i>
+			<!-- 功能弹窗面板 -->
+			<div class="page-popup">
+				<div class="popup-item" v-show="isSkin">
+					<div class="popup-head border-bottom-1px">
+						<span class="popup-title fl">换装</span>
+						<i class="ivu-icon ivu-icon-md-close-circle" @click="hideSkin"></i>
+					</div>
+					<div class="popup-content">
+						<!-- 换装内容 -->
+						<tabs :animated="false">
+					        <tab-pane label="" icon="ios-egg">
+					        	<ul class="opt-list">
+					        		<li 
+					        		v-for="suit in suits"
+					        		:key="suit.name"
+					        		:class="['opt-btn', { active: currentSuit === suit.id}]"
+					        		@click="setSuit(suit.id)">
+						        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
+						        		{{ suit.name }}
+					        		</li>
+					        	</ul>
+					        </tab-pane>
+					        <tab-pane label="" icon="ios-school">
+					        	<ul class="opt-list">
+					        		<li 
+					        		v-for="hat in hats"
+					        		:key="hat.name"
+					        		:class="['opt-btn', { active: currentHat === hat.id}]"
+					        		@click="setHat(hat.id)">
+						        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
+						        		{{ hat.name }}
+					        		</li>
+					        	</ul>
+					        </tab-pane>
+					        <tab-pane label="" icon="ios-shirt">
+					        	<ul class="opt-list">
+					        		<li
+					        		v-for="clothe in clothes"
+					        		:key="clothe.name"
+					        		:class="['opt-btn', { active: currentClothes === clothe.id}]"
+					        		@click="setClothes(clothe.id)">
+						        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
+						        		{{ clothe.name }}
+					        		</li>
+					        	</ul>
+					        </tab-pane>
+					        <tab-pane label="" icon="md-rose">标签4的内容</tab-pane>
+					        <tab-pane label="" icon="md-glasses">标签5的内容</tab-pane>
+					    </tabs>
+					</div>
 				</div>
-				<div class="skin-content">
-					<!-- 换装内容 -->
-					<tabs :animated="false">
-				        <tab-pane label="" icon="ios-egg">
-				        	<ul class="opt-list">
-				        		<li 
-				        		v-for="suit in suits"
-				        		:key="suit.name"
-				        		:class="['opt-btn', { active: currentSuit === suit.id}]"
-				        		@click="setSuit(suit.id)">
-					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
-					        		{{ suit.name }}
-				        		</li>
-				        	</ul>
-				        </tab-pane>
-				        <tab-pane label="" icon="ios-school">
-				        	<ul class="opt-list">
-				        		<li 
-				        		v-for="hat in hats"
-				        		:key="hat.name"
-				        		:class="['opt-btn', { active: currentHat === hat.id}]"
-				        		@click="setHat(hat.id)">
-					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
-					        		{{ hat.name }}
-				        		</li>
-				        	</ul>
-				        </tab-pane>
-				        <tab-pane label="" icon="ios-shirt">
-				        	<ul class="opt-list">
-				        		<li
-				        		v-for="clothe in clothes"
-				        		:key="clothe.name"
-				        		:class="['opt-btn', { active: currentClothes === clothe.id}]"
-				        		@click="setClothes(clothe.id)">
-					        		<span class="opt-mask fadeIn animated"><Icon type="md-checkmark-circle" /></span>
-					        		{{ clothe.name }}
-				        		</li>
-				        	</ul>
-				        </tab-pane>
-				        <tab-pane label="" icon="md-rose">标签4的内容</tab-pane>
-				        <tab-pane label="" icon="md-glasses">标签5的内容</tab-pane>
-				    </tabs>
+				<div class="popup-item" v-show="isShop">
+					<div class="popup-head border-bottom-1px">
+						<span class="popup-title fl">商店</span>
+						<i class="ivu-icon ivu-icon-md-close-circle" @click="hideSkin"></i>
+					</div>
+					<div class="popup-content">
+						<p>商店</p>
+					</div>
+				</div>
+				<div class="popup-item" v-show="isBag">
+					<div class="popup-head border-bottom-1px">
+						<span class="popup-title fl">背包</span>
+						<i class="ivu-icon ivu-icon-md-close-circle" @click="hideSkin"></i>
+					</div>
+					<div class="popup-content">
+						<p>背包</p>
+						<div class="food-box">
+							<ul class="food-list">
+								<li v-for="(food, index) in foods" @click="feedClick(food.name)">
+									<p class="food-name">{{food.name}}</p>
+									<p>数量：{{food.num}}</p>
+									<p>进食时长：{{food.eatTime | SecondToDate}}</p>
+									<p>增加经验：{{food.exp}}</p>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>		
 		</div>
@@ -291,6 +330,7 @@
 			</div>
 		</div>
 
+		<!-- 用户信息 -->
 		<Modal v-model="modal12" @on-ok="keepUser">
 			<div class="user-form">
 				<i-form :model="user" :label-width="80">
@@ -301,6 +341,9 @@
 		        <div><p>等级：{{chick.level}}级，经验：{{chick.exp}}，升级所需：{{chick.upgradeExp}}</p></div>
 	        </div>
 	    </Modal>
+
+	    <!-- 背包 -->
+
 	</div>
 	<script src="https://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
 	<script src="lib/vuex/vuex.min.js"></script>
@@ -312,6 +355,12 @@
 	        data: {
 	        	modal12: false,
 	            skinBox: false,
+	            skin: 'skin',
+	            shop: 'shop',
+	            bag: 'bag',
+	            isSkin: false,
+	            isShop: false,
+	            isBag: false,
 	            currentSuit: 'default', // 当前套装
 	            currentHat: 'default', 		// 当前帽子
 	            currentClothes: 'default', 	// 当前衣服
@@ -387,13 +436,26 @@
 				ok () {
 					this.$store.commit('popupLevel');
 	          	},
-	          	// 打开换装弹窗
-		        showSkin: function () {
+	          	// 打开功能菜单弹窗
+		        showPopup: function (val) {
 		            this.skinBox = true;
+		            if (val == 'skin') {
+		            	this.isSkin = true;
+		            } else if (val == 'shop') {
+		            	this.isShop = true;
+		            } else {
+		            	this.isBag = true;
+		            }
 		        },
 		        // 关闭换装弹窗
 		        hideSkin: function () {
 					this.skinBox = false;
+					var that = this;
+					setTimeout(function(){ 
+						that.isSkin = false;
+						that.isShop = false;
+						that.isBag = false;
+					}, 400);
 		        },
 		        // 打开用户信息面板
 		        showUser: function () {
@@ -415,7 +477,7 @@
 		        	this.componentClothes = 'clothes-' + pid;
 		        },
 		        keepUser: function() {
-		        	this.$store.commit('keepUser');
+		        	this.$store.commit('keepUser',);
 		        }
 	        },
 	        // 过滤器
