@@ -34,141 +34,28 @@
 			</ul>
 			<div class="content">
 				<!-- 太阳光 -->
-				<div class="sunlight">
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
+				<c-sunlight></c-sunlight>
 				<!-- 山峰 -->
-				<div class="peak-box">
-					<div class="peak-1"></div>
-					<div class="peak-2"></div>
-					<div class="peak-3"></div>
-					<div class="peak-4"></div>
-					<div class="peak-5"></div>
-					<div class="peak-6"></div>
-					<div class="peak-7">
-						<div class="peak-7-1"></div>
-						<div class="peak-7-2"></div>
-					</div>
-					<div class="peak-8"></div>
-					<div class="peak-9"></div>
-					<!-- 风车塔 -->
-					<div class="windmill">
-						<div class="windmill-1"></div>
-						<div class="windmill-2"></div>
-						<div class="windmill-3"></div>
-						<div class="windmill-4"></div>
-						<div class="windmill-5">
-							<div class="windmill-5-1"></div>
-							<div class="windmill-5-2"></div>
-						</div>
-					</div>
-				</div>
+				<c-peak></c-peak>
 				<!-- 白云 -->
-				<div class="clouds">
-				  <div class="cloud x1"></div>
-				  <div class="cloud x2"></div>
-				  <div class="cloud x3"></div>
-				</div> 
-				<div class="grass-1">
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
-					<span></span>
+				<c-clouds></c-clouds>
+				<div class="land-wrap">
+					<!-- 草地 -->
+					<c-grass></c-grass>
 					<!-- 房子 -->
-					<div class="house">
-						<div class="house-1"></div>
-						<div class="house-2-1"></div>
-						<div class="house-2-2"></div>
-						<div class="house-2"></div>
-						<div class="house-3-1"></div>
-						<div class="house-3-2"></div>
-						<div class="house-3"></div>
-						<div class="house-4"></div>
-						<div class="house-5"></div>
-						<div class="house-6"></div>
-						<div class="house-7"></div>
-						<div class="house-8"></div>
-						<!-- 屋前草地 -->
-						<div class="house-9"></div>
-					</div>
+					<c-house></c-house>
 					<!-- 护栏 -->
-					<div class="fence">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
+					<c-fence></c-fence>
 					<!-- 蜜蜂鲜花 -->
-					<div class="bee-box">
-						<div class="soil two"></div>
-						<div class="soil"></div>
-						<div class="flowerpot">
-							<div class="flowerpot-top"></div>
-							<div class="flowerpot-bottom"></div>
-						</div>
-						<div class="flower">
-							<div class="flower-top">
-								<p></p>
-								<p></p>
-								<p></p>
-								<p></p>
-							</div>
-							<div class="flower-head"></div>
-						</div>
-						<div class="bee">
-							<div class="bee-body"></div>
-						</div>
-						<div class="bee bee-2">
-							<div class="bee-body"></div>
-						</div>
-						<div class="triangle-box two">
-							<div class="item"></div>
-							<div class="item"></div>
-							<div class="item"></div>
-						</div>
-					</div>
+					<c-bee></c-bee>
 					<!-- 鸡蛋 -->
-					<div class="egg-wrapper">
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<div class="egg infinite">
-							<div class="heart"></div>
-						</div>
-					</div>
-					<!-- 三角形 -->
-					<div class="triangle-box">
-						<div class="item"></div>
-						<div class="item"></div>
-						<div class="item"></div>
-						<div class="item"></div>
-					</div>
+					<c-egg></c-egg>
 				</div>
 
 				<!-- 叶子 -->
-				<div class="leaf-box">
-					<div class="leaf-item leaf-1"></div>
-					<div class="leaf-item leaf-2"></div>
-					<div class="leaf-item leaf-3"></div>
-					<div class="leaf-item leaf-4"></div>
-				</div>
+				<c-leaf></c-leaf>
 				<!-- 鸡饭碗 -->
-				<div class="trough">
-					<span></span>
-					<span></span>
-					<div class="fodder"></div>
-					<div class="trough-l">
-						<p></p>
-						<p></p>
-						<p></p>
-					</div>
-				</div>
+				<c-trough></c-trough>
 				<!-- chick -->
 				<div class="chick" :class="{noeat:!chick.eat}">
 					<!-- 进食倒计 -->

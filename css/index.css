@@ -146,10 +146,17 @@
   transform: rotate(-22deg);
   -webkit-animation:sunlight-3 15s ease-in infinite;
 }
-.grass-1{
+.land-wrap {
   position: absolute;
   width: 100%;
   height: 40%;
+  bottom: 0;
+  left: 0;
+}
+.grass-1{
+  position: absolute;
+  width: 100%;
+  height: 100%;
   bottom: 0;
   left: 0;
   background-color: #b7f03b;
@@ -2336,11 +2343,13 @@
   z-index: 30;
   display: flex;
   align-items: center;
+  padding: .25rem .75rem .25rem .25rem;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 3rem;
+  padding-left: 2.4rem;
 }
 .user-logo {
-  width: 2.6rem;
-  height: 2.6rem;
-  margin-right: .5rem;
+  margin-right: .25rem;
   border-radius: 50%;
   text-align: center;
   color: #ffbb38;
@@ -2349,16 +2358,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: 2rem;
+  position: absolute;
+  left: 0;
 }
 .user-money {
-  display: flex;
-  color: #ffb304;
+    display: flex;
+    color: #ffb304;
+    font-size: .7rem;
+    padding-top: .2rem;
 }
 .user-name {
-  margin-bottom: .25rem;
-  margin-top: .2rem;
-  font-size: 1rem;
+  font-size: .75rem;
   font-weight: 600;
   color: #8c3530;
 }
@@ -2379,6 +2390,7 @@
   top: -5rem;
   width: 100%;
   text-align: center;
+  z-index: 99;
 }
 .countdown-text {
   position: relative;
@@ -2421,4 +2433,3 @@
     height: 100%;
     background-color: #ffa446;
 }
-
