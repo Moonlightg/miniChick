@@ -192,14 +192,15 @@
 						<i class="ivu-icon ivu-icon-md-close-circle" @click="hideSkin"></i>
 					</div>
 					<div class="popup-content">
-						<p>背包</p>
 						<div class="food-box">
 							<ul class="food-list">
-								<li v-for="(food, index) in foods" @click="feedClick(food.name)">
-									<p class="food-name">{{food.name}}</p>
-									<p>数量：{{food.num}}</p>
-									<p>进食时长：{{food.eatTime | SecondToDate}}</p>
-									<p>增加经验：{{food.exp}}</p>
+								<li v-for="(food, index) in foods" @click="feedClick(index)">
+									<div class="food-item">
+										<p class="food-name">{{food.name}}</p>
+										<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
+										<p><span class="food-icon"><Icon type="ios-alarm-outline" /></span>{{food.eatTime | SecondToDate}}</p>
+										<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p>
+									</div>
 								</li>
 							</ul>
 						</div>
@@ -310,8 +311,8 @@
 					})
 				},
 				// 点击食物进行喂食
-				feedClick: function (val) {
-					this.$store.commit('feedClick',val);
+				feedClick: function (index) {
+					this.$store.commit('feedClick',index);
 				},
 				// 升级弹窗确认按钮，确认后再检测是否可以继续升级
 				ok () {

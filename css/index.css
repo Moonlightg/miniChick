@@ -2433,3 +2433,30 @@
     height: 100%;
     background-color: #ffa446;
 }
+
+/* 背包列表。*/
+.food-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: .25rem;
+}
+.food-list li {
+  width: 33.333%;
+  padding: .25rem;
+}
+.food-item {
+  padding: .5rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+.food-name {
+  text-align: center;
+  margin-bottom: .5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid #f3f3f3;
+  padding-bottom: .5rem;
+}
+.food-icon {
+  margin-right: .5rem;
+}

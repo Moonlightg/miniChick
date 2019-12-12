@@ -1,6 +1,7 @@
 const store = new Vuex.Store({
     state: {
         user: {
+          firstGame: 0, // 
           name: '养鸡大户006',
           money: 3000
         },
@@ -21,9 +22,9 @@ const store = new Vuex.Store({
         foods: [{
           id: 1,
           name: '小麦',    // 食物名称
-          eatTime: 10000,    // 进食时间 (单位毫秒)
+          eatTime: 5000,    // 进食时间 (单位毫秒)
           exp: 100,       // 增加小鸡经验
-          num: 5          // 库存数量
+          num: 2         // 库存数量
         },{
           id: 2,
           name: '香蕉',
@@ -40,6 +41,12 @@ const store = new Vuex.Store({
         value: 0
     },
     mutations: {
+        // 首次游戏改变状态
+        startGame (state,pid) {
+          state.user.firstGame = pid;
+          this.commit('save');
+          //this.commit('load');
+        },
         // 判断是否正在进食
         eat (state) {
             // 页面加载获取当前时间
@@ -53,30 +60,34 @@ const store = new Vuex.Store({
                 state.enddate = '';
                 state.chick.eat = false;
                 this.commit('save');
-                state.content = '主人我好饿哦！';
+                state.content = '大佬，肚饥咧！';
                 return;
             }
         },
-        feedClick (state,r) {
+        feedClick (state,index) {
             // 得到选中的食物
-            state.foods.forEach(obj => {
-              if (obj.name === r) {
-                state.currFood = obj
-              }
-            })
+            // state.foods.forEach(obj => {
+            //   if (obj.name === r) {
+            //     state.currFood = obj
+            //   }
+            // })
+            state.currFood = state.foods[index];
             console.log(state.currFood);
-            if (state.eat) {
+            if (state.chick.eat) {
               console.log("本鸡正在吃饭");
               return;
-            } else {
+            } else if ( state.currFood.num > 0 ) {
               console.log("本鸡饿了，快给我吃的");
               let startDate = new Date().getTime();
               let endDate = startDate + state.currFood.eatTime;
               //state.startDate = startDate;
               state.endDate = endDate;
               state.currFood.num--;  // 扣除食物数量
+              state.chick.eat = true;
               this.commit('save');
               this.commit('countdown', startDate);
+            } else {
+              console.log("你没有"+this.state.currFood.name+"食物了");
             }
         },
         // 进食结束
@@ -196,8 +207,8 @@ const store = new Vuex.Store({
               endDate: state.endDate,
               currFood: state.currFood,
               chick: state.chick,
-              user: state.user
-              //eat: state.eat
+              user: state.user,
+              foods: state.foods
             };
             console.log(data);
             localStorage.setItem('farmDate', JSON.stringify(data))
@@ -209,8 +220,8 @@ const store = new Vuex.Store({
             state.endDate = data.endDate,
             state.currFood = data.currFood,
             state.chick = data.chick,
-            state.user = data.user
-            //state.eat = data.eat
+            state.user = data.user,
+            state.foods = data.foods
         }
     }
 })
