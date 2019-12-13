@@ -386,6 +386,8 @@
   overflow: hidden;
 }
 .chick-body:before{
+  position: absolute;
+  top: 0;
   left: -.05rem;
   width: 7.6rem;
   height: 8.2rem;
