@@ -621,6 +621,52 @@
     background-color: #fff6f7;
     z-index: 10;
 }
+.arm {
+    top: 3rem;
+    right: 0;
+    width: 5rem;
+    height: 5rem;
+    z-index: 9;
+}
+.arm span {
+  position: absolute;
+}
+.arm span:first-child{
+  top: 20%;
+  right: 0%;
+  width: 70%;
+  height: 22%;
+  background: #F20;
+  transform: rotate(37deg);
+  border-radius: 66% 66% 66% 66% / 80% 80% 50% 50%;
+}
+.arm span:nth-child(2){
+  top: 34%;
+  right: 4%;
+  width: 62%;
+  height: 17%;
+  background: #F50;
+  transform: rotate(23deg);
+  border-radius: 66% 66% 66% 66% / 80% 80% 50% 50%;
+}
+.arm span:nth-child(3){
+  top: 34%;
+  right: 4%;
+  width: 62%;
+  height: 17%;
+  background: #F50;
+  transform: rotate(23deg);
+  border-radius: 66% 66% 66% 66% / 80% 80% 50% 50%;
+}
+.arm span:nth-child(4) {
+  top: 0;
+  right: 0;
+  width: 1rem;
+  height: 1.4rem;
+  border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+  background-color: #07C;
+  transform: rotate(-45deg);
+}
 .food{
   position: absolute;
   top: .7rem;
@@ -2468,6 +2514,7 @@
   padding: .25rem;
 }
 .food-item {
+  position: relative;
   padding: .5rem;
   border-radius: 5px;
   border: 1px solid #ddd;
@@ -2483,3 +2530,23 @@
 .food-icon {
   margin-right: .5rem;
 }
+.shortage-tips {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5); 
+    border-radius: 5px;
+    display: none;
+}
+.shortage .shortage-tips {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  flex-direction: column;
+}
+
+
+

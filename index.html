@@ -96,6 +96,12 @@
 					<div class="wing-content">
 						<span></span>
 					</div>
+					<div class="arm" style="display: none;">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
 					<div class="wing-right">
 						<span></span>
 						<span></span>
@@ -194,12 +200,15 @@
 					<div class="popup-content">
 						<div class="food-box">
 							<ul class="food-list">
-								<li v-for="(food, index) in foods" @click="feedClick(index)">
+								<li v-for="(food, index) in foods" @click="feedClick(index)" :class="{ shortage: food.num === 0}">
 									<div class="food-item">
 										<p class="food-name">{{food.name}}</p>
 										<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
 										<p><span class="food-icon"><Icon type="ios-alarm-outline" /></span>{{food.eatTime | SecondToDate}}</p>
 										<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p>
+										<div class="shortage-tips">
+											<i-button :size="buttonSize" type="success">购买</i-button>
+										</div>
 									</div>
 								</li>
 							</ul>
@@ -248,6 +257,7 @@
 	            isSkin: false,
 	            isShop: false,
 	            isBag: false,
+	            buttonSize: 'small',
 	            formUser: { // 用户信息填写表单
 	            	name: ''
 
