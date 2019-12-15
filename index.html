@@ -238,7 +238,12 @@
 		        <div><p>等级：{{chick.level}}级，经验：{{chick.exp}}，升级所需：{{chick.upgradeExp}}</p></div>
 	        </div>
 	    </Modal>
-	    <!-- 背包 -->
+
+	    <!-- 升级弹窗 -->
+		<Modal :value="modalLevel" @on-ok="levelUser">
+			<span class="c-modal__title">升级了</span>
+          	<p style="font-size: 20px;">恭喜您升到{{chick.level}}级了！</p>
+	    </Modal>
 
 	</div>
 	<script src="https://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
@@ -305,7 +310,7 @@
 		          'endDate',
 		          'content',
 		          'currFood',
-		          'modalLecel',
+		          'modalLevel',
 		          'value'
 		    ]),
 	        mounted () {
@@ -364,7 +369,11 @@
 		        },
 		        keepUser: function() {
 		        	this.$store.commit('keepUser',);
+		        },
+		        levelUser: function() {
+		        	this.$store.commit('popupLevel');
 		        }
+
 	        },
 	        // 过滤器
 	        filters: {

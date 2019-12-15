@@ -36,7 +36,7 @@ const store = new Vuex.Store({
         endDate: '',      // 结束时间
         content: '',      // 倒计时
         currFood: {},     // 当前选中的食物
-        modalLecel: false,// 升级弹窗
+        modalLevel: false,// 升级弹窗
         // 进度条
         value: 0
     },
@@ -115,14 +115,14 @@ const store = new Vuex.Store({
               state.chick.level += 1;
               state.chick.exp = exps - state.chick.upgradeExp;
               state.chick.upgradeExp = parseInt(state.chick.upgradeExp * 2);
-              state.modalLecel = true;
+              state.modalLevel = true;
               this.commit('save'); 
             }
         },
         // 升级弹窗提示
         popupLevel (state) {
             let self = this;
-            state.modalLecel = false;
+            state.modalLevel = false;
             setTimeout (function() {
               self.commit('settleLevel', state.chick.exp);
             },500)
