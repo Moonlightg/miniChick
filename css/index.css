@@ -2431,6 +2431,18 @@
   position: absolute;
   left: 0;
 }
+.user-level {
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  color: #fff;
+  background: #F90;
+  font-size: .65rem;
+  padding: 0 6px;
+  border-radius: 10px;
+  border: 1px solid #8c362f;
+  transform: translateX(-50%);
+}
 .user-money {
     display: flex;
     color: #ffb304;
