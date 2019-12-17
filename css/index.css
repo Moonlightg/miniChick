@@ -2560,5 +2560,27 @@
   flex-direction: column;
 }
 
+/* 购物 */
+.shopping-box {
+  text-align: center;
+}
+.num-form {
+  width: 8rem;
+  display: flex;
+  margin: 0 auto;
+}
+.shop-btn {
+  flex: 0 0 2rem;
+  text-align: center;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.shop-input input {
+  text-align: center;
+}
+
 
 

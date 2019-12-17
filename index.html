@@ -207,7 +207,7 @@
 										<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
 										<p><span class="food-icon"><Icon type="ios-alarm-outline" /></span>{{food.eatTime | SecondToDate}}</p>
 										<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p>
-										<div class="shortage-tips">
+										<div class="shortage-tips" @click.stop="shopping(food.name)">
 											<i-button :size="buttonSize" type="success">购买</i-button>
 										</div>
 									</div>
@@ -246,6 +246,19 @@
           	<p style="font-size: 20px;">恭喜您升到{{chick.level}}级了！</p>
 	    </Modal>
 
+	    <!-- 直接购买商品 -->
+		<Modal :value="modalShopping" @on-ok="shoppingSettle">
+			<div class="shopping-box">
+				<p>{{currFood.name}}</p>
+				<p>${{currFood.price}}/个</p>
+				<div class="num-form">
+					<div class="shop-btn" @click="shoppingReduce"><span>-</span></div>
+					<div class="shop-input"><i-input type="text" v-model="shoppingNum" placeholder="数量"></i-input></div>
+					<div class="shop-btn" @click="shoppingAdd"><Icon type="md-add-circle" /></div>
+				</div>
+			</div>
+	    </Modal>
+
 	</div>
 	<script src="https://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
 	<script src="lib/vuex/vuex.min.js"></script>
@@ -257,6 +270,7 @@
 	        data: {
 	        	modal12: false,
 	            skinBox: false,
+	            modalShopping: false,
 	            skin: 'skin',
 	            shop: 'shop',
 	            bag: 'bag',
@@ -297,7 +311,8 @@
 	            		id: 'forg',
 	            		name: '青蛙套装'
 	            	}
-	            ]
+	            ],
+	            shoppingNum: 0 // 购物数量
 	        },
 	        store, // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
 	        computed: Vuex.mapState([
@@ -329,6 +344,16 @@
 				// 点击食物进行喂食
 				feedClick: function (index) {
 					this.$store.commit('feedClick',index);
+				},
+				shopping: function (name) {
+					this.$store.commit('shoppingFood',name);
+					this.modalShopping = true;
+				},
+				shoppingReduce: function() {
+					this.shoppingNum--;
+				},
+				shoppingAdd: function() {
+					this.shoppingNum++;
 				},
 				// 升级弹窗确认按钮，确认后再检测是否可以继续升级
 				ok () {
@@ -373,6 +398,15 @@
 		        },
 		        levelUser: function() {
 		        	this.$store.commit('popupLevel');
+		        },
+		        shoppingSettle: function() {
+		        	var num = this.shoppingNum;
+		        	var name = this.$store.currFood;
+		        	console.log("name:"+name);
+		        	this.$store.commit('shoppingSettle',num);
+		        	this.modalShopping = false;
+		        	this.shoppingNum = 0;
+
 		        }
 
 	        },

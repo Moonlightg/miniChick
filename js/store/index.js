@@ -22,12 +22,14 @@ const store = new Vuex.Store({
         foods: [{
           id: 1,
           name: '小麦',    // 食物名称
-          eatTime: 5000,    // 进食时间 (单位毫秒)
+          price: 10,      // 单价
+          eatTime: 5000,  // 进食时间 (单位毫秒)
           exp: 100,       // 增加小鸡经验
-          num: 2         // 库存数量
+          num: 2          // 库存数量
         },{
           id: 2,
           name: '香蕉',
+          price: 100,
           eatTime: 100000,
           exp: 500,
           num: 5
@@ -89,6 +91,20 @@ const store = new Vuex.Store({
             } else {
               console.log("你没有"+this.state.currFood.name+"食物了");
             }
+        },
+        shoppingFood (state,name) {
+          // 得到需要购买的食物
+          state.foods.forEach(obj => {
+            if (obj.name === name) {
+              state.currFood = obj
+            }
+          });
+
+        },
+        shoppingSettle (state,num) {
+          var that = this;
+          // that.$Message.success('购买了'+num+'个'+store.currFood.name);
+          console.log("购买了"+num+"个"+state.currFood.name);
         },
         // 进食结束
         endEat (state) {
