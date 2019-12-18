@@ -50,7 +50,7 @@ const store = new Vuex.Store({
           //this.commit('load');
         },
         // 判断是否正在进食
-        eat (state) {
+        CHICK_IS_EAT (state) {
             // 页面加载获取当前时间
             let loadDate = new Date().getTime();
             // 判断上一次是否进食结束
@@ -61,7 +61,7 @@ const store = new Vuex.Store({
             } else {
                 state.enddate = '';
                 state.chick.eat = false;
-                this.commit('save');
+                this.commit('SAVE_GAME');
                 state.content = '大佬，肚饥咧！';
                 return;
             }
@@ -86,7 +86,7 @@ const store = new Vuex.Store({
               state.endDate = endDate;
               state.currFood.num--;  // 扣除食物数量
               state.chick.eat = true;
-              this.commit('save');
+              this.commit('SAVE_GAME');
               this.commit('countdown', startDate);
             } else {
               console.log("你没有"+this.state.currFood.name+"食物了");
@@ -112,7 +112,7 @@ const store = new Vuex.Store({
             state.chick.eat = false;     // 进食状态设为false
             // 经验值计算
             this.commit('settleExp');
-            this.commit('save');          // 存档
+            this.commit('SAVE_GAME');          // 存档
             state.content = '喂食结束';
             setTimeout (function() {
               state.content = '阴公，好嗨饿！';
@@ -132,7 +132,7 @@ const store = new Vuex.Store({
               state.chick.exp = exps - state.chick.upgradeExp;
               state.chick.upgradeExp = parseInt(state.chick.upgradeExp * 2);
               state.modalLevel = true;
-              this.commit('save'); 
+              this.commit('SAVE_GAME'); 
             }
         },
         // 升级弹窗提示
@@ -179,7 +179,7 @@ const store = new Vuex.Store({
                     format =`${min}分${sec}秒`;
                   }
                   state.content = format; // 显示倒计时
-                  self.commit('save');
+                  self.commit('SAVE_GAME');
                 } else {
                   clearInterval(timer); // 清除定时器
                   self.commit('endEat');
@@ -187,38 +187,24 @@ const store = new Vuex.Store({
               },1000)
             }
         },
-        // 保存修改用户信息
-        keepUser (state) {
-          let self = this;
-          console.log(state.user);
-          self.commit('save');
-        },
-        // 设置套装
-        setSuit (state,pid) {
-          let self = this;
-          state.chick.currentSuit = pid;
-          state.chick.currentClothes = pid;
-          state.chick.currentHat = pid;
-          state.chick.componentHat = 'hat-' + pid;
-          state.chick.componentClothes = 'clothes-' + pid;
-          self.commit('save');
-        },
-        // 设置帽子
-        setHat (state,pid) {
-          let self = this;
-          state.chick.currentHat = pid;
-          state.chick.componentHat = 'hat-' + pid;
-          self.commit('save');
-        },
-        // 设置衣服
-        setClothes (state,pid) {
-          let self = this;
-          state.chick.currentClothes = pid;
-          state.chick.componentClothes = 'clothes-' + pid;
-          self.commit('save');
+        // 设置服装
+        REPLACE_DRESS (state,price) {
+          if (price.type == 0) {
+            state.chick.currentSuit = price.pid;
+            state.chick.currentClothes = price.pid;
+            state.chick.currentHat = price.pid;
+            state.chick.componentHat = 'hat-' + price.pid;
+            state.chick.componentClothes = 'clothes-' + price.pid;
+          } else if (price.type == 1) {
+            state.chick.currentHat = price.pid;
+            state.chick.componentHat = 'hat-' + price.pid;
+          } else {
+            state.chick.currentClothes = price.pid;
+            state.chick.componentClothes = 'clothes-' + price.pid;
+          }
         },
         // 存档
-        save (state) {
+        SAVE_GAME (state) {
             let data = {
               endDate: state.endDate,
               currFood: state.currFood,
@@ -230,7 +216,7 @@ const store = new Vuex.Store({
             localStorage.setItem('farmDate', JSON.stringify(data))
         },
           // 读档
-        load (state) {
+        LOAD_GAME (state) {
             let data = JSON.parse(localStorage.getItem('farmDate'))
             if (!data) return
             state.endDate = data.endDate,
@@ -239,5 +225,26 @@ const store = new Vuex.Store({
             state.user = data.user,
             state.foods = data.foods
         }
+    },
+    actions: {
+      // 保存修改用户信息
+      keepuser (context) {
+        context.commit('SAVE_GAME');
+      },
+      // 设置服装
+      replacedress (context,value) {
+        context.commit("REPLACE_DRESS",value);
+        context.commit('SAVE_GAME');
+      },
+      // 读档
+      loadgame (context) {
+        context.commit('LOAD_GAME');
+        // 判断是否进食
+        context.commit('CHICK_IS_EAT');
+      },
+      // 存档
+      savegame (context) {
+        context.commit('SAVE_GAME');
+      }
     }
 })
