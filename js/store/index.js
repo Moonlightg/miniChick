@@ -92,7 +92,7 @@ const store = new Vuex.Store({
               console.log("你没有"+this.state.currFood.name+"食物了");
             }
         },
-        shoppingFood (state,name) {
+        shopFood (state,name) {
           // 得到需要购买的食物
           state.foods.forEach(obj => {
             if (obj.name === name) {
@@ -101,9 +101,8 @@ const store = new Vuex.Store({
           });
 
         },
-        shoppingSettle (state,num) {
-          var that = this;
-          // that.$Message.success('购买了'+num+'个'+store.currFood.name);
+        SHOP_SETTLE (state,num) {
+          state.currFood.num = num;
           console.log("购买了"+num+"个"+state.currFood.name);
         },
         // 进食结束
@@ -234,6 +233,11 @@ const store = new Vuex.Store({
       // 设置服装
       replacedress (context,value) {
         context.commit("REPLACE_DRESS",value);
+        context.commit('SAVE_GAME');
+      },
+      // 购买商品
+      shopsettle (context,value) {
+        context.commit("SHOP_SETTLE",value);
         context.commit('SAVE_GAME');
       },
       // 读档

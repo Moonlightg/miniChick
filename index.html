@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-	<div id="app" style="opacity: 0.1;">
+	<div id="app">
 		<div class="container" :class="{ beingskin: skinBox }">
 			<div class="user-box" @click="showUser">
 				<div class="user-logo">
@@ -207,7 +207,7 @@
 										<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
 										<p><span class="food-icon"><Icon type="ios-alarm-outline" /></span>{{food.eatTime | SecondToDate}}</p>
 										<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p>
-										<div class="shortage-tips" @click.stop="shopping(food.name)">
+										<div class="shortage-tips" @click.stop="showShop(food.name)">
 											<i-button :size="buttonSize" type="success">购买</i-button>
 										</div>
 									</div>
@@ -247,15 +247,18 @@
 	    </Modal>
 
 	    <!-- 直接购买商品 -->
-		<Modal :value="modalShopping" @on-ok="shoppingSettle">
+		<Modal :value="modalShop" 
+			@on-ok="shopSettle"
+			@on-cancel="hideShop">
 			<div class="shopping-box">
 				<p>{{currFood.name}}</p>
-				<p>${{currFood.price}}/个</p>
+				<p>单价：${{currFood.price}}/个</p>
 				<div class="num-form">
-					<div class="shop-btn" @click="shoppingReduce"><span>-</span></div>
+					<div class="shop-btn" @click="shopReduce"><span>-</span></div>
 					<div class="shop-input"><i-input type="text" v-model="shoppingNum" placeholder="数量"></i-input></div>
-					<div class="shop-btn" @click="shoppingAdd"><Icon type="md-add-circle" /></div>
+					<div class="shop-btn" @click="shopAdd"><Icon type="md-add-circle" /></div>
 				</div>
+				<p>总价：${{currFood.price * shoppingNum}}</p>
 			</div>
 	    </Modal>
 
@@ -270,7 +273,7 @@
 	        data: {
 	        	modal12: false,
 	            skinBox: false,
-	            modalShopping: false,
+	            modalShop: false,
 	            skin: 'skin',
 	            shop: 'shop',
 	            bag: 'bag',
@@ -344,14 +347,17 @@
 				feedClick: function (index) {
 					this.$store.commit('feedClick',index);
 				},
-				shopping: function (name) {
-					this.$store.commit('shoppingFood',name);
-					this.modalShopping = true;
+				showShop: function (name) {
+					this.$store.commit('shopFood',name);
+					this.modalShop = true;
 				},
-				shoppingReduce: function() {
+				hideShop: function() {
+					this.modalShop = false;
+				},
+				shopReduce: function() {
 					this.shoppingNum--;
 				},
-				shoppingAdd: function() {
+				shopAdd: function() {
 					this.shoppingNum++;
 				},
 				// 升级弹窗确认按钮，确认后再检测是否可以继续升级
@@ -393,15 +399,28 @@
 		        levelUser: function() {
 		        	this.$store.commit('popupLevel');
 		        },
-		        shoppingSettle: function() {
+		        shopSettle: function() {
 		        	var num = this.shoppingNum;
-		        	var name = this.$store.currFood;
-		        	console.log("name:"+name);
-		        	this.$store.commit('shoppingSettle',num);
-		        	this.modalShopping = false;
+		        	var name = this.$store.state.currFood.name;
+		        	if (num == 0) {
+		        		this.error('请输入购买数量');
+		        		this.modalShop = false;
+		        		return false;
+		        	} else {
+		        		this.success('成功购买了'+num+"个"+name);
+		        	}
+		        	this.$store.dispatch('shopsettle',num);
+		        	this.modalShop = false;
 		        	this.shoppingNum = 0;
-
-		        }
+		        },
+		        // 公共成功提示
+		        success: function(val) {
+	                this.$Message.success(val);
+	            },
+	            // 公共失败提示
+	            error: function(val) {
+	                this.$Message.error(val);
+	            }
 
 	        },
 	        // 过滤器
