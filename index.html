@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-	<div id="app">
+	<div id="app" style="opacity: .1">
 		<div class="container" :class="{ beingskin: skinBox }">
 			<div class="user-box" @click="showUser">
 				<div class="user-logo">
@@ -56,7 +56,7 @@
 				<!-- 叶子 -->
 				<c-leaf></c-leaf>
 				<!-- 鸡饭碗 -->
-				<c-trough></c-trough>
+				<c-trough :troughTitle="troughTitle"></c-trough>
 				<!-- chick -->
 				<div class="chick" :class="{noeat:!chick.eat}">
 					<!-- 进食倒计 -->
@@ -131,14 +131,14 @@
 					</div>
 				</div>
 				<!-- 弹窗遮罩层 -->
-				<div class="popup-mask" v-show="skinBox" @click="hideSkin"></div>
+				<div class="popup-mask" v-show="skinBox" @click="hidePopup"></div>
 			</div>
 			<!-- 功能弹窗面板 -->
 			<div class="page-popup">
 				<div class="popup-item" v-show="isSkin">
 					<div class="popup-head border-bottom-1px">
 						<span class="popup-title fl">换装</span>
-						<i class="ivu-icon ivu-icon-md-close-circle" @click="hideSkin"></i>
+						<i class="ivu-icon ivu-icon-md-close-circle" @click="hidePopup"></i>
 					</div>
 					<div class="popup-content">
 						<!-- 换装内容 -->
@@ -187,7 +187,7 @@
 				<div class="popup-item" v-show="isShop">
 					<div class="popup-head border-bottom-1px">
 						<span class="popup-title fl">商店</span>
-						<i class="ivu-icon ivu-icon-md-close-circle" @click="hideSkin"></i>
+						<i class="ivu-icon ivu-icon-md-close-circle" @click="hidePopup"></i>
 					</div>
 					<div class="popup-content">
 						<p>商店</p>
@@ -196,7 +196,7 @@
 				<div class="popup-item" v-show="isBag">
 					<div class="popup-head border-bottom-1px">
 						<span class="popup-title fl">背包</span>
-						<i class="ivu-icon ivu-icon-md-close-circle" @click="hideSkin"></i>
+						<i class="ivu-icon ivu-icon-md-close-circle" @click="hidePopup"></i>
 					</div>
 					<div class="popup-content">
 						<div class="food-box">
@@ -218,15 +218,17 @@
 				</div>
 			</div>		
 		</div>
-		<div class="loading">
-			<div class="pic">
-				<div class="egg-wrapper">
-					<div class="egg infinite">
+		<transition name="fade">
+		    <div class="loading" v-if="isLoad">
+				<div class="pic">
+					<div class="egg-wrapper">
+						<div class="egg infinite">
+						</div>
 					</div>
+					<p>我是一只鸡</p>
 				</div>
-				<p>我是一只鸡</p>
 			</div>
-		</div>
+		</transition>
 
 		<!-- 用户信息 -->
 		<Modal v-model="modal12" @on-ok="keepUser">
@@ -271,6 +273,8 @@
 		new Vue({
 	        el: '#app',
 	        data: {
+	        	troughTitle: '鸡碗',
+	        	isLoad: true,
 	        	modal12: false,
 	            skinBox: false,
 	            modalShop: false,
@@ -339,13 +343,17 @@
 				// 初始化
 				init () {
 					this.$nextTick(function () {
+						var _that = this;
 					  	// 页面加载读取缓存
-					  	this.$store.dispatch('loadgame');
-					})
+					  	_that.$store.dispatch('loadgame');
+					});
+					this.hideLoading();
 				},
 				// 点击食物进行喂食
 				feedClick: function (index) {
 					this.$store.commit('feedClick',index);
+					this.hidePopup();
+					this.success('喂食成功！');
 				},
 				showShop: function (name) {
 					this.$store.commit('shopFood',name);
@@ -375,8 +383,8 @@
 		            	this.isBag = true;
 		            }
 		        },
-		        // 关闭换装弹窗
-		        hideSkin: function () {
+		        // 关闭功能菜单弹窗
+		        hidePopup: function () {
 					this.skinBox = false;
 					var that = this;
 					setTimeout(function(){ 
@@ -408,6 +416,7 @@
 		        		return false;
 		        	} else {
 		        		this.success('成功购买了'+num+"个"+name);
+		        		this.hidePopup();
 		        	}
 		        	this.$store.dispatch('shopsettle',num);
 		        	this.modalShop = false;
@@ -420,6 +429,13 @@
 	            // 公共失败提示
 	            error: function(val) {
 	                this.$Message.error(val);
+	            },
+	            hideLoading: function() {
+	            	var that = this;
+	            	//定义2秒后隐藏loading
+				  	setInterval(function(){
+				    	that.isLoad = false;
+				  	},2000)
 	            }
 
 	        },
@@ -451,13 +467,6 @@
 	          }
 	      }
 	    });
-		// 定时器
-		$(function(){
-		  //定义3秒后隐藏loading
-		  setInterval(function(){
-		    $(".loading").fadeOut();
-		  },2000)
-		})
 	</script>
 </body>
 </html>

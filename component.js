@@ -85,6 +85,7 @@ Vue.component('c-clouds', {
 
 // 鸡饭碗
 Vue.component('c-trough', {
+	props: ['troughTitle'],
 	template: `
 		<div class="trough" title="鸡饭碗">
 			<span></span>
@@ -95,6 +96,7 @@ Vue.component('c-trough', {
 				<p></p>
 				<p></p>
 			</div>
+			<div>{{troughTitle}}</div>
 		</div>
 	`
 });
