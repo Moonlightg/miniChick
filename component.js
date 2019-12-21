@@ -96,7 +96,6 @@ Vue.component('c-trough', {
 				<p></p>
 				<p></p>
 			</div>
-			<div>{{troughTitle}}</div>
 		</div>
 	`
 });

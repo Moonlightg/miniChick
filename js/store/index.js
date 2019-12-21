@@ -103,6 +103,7 @@ const store = new Vuex.Store({
         },
         SHOP_SETTLE (state,num) {
           state.currFood.num = num;
+          state.user.money = state.user.money - state.currFood.price * num;
           console.log("购买了"+num+"个"+state.currFood.name);
         },
         // 进食结束
