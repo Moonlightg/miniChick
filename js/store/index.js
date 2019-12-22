@@ -33,6 +33,20 @@ const store = new Vuex.Store({
           eatTime: 100000,
           exp: 500,
           num: 5
+        },{
+          id: 3,
+          name: '玉米',
+          price: 150,
+          eatTime: 120000,
+          exp: 800,
+          num: 5
+        },{
+          id: 4,
+          name: '苹果',
+          price: 450,
+          eatTime: 160000,
+          exp: 1000,
+          num: 5
         }],
         startDate: '',    // 开始时间
         endDate: '',      // 结束时间
