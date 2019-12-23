@@ -25,28 +25,48 @@ const store = new Vuex.Store({
           price: 10,      // 单价
           eatTime: 5000,  // 进食时间 (单位毫秒)
           exp: 100,       // 增加小鸡经验
-          num: 2          // 库存数量
+          num: 2,         // 库存数量
+          unlock: 1       // 0为待解锁，1为已解锁
         },{
           id: 2,
           name: '香蕉',
           price: 100,
           eatTime: 100000,
           exp: 500,
-          num: 5
+          num: 0,
+          unlock: 0
         },{
           id: 3,
           name: '玉米',
           price: 150,
           eatTime: 120000,
           exp: 800,
-          num: 5
+          num: 0,
+          unlock: 0
         },{
           id: 4,
           name: '苹果',
           price: 450,
           eatTime: 160000,
           exp: 1000,
-          num: 5
+          num: 0,
+          unlock: 0
+        },{
+          id: 5,
+          name: '榴莲',
+          price: 650,
+          eatTime: 170000,
+          exp: 1100,
+          num: 0,
+          unlock: 0
+        },{
+          id: 6,
+          name: '车厘子',
+          price: 750,
+          eatTime: 180000,
+          exp: 1200,
+          num: 0,
+          unlock: 0
         }],
         startDate: '',    // 开始时间
         endDate: '',      // 结束时间

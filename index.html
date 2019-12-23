@@ -201,14 +201,17 @@
 					<div class="popup-content">
 						<div class="food-box">
 							<ul class="food-list">
-								<li v-for="(food, index) in foods" @click="feedClick(index)" :class="{ shortage: food.num === 0}">
+								<li v-for="(food, index) in foods" @click="feedClick(index)" :class="{ isMask: food.num == 0 || food.unlock == 0}">
 									<div class="food-item">
 										<p class="food-name">{{food.name}}</p>
 										<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
 										<p><span class="food-icon"><Icon type="ios-alarm-outline" /></span>{{food.eatTime | SecondToDate}}</p>
 										<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p>
-										<div class="shortage-tips" @click.stop="showShop(food.name)">
+										<div class="mask-bg shortage-tips" @click.stop="showShop(food.name)" v-if="food.num == 0 && food.unlock == 1">
 											<i-button :size="buttonSize" type="success">购买</i-button>
+										</div>
+										<div class="mask-bg shortage-tips" v-if="food.unlock == 0">
+											<i-button :size="buttonSize" type="success">解锁</i-button>
 										</div>
 									</div>
 								</li>
