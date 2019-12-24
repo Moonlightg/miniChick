@@ -210,7 +210,7 @@
 										<div class="mask-bg shortage-tips" @click.stop="showShop(food.name)" v-if="food.num == 0 && food.unlock == 1">
 											<i-button :size="buttonSize" type="success">购买</i-button>
 										</div>
-										<div class="mask-bg shortage-tips" v-if="food.unlock == 0">
+										<div class="mask-bg shortage-tips" v-if="food.unlock == 0" @click.stop="showUnlock(food.name)">
 											<i-button :size="buttonSize" type="success">解锁</i-button>
 										</div>
 									</div>
@@ -267,6 +267,15 @@
 			</div>
 	    </Modal>
 
+	    <!-- 解锁商品确认 -->
+		<Modal :value="modalUnlock" 
+			@on-ok="commitUnlock"
+			@on-cancel="hideUnlock">
+			<div class="shopping-box">
+				<p>确定解锁吗？</p>
+				<p>解锁需要：${{currFood.unlockPrice}}</p>
+			</div>
+	    </Modal>
 	</div>
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="lib/vuex/vuex.min.js"></script>
@@ -281,6 +290,7 @@
 	        	modal12: false,
 	            skinBox: false,
 	            modalShop: false,
+	            modalUnlock: false,
 	            skin: 'skin',
 	            shop: 'shop',
 	            bag: 'bag',
@@ -371,6 +381,24 @@
 				shopAdd: function() {
 					this.shoppingNum++;
 				},
+				showUnlock: function(name) {
+					this.$store.commit('shopFood',name);
+					this.modalUnlock = true;
+				},
+				hideUnlock: function() {
+					this.modalUnlock = false;
+				},
+				commitUnlock: function() {
+					var unlockPrice = this.$store.state.currFood.unlockPrice;
+					console.log("解锁需要金币："+unlockPrice);
+					if (this.$store.state.user.money < unlockPrice) {
+						console.log("不够金币解锁");
+						return false;
+					} else {
+						this.$store.dispatch('unlockfood',unlockPrice);
+					}
+					this.hideUnlock();
+				},
 				// 升级弹窗确认按钮，确认后再检测是否可以继续升级
 				ok () {
 					this.$store.commit('popupLevel');
@@ -417,12 +445,15 @@
 		        		this.error('请输入购买数量');
 		        		this.modalShop = false;
 		        		return false;
+		        	} else if ( this.$store.state.user.money < this.$store.state.currFood.price * num) {
+		        		console.log("不够金币购买");
+
 		        	} else {
 		        		this.success('成功购买了'+num+"个"+name);
 		        		this.hidePopup();
 		        	}
 		        	this.$store.dispatch('shopsettle',num);
-		        	this.modalShop = false;
+		        	this.hideShop();
 		        	this.shoppingNum = 0;
 		        },
 		        // 公共成功提示

@@ -26,7 +26,8 @@ const store = new Vuex.Store({
           eatTime: 5000,  // 进食时间 (单位毫秒)
           exp: 100,       // 增加小鸡经验
           num: 2,         // 库存数量
-          unlock: 1       // 0为待解锁，1为已解锁
+          unlock: 1,      // 0为待解锁，1为已解锁
+          unlockPrice: 1  // 解锁金额
         },{
           id: 2,
           name: '香蕉',
@@ -34,7 +35,8 @@ const store = new Vuex.Store({
           eatTime: 100000,
           exp: 500,
           num: 0,
-          unlock: 0
+          unlock: 0,
+          unlockPrice: 100
         },{
           id: 3,
           name: '玉米',
@@ -42,7 +44,8 @@ const store = new Vuex.Store({
           eatTime: 120000,
           exp: 800,
           num: 0,
-          unlock: 0
+          unlock: 0,
+          unlockPrice: 500
         },{
           id: 4,
           name: '苹果',
@@ -50,7 +53,8 @@ const store = new Vuex.Store({
           eatTime: 160000,
           exp: 1000,
           num: 0,
-          unlock: 0
+          unlock: 0,
+          unlockPrice: 1000
         },{
           id: 5,
           name: '榴莲',
@@ -58,7 +62,8 @@ const store = new Vuex.Store({
           eatTime: 170000,
           exp: 1100,
           num: 0,
-          unlock: 0
+          unlock: 0,
+          unlockPrice: 1300
         },{
           id: 6,
           name: '车厘子',
@@ -66,7 +71,8 @@ const store = new Vuex.Store({
           eatTime: 180000,
           exp: 1200,
           num: 0,
-          unlock: 0
+          unlock: 0,
+          unlockPrice: 1500
         }],
         startDate: '',    // 开始时间
         endDate: '',      // 结束时间
@@ -134,6 +140,10 @@ const store = new Vuex.Store({
             }
           });
 
+        },
+        UNLOCK_FOOD (state,price) {
+          state.currFood.unlock = 1;
+          state.user.money = state.user.money - price;
         },
         SHOP_SETTLE (state,num) {
           state.currFood.num = num;
@@ -274,6 +284,10 @@ const store = new Vuex.Store({
       shopsettle (context,value) {
         context.commit("SHOP_SETTLE",value);
         context.commit('SAVE_GAME');
+      },
+      // 解锁商品
+      unlockfood (context,value) {
+        context.commit("UNLOCK_FOOD",value);
       },
       // 读档
       loadgame (context) {
