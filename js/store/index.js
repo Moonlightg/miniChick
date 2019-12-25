@@ -17,6 +17,13 @@ const store = new Vuex.Store({
           currentClothes: 'default',  // 当前衣服
           componentHat: 'hat-default', // 默认帽子组件
           componentClothes: 'clothes-default', // 默认衣服组件
+          // 鸡蛋
+          egg: {
+            num: 0,       // 鸡蛋待拾取数量
+            allNum: 0,    // 库存鸡蛋总量
+            progress: 55, // 鸡蛋进度条
+            price: 1000,  // 鸡蛋价格
+          }
         },
         // 食物信息
         foods: [{
@@ -32,7 +39,7 @@ const store = new Vuex.Store({
           id: 2,
           name: '香蕉',
           price: 100,
-          eatTime: 100000,
+          eatTime: 5000,
           exp: 500,
           num: 0,
           unlock: 0,
@@ -154,7 +161,7 @@ const store = new Vuex.Store({
         endEat (state) {
             state.enddate = '';    // 倒计时结束清零结束时间
             state.chick.eat = false;     // 进食状态设为false
-            // 经验值计算
+            // 结束结算
             this.commit('settleExp');
             this.commit('SAVE_GAME');          // 存档
             state.content = '喂食结束';
@@ -162,11 +169,13 @@ const store = new Vuex.Store({
               state.content = '阴公，好嗨饿！';
             },2000)
         },
-        // 经验结算
+        // 结束结算
         settleExp (state) {
+            let eggExps = state.chick.egg.progress += parseInt(state.currFood.exp/50);
+            console.log("鸡蛋进度条增加后："+eggExps);
             let exps = state.chick.exp += state.currFood.exp;
-            console.log("exps:"+exps);
             this.commit('settleLevel', exps);
+            this.commit('settleEgg', eggExps);
         },
         // 升级计算
         settleLevel (state, exps) {
@@ -177,6 +186,13 @@ const store = new Vuex.Store({
               state.chick.upgradeExp = parseInt(state.chick.upgradeExp * 2);
               state.modalLevel = true;
               this.commit('SAVE_GAME'); 
+            }
+        },
+        // 生成鸡蛋个数计算
+        settleEgg (state,eggExps) {
+            if (eggExps > 100) {
+              state.chick.egg.num = eggExps%100;
+              state.chick.egg.progress = eggExps - state.chick.egg.num*100;
             }
         },
         // 升级弹窗提示
@@ -288,6 +304,7 @@ const store = new Vuex.Store({
       // 解锁商品
       unlockfood (context,value) {
         context.commit("UNLOCK_FOOD",value);
+        context.commit('SAVE_GAME');
       },
       // 读档
       loadgame (context) {

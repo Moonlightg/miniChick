@@ -148,6 +148,7 @@ Vue.component('c-bee', {
 
 // 鸡蛋
 Vue.component('c-egg', {
+	props: ['eggprogress','eggnum'],
 	template: `
 		<div class="egg-wrapper" title="鸡蛋">
 			<span></span>
@@ -155,7 +156,15 @@ Vue.component('c-egg', {
 			<span></span>
 			<span></span>
 			<div class="egg infinite">
-				<div class="heart"></div>
+				<div class="heart">
+					<div class="egg-num" v-if="eggnum != 0">{{eggnum}}</div>	
+				</div>
+			</div>
+			<div class="egg-progress-wrap">	
+				<p>{{eggprogress}}%</p>
+				<div class="egg-progress">
+					<div class="egg-progress-item" :style="'width:' + eggprogress + '%' "></div>
+				</div>
 			</div>
 		</div>
 	`

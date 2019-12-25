@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-	<div id="app">
+	<div id="app" style="opacity: .1">
 		<div class="container" :class="{ beingskin: skinBox }">
 			<div class="user-box" @click="showUser">
 				<div class="user-logo">
@@ -50,7 +50,7 @@
 					<!-- 蜜蜂鲜花 -->
 					<c-bee></c-bee>
 					<!-- 鸡蛋 -->
-					<c-egg></c-egg>
+					<c-egg :eggnum="chick.egg.num" :eggprogress="chick.egg.progress"></c-egg>
 				</div>
 
 				<!-- 叶子 -->
@@ -211,7 +211,7 @@
 											<i-button :size="buttonSize" type="success">购买</i-button>
 										</div>
 										<div class="mask-bg shortage-tips" v-if="food.unlock == 0" @click.stop="showUnlock(food.name)">
-											<i-button :size="buttonSize" type="success">解锁</i-button>
+											<i-button :size="buttonSize" type="warning">解锁</i-button>
 										</div>
 									</div>
 								</li>
@@ -389,13 +389,15 @@
 					this.modalUnlock = false;
 				},
 				commitUnlock: function() {
+					var food = this.$store.state.currFood.name;
 					var unlockPrice = this.$store.state.currFood.unlockPrice;
 					console.log("解锁需要金币："+unlockPrice);
 					if (this.$store.state.user.money < unlockPrice) {
-						console.log("不够金币解锁");
+						this.error('不够金币解锁');
 						return false;
 					} else {
 						this.$store.dispatch('unlockfood',unlockPrice);
+						this.success('成功解锁了'+food);
 					}
 					this.hideUnlock();
 				},
@@ -446,8 +448,8 @@
 		        		this.modalShop = false;
 		        		return false;
 		        	} else if ( this.$store.state.user.money < this.$store.state.currFood.price * num) {
-		        		console.log("不够金币购买");
-
+		        		this.error('不够金币购买');
+		        		return false;
 		        	} else {
 		        		this.success('成功购买了'+num+"个"+name);
 		        		this.hidePopup();
