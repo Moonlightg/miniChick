@@ -364,7 +364,14 @@
 				},
 				// 点击食物进行喂食
 				feedClick: function (index) {
-					this.$store.commit('feedClick',index);
+					this.$store.state.currFood = this.$store.state.foods[index];
+					if (this.$store.state.chick.eat) return
+					if (this.$store.state.currFood.num > 0) {
+		              console.log("本鸡饿了，快给我吃的1");
+		              this.$store.commit('feedClick');
+		            } else {
+		              console.log("你没有"+this.state.currFood.name+"食物了");
+		            }
 					this.hidePopup();
 					this.success('喂食成功！');
 				},

@@ -354,6 +354,7 @@
   height: 100%;
   background: #03A9F4;
   border: 1px solid #03A9F4;
+  transition: all .3s;
 }
 .egg-progress-wrap>p {
   color: red;
