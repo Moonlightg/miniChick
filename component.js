@@ -149,8 +149,24 @@ Vue.component('c-bee', {
 // 鸡蛋
 Vue.component('c-egg', {
 	props: ['eggprogress','eggnum'],
+	methods: {
+		// 弹出收成
+	    popAdd (addEggExps) {
+	    	let self = this;
+	      	let popDom = document.createElement('div');// 创建dom
+	      	popDom.classList.add('pop-money');// 给dom添加class
+	      	popDom.innerHTML = "+"+addEggExps+"%";
+	      	self.$refs.eggexp.appendChild(popDom);// 在ref="eggexp"元素内添加dom
+	      	setTimeout(() => {
+	        	popDom.remove()
+	      	}, 500)
+	    },
+		adds: function(){
+			console.log("测试");
+		}
+	},
 	template: `
-		<div class="egg-wrapper" title="鸡蛋">
+		<div class="egg-wrapper" title="鸡蛋" ref="eggexp">
 			<span></span>
 			<span></span>
 			<span></span>

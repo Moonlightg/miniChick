@@ -50,7 +50,7 @@
 					<!-- 蜜蜂鲜花 -->
 					<c-bee></c-bee>
 					<!-- 鸡蛋 -->
-					<c-egg :eggnum="chick.egg.num" :eggprogress="chick.egg.progress"></c-egg>
+					<c-egg :eggnum="chick.egg.num" :eggprogress="chick.egg.progress"  ref="paper"></c-egg>
 				</div>
 
 				<!-- 叶子 -->
@@ -286,6 +286,7 @@
 	        el: '#app',
 	        data: {
 	        	troughTitle: '鸡碗',
+	        	effects: 2,
 	        	isLoad: true,
 	        	modal12: false,
 	            skinBox: false,
@@ -365,16 +366,67 @@
 				// 点击食物进行喂食
 				feedClick: function (index) {
 					this.$store.state.currFood = this.$store.state.foods[index];
+					// 判断是否在进食
 					if (this.$store.state.chick.eat) return
 					if (this.$store.state.currFood.num > 0) {
-		              console.log("本鸡饿了，快给我吃的1");
-		              this.$store.commit('feedClick');
+		              	console.log("本鸡饿了，快给我吃的1");
+		              	let startDate = new Date().getTime();
+            			let endDate = startDate + this.$store.state.currFood.eatTime;
+		              	this.$store.commit('feedClick',endDate);
+		              	this.countdown(startDate);
 		            } else {
-		              console.log("你没有"+this.state.currFood.name+"食物了");
+		            	this.error("你没有"+this.state.currFood.name+"食物了");
 		            }
 					this.hidePopup();
 					this.success('喂食成功！');
 				},
+				// 喂食倒计时方法
+		        countdown (startdate) {
+		            let self = this;
+		            let es = self.$store.state.endDate - startdate;
+		            let delay = Math.ceil(100/self.$store.state.currFood.eatTime*1000); // 计算每秒走的进度
+		            if (es > 0) {
+		              	let timer = setInterval (function() {
+			                let nowTime = new Date().getTime();
+			                let t = self.$store.state.endDate - nowTime;
+			                let value = (self.$store.state.currFood.eatTime - t)/1000 * delay; // 计算进度条
+			                if (value <= 100) {
+			                  	self.$store.state.value = value
+			                } else {
+			                  	self.$store.state.value = 100;
+			                }
+			                console.log("t:"+t+"进度条："+value+"%");
+		                	if (t > 0) {
+			                  	self.$store.state.chick.eat = true;
+			                  	let day = Math.floor(t/86400000);
+			                  	let hour=Math.floor((t/3600000)%24);
+			                  	let min=Math.floor((t/60000)%60);
+			                  	let sec=Math.floor((t/1000)%60);
+			                  	hour = hour < 10 ? "0" + hour : hour;
+			                  	min = min < 10 ? "0" + min : min;
+			                  	sec = sec < 10 ? "0" + sec : sec;
+			                  	let format = '';
+			                  	if (day > 0) {
+			                    	format = `${day}天${hour}小时${min}分${sec}秒`;
+			                  	} 
+			                  	if (day <= 0 && hour > 0 ) {
+			                    	format = `${hour}小时${min}分${sec}秒`; 
+			                  	}
+			                  	if (day <= 0 && hour <= 0) {
+			                    	format =`${min}分${sec}秒`;
+			                  	}
+			                  	self.$store.state.content = format; // 显示倒计时
+			                  	self.$store.dispatch('savegame');
+		                	} else {
+		                  		clearInterval(timer); // 清除定时器
+		                  		// 喂食结束
+		                  		self.$store.dispatch('endeat');
+		                  		// 弹出鸡蛋加成
+		                  		self.$refs.paper.popAdd(self.$store.state.chick.egg.addEggExps);
+		                	}
+		              	},1000)
+		            }
+		        },
 				showShop: function (name) {
 					this.$store.commit('shopFood',name);
 					this.modalShop = true;

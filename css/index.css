@@ -57,6 +57,28 @@
   position: absolute;
   content: "";
 }
+.pop-money {
+    top: 0;
+    left: 39%;
+    text-shadow: 0 1px orange, 1px 0 orange, -1px 0 orange, 0 -1px orange;
+    font-size: 15px;
+    opacity: 1;
+    color: yellow;
+    z-index: 9999;
+    text-align: center;
+    position: absolute;
+    transform: translate(-25%, -100%);
+    animation: fadeOut 500ms ease-out;
+}
+
+@keyframes fadeOut {
+    0% {
+        transform: translate(-25%, 0);
+    }
+    100% {
+        transform: translate(-25%, -100%);
+    }
+}
 /*加载*/
 .loading{
   position: fixed;

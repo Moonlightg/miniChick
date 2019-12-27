@@ -23,7 +23,8 @@ const store = new Vuex.Store({
             allNum: 0,    // 库存鸡蛋总量
             progress: 55, // 鸡蛋进度条
             price: 1000,  // 鸡蛋价格
-            eggBase: 50,  // 鸡蛋个数*基数 = 生成鸡蛋增加的数值
+            eggBase: 50,  // 鸡蛋生成基数值：鸡蛋个数*基数 = 生成鸡蛋增加的数值
+            addEggExps: 0 // 每次增加的鸡蛋经验
           }
         },
         // 食物信息
@@ -114,21 +115,21 @@ const store = new Vuex.Store({
                 return;
             }
         },
-        feedClick (state) {
+        feedClick (state,endDate) {
             // 得到选中的食物
             // state.foods.forEach(obj => {
             //   if (obj.name === r) {
             //     state.currFood = obj
             //   }
-            // })
-            let startDate = new Date().getTime();
-            let endDate = startDate + state.currFood.eatTime;
+            // // })
+            // let startDate = new Date().getTime();
+            // let endDate = startDate + state.currFood.eatTime;
             //state.startDate = startDate;
             state.endDate = endDate;
             state.currFood.num--;  // 扣除食物数量
             state.chick.eat = true;
             this.commit('SAVE_GAME');
-            this.commit('countdown', startDate);
+            //this.commit('countdown', startDate);
             
         },
         shopFood (state,name) {
@@ -150,6 +151,17 @@ const store = new Vuex.Store({
           console.log("购买了"+num+"个"+state.currFood.name);
         },
         // 进食结束
+        END_EAT (state) {
+            state.enddate = '';    // 倒计时结束清零结束时间
+            state.chick.eat = false;     // 进食状态设为false
+            // 结束结算
+            this.commit('settleExp');
+            this.commit('SAVE_GAME');          // 存档
+            state.content = '喂食结束';
+            setTimeout (function() {
+              state.content = '阴公，好嗨饿！';
+            },2000)
+        },
         endEat (state) {
             state.enddate = '';    // 倒计时结束清零结束时间
             state.chick.eat = false;     // 进食状态设为false
@@ -163,7 +175,8 @@ const store = new Vuex.Store({
         },
         // 结束结算
         settleExp (state) {
-            let eggExps = state.chick.egg.progress += parseInt(state.currFood.exp/state.chick.egg.eggBase);
+            state.chick.egg.addEggExps = parseInt(state.currFood.exp/state.chick.egg.eggBase);
+            let eggExps = state.chick.egg.progress += state.chick.egg.addEggExps;
             console.log("鸡蛋进度条增加后："+eggExps);
             let exps = state.chick.exp += state.currFood.exp;
             this.commit('settleLevel', exps);
@@ -282,6 +295,9 @@ const store = new Vuex.Store({
       // 保存修改用户信息
       keepuser (context) {
         context.commit('SAVE_GAME');
+      },
+      endeat (context) {
+        context.commit('END_EAT');
       },
       // 设置服装
       replacedress (context,value) {
