@@ -357,12 +357,27 @@
 				// 初始化
 				init () {
 					this.$nextTick(function () {
-						var _that = this;
+						var self = this;
 					  	// 页面加载读取缓存
-					  	_that.$store.dispatch('loadgame');
+					  	self.$store.dispatch('loadgame');
+					  	self.chickIsEat();
 					});
 					this.hideLoading();
 				},
+				// 判断是否正在进食
+		        chickIsEat: function() {
+		            // 页面加载获取当前时间
+		            let loadDate = new Date().getTime();
+		            // 判断上一次是否进食结束
+		            let isEat = this.$store.state.endDate - loadDate;
+		            if (isEat > 0) {
+		                this.$store.state.chick.eat = true;
+		                this.countdown(loadDate);
+		            } else {
+		            	this.$store.commit('CHICK_IS_EAT');
+		                return;
+		            }
+		        },
 				// 点击食物进行喂食
 				feedClick: function (index) {
 					this.$store.state.currFood = this.$store.state.foods[index];
@@ -372,7 +387,7 @@
 		              	console.log("本鸡饿了，快给我吃的1");
 		              	let startDate = new Date().getTime();
             			let endDate = startDate + this.$store.state.currFood.eatTime;
-		              	this.$store.commit('feedClick',endDate);
+		              	this.$store.commit('FEED_CLICK',endDate);
 		              	this.countdown(startDate);
 		            } else {
 		            	this.error("你没有"+this.state.currFood.name+"食物了");
@@ -453,6 +468,7 @@
 					console.log("解锁需要金币："+unlockPrice);
 					if (this.$store.state.user.money < unlockPrice) {
 						this.error('不够金币解锁');
+						this.modalUnlock = false;
 						return false;
 					} else {
 						this.$store.dispatch('unlockfood',unlockPrice);
@@ -508,6 +524,7 @@
 		        		return false;
 		        	} else if ( this.$store.state.user.money < this.$store.state.currFood.price * num) {
 		        		this.error('不够金币购买');
+		        		this.modalShop = false;
 		        		return false;
 		        	} else {
 		        		this.success('成功购买了'+num+"个"+name);

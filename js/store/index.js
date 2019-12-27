@@ -41,7 +41,7 @@ const store = new Vuex.Store({
           id: 2,
           name: '香蕉',
           price: 100,
-          eatTime: 5000,
+          eatTime: 20000,
           exp: 500,
           num: 0,
           unlock: 0,
@@ -100,22 +100,12 @@ const store = new Vuex.Store({
         },
         // 判断是否正在进食
         CHICK_IS_EAT (state) {
-            // 页面加载获取当前时间
-            let loadDate = new Date().getTime();
-            // 判断上一次是否进食结束
-            let isEat = state.endDate - loadDate;
-            if (isEat > 0) {
-                state.chick.eat = true;
-                this.commit('countdown', loadDate);
-            } else {
-                state.enddate = '';
-                state.chick.eat = false;
-                this.commit('SAVE_GAME');
-                state.content = '大佬，肚饥咧！';
-                return;
-            }
+          state.enddate = '';
+          state.chick.eat = false;
+          this.commit('SAVE_GAME');
+          state.content = '大佬，肚饥咧！';
         },
-        feedClick (state,endDate) {
+        FEED_CLICK (state,endDate) {
             // 得到选中的食物
             // state.foods.forEach(obj => {
             //   if (obj.name === r) {
@@ -129,7 +119,6 @@ const store = new Vuex.Store({
             state.currFood.num--;  // 扣除食物数量
             state.chick.eat = true;
             this.commit('SAVE_GAME');
-            //this.commit('countdown', startDate);
             
         },
         shopFood (state,name) {
@@ -208,50 +197,6 @@ const store = new Vuex.Store({
               self.commit('settleLevel', state.chick.exp);
             },500)
         },
-        // 倒计时方法
-        countdown (state, startdate) {
-            let self = this;
-            let es = state.endDate - startdate;
-            let delay = Math.ceil(100/state.currFood.eatTime*1000); // 计算每秒走的进度
-            if (es > 0) {
-              let timer = setInterval (function() {
-                let nowTime = new Date().getTime();
-                let t = state.endDate - nowTime;
-                let value = (state.currFood.eatTime - t)/1000 * delay; // 计算进度条
-                if (value <= 100) {
-                  state.value = value
-                } else {
-                  state.value = 100;
-                }
-                console.log("t:"+t+"进度条："+value+"%");
-                if (t > 0) {
-                  state.chick.eat = true;
-                  let day = Math.floor(t/86400000);
-                  let hour=Math.floor((t/3600000)%24);
-                  let min=Math.floor((t/60000)%60);
-                  let sec=Math.floor((t/1000)%60);
-                  hour = hour < 10 ? "0" + hour : hour;
-                  min = min < 10 ? "0" + min : min;
-                  sec = sec < 10 ? "0" + sec : sec;
-                  let format = '';
-                  if (day > 0) {
-                    format = `${day}天${hour}小时${min}分${sec}秒`;
-                  } 
-                  if (day <= 0 && hour > 0 ) {
-                    format = `${hour}小时${min}分${sec}秒`; 
-                  }
-                  if (day <= 0 && hour <= 0) {
-                    format =`${min}分${sec}秒`;
-                  }
-                  state.content = format; // 显示倒计时
-                  self.commit('SAVE_GAME');
-                } else {
-                  clearInterval(timer); // 清除定时器
-                  self.commit('endEat');
-                }
-              },1000)
-            }
-        },
         // 设置服装
         REPLACE_DRESS (state,price) {
           if (price.type == 0) {
@@ -277,7 +222,6 @@ const store = new Vuex.Store({
               user: state.user,
               foods: state.foods
             };
-            console.log(data);
             localStorage.setItem('farmDate', JSON.stringify(data))
         },
           // 读档
@@ -317,8 +261,6 @@ const store = new Vuex.Store({
       // 读档
       loadgame (context) {
         context.commit('LOAD_GAME');
-        // 判断是否进食
-        context.commit('CHICK_IS_EAT');
       },
       // 存档
       savegame (context) {
