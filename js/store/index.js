@@ -5,6 +5,12 @@ const store = new Vuex.Store({
           name: '养鸡大户006',
           money: 3000
         },
+        // 物品，收获物品
+        goods: [{
+          id: 1,
+          name: 'egg',
+          num: 0
+        }],
         // 小鸡信息
         chick: {
           exp: 0,         // 经验值
@@ -21,7 +27,7 @@ const store = new Vuex.Store({
           egg: {
             num: 0,       // 鸡蛋待拾取数量
             allNum: 0,    // 库存鸡蛋总量
-            progress: 55, // 鸡蛋进度条
+            progress: 95, // 鸡蛋进度条
             price: 1000,  // 鸡蛋价格
             eggBase: 50,  // 鸡蛋生成基数值：鸡蛋个数*基数 = 生成鸡蛋增加的数值
             addEggExps: 0 // 每次增加的鸡蛋经验
@@ -41,7 +47,7 @@ const store = new Vuex.Store({
           id: 2,
           name: '香蕉',
           price: 100,
-          eatTime: 20000,
+          eatTime: 10000,
           exp: 500,
           num: 0,
           unlock: 0,
@@ -87,6 +93,7 @@ const store = new Vuex.Store({
         endDate: '',      // 结束时间
         content: '',      // 倒计时
         currFood: {},     // 当前选中的食物
+        currGood: {},     // 当前收获的物品
         modalLevel: false,// 升级弹窗
         // 进度条
         value: 0
@@ -168,7 +175,7 @@ const store = new Vuex.Store({
             let eggExps = state.chick.egg.progress += state.chick.egg.addEggExps;
             console.log("鸡蛋进度条增加后："+eggExps);
             let exps = state.chick.exp + state.currFood.exp;
-            console.log("小鸡增加经验："+exps);
+            console.log("小鸡经验增加后为："+exps);
             this.commit('settleLevel', exps);
             this.commit('settleEgg', eggExps);
         },
@@ -186,8 +193,10 @@ const store = new Vuex.Store({
         // 生成鸡蛋个数计算
         settleEgg (state,eggExps) {
             if (eggExps > 100) {
-              state.chick.egg.num = eggExps%100;
+              state.chick.egg.num = parseInt(eggExps/100);
+              console.log("生成的鸡蛋数："+state.chick.egg.num);
               state.chick.egg.progress = eggExps - state.chick.egg.num * 100;
+              console.log("剩余的鸡蛋经验值："+state.chick.egg.progress);
             }
         },
         // 升级弹窗提示
@@ -197,6 +206,18 @@ const store = new Vuex.Store({
             setTimeout (function() {
               self.commit('settleLevel', state.chick.exp);
             },500)
+        },
+        // 收获物品
+        HARVEST_EGG (state,good) {
+          // 得到收取的物品
+          state.goods.forEach(obj => {
+            if (obj.name === good.name) {
+              state.currGood = obj;
+              state.currGood.num += good.num;
+              console.log("收获物品"+state.currGood.name+"一共"+good.num+"个");
+              state.chick.egg.num = 0;
+            }
+          })
         },
         // 设置服装
         REPLACE_DRESS (state,price) {
@@ -219,9 +240,11 @@ const store = new Vuex.Store({
             let data = {
               endDate: state.endDate,
               currFood: state.currFood,
+              currGood: state.currGood,
               chick: state.chick,
               user: state.user,
-              foods: state.foods
+              foods: state.foods,
+              goods: state.goods
             };
             localStorage.setItem('farmDate', JSON.stringify(data))
         },
@@ -231,9 +254,11 @@ const store = new Vuex.Store({
             if (!data) return
             state.endDate = data.endDate,
             state.currFood = data.currFood,
+            state.currGood = data.currGood,
             state.chick = data.chick,
             state.user = data.user,
-            state.foods = data.foods
+            state.foods = data.foods,
+            state.goods = data.goods
         }
     },
     actions: {
@@ -243,6 +268,10 @@ const store = new Vuex.Store({
       },
       endeat (context) {
         context.commit('END_EAT');
+      },
+      // 收获物品
+      harvestegg (context,value) {
+        context.commit('HARVEST_EGG',value);
       },
       // 设置服装
       replacedress (context,value) {

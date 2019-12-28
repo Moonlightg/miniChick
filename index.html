@@ -221,7 +221,16 @@
 								</div>
 					        </tab-pane>
 					        <tab-pane label="物品" icon="ios-archive">
-					        	<p>444</p>
+					        	<div class="food-box">
+									<ul class="food-list">
+										<li v-for="(good, index) in goods" v-if="good.num != 0">
+											<div class="food-item">
+												<p class="food-name">{{good.name}}</p>
+												<p>{{good.num}}</p>
+											</div>
+										</li>
+									</ul>
+								</div>
 					        </tab-pane>
 					    </tabs>
 					</div>
@@ -348,12 +357,14 @@
 		          'user',
 		          'chick',
 		          'foods',
+		          'goods',
 		          'eat',
 		          'setTime',
 		          'startDate',
 		          'endDate',
 		          'content',
 		          'currFood',
+		          'currGood',
 		          'modalLevel',
 		          'value'
 		    ]),

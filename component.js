@@ -161,9 +161,15 @@ Vue.component('c-egg', {
 	        	popDom.remove()
 	      	}, 500)
 	    },
-		adds: function(){
-			console.log("测试");
-		}
+	    harvestEgg() {
+	    	let self = this;
+	    	let eggNum = self.$store.state.chick.egg.num;
+	    	console.log("可收获的鸡蛋："+self.$store.state.chick.egg.num);
+	    	if (eggNum > 0) {
+	    		self.$store.dispatch('harvestegg',{"name":'egg',"num":eggNum});
+	    		//self.success('收获了'+eggNum+"个鸡蛋！");
+	    	}
+	    }
 	},
 	template: `
 		<div class="egg-wrapper" title="鸡蛋" ref="eggexp">
@@ -171,7 +177,7 @@ Vue.component('c-egg', {
 			<span></span>
 			<span></span>
 			<span></span>
-			<div class="egg infinite">
+			<div class="egg infinite" @click="harvestEgg">
 				<div class="heart">
 					<div class="egg-num" v-if="eggnum != 0">{{eggnum}}</div>	
 				</div>
