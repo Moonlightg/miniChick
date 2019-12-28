@@ -164,10 +164,11 @@ const store = new Vuex.Store({
         },
         // 结束结算
         settleExp (state) {
-            state.chick.egg.addEggExps = parseInt(state.currFood.exp/state.chick.egg.eggBase);
+            state.chick.egg.addEggExps = parseInt(state.currFood.exp/state.chick.egg.eggBase);// 鸡蛋加成 = 食物经验/基数，取整数
             let eggExps = state.chick.egg.progress += state.chick.egg.addEggExps;
             console.log("鸡蛋进度条增加后："+eggExps);
-            let exps = state.chick.exp += state.currFood.exp;
+            let exps = state.chick.exp + state.currFood.exp;
+            console.log("小鸡增加经验："+exps);
             this.commit('settleLevel', exps);
             this.commit('settleEgg', eggExps);
         },
@@ -186,7 +187,7 @@ const store = new Vuex.Store({
         settleEgg (state,eggExps) {
             if (eggExps > 100) {
               state.chick.egg.num = eggExps%100;
-              state.chick.egg.progress = eggExps - state.chick.egg.num * state.chick.egg.eggBase;
+              state.chick.egg.progress = eggExps - state.chick.egg.num * 100;
             }
         },
         // 升级弹窗提示

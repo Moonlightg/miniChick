@@ -199,24 +199,31 @@
 						<i class="ivu-icon ivu-icon-md-close-circle" @click="hidePopup"></i>
 					</div>
 					<div class="popup-content">
-						<div class="food-box">
-							<ul class="food-list">
-								<li v-for="(food, index) in foods" @click="feedClick(index)" :class="{ isMask: food.num == 0 || food.unlock == 0}">
-									<div class="food-item">
-										<p class="food-name">{{food.name}}</p>
-										<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
-										<p><span class="food-icon"><Icon type="ios-alarm-outline" /></span>{{food.eatTime | SecondToDate}}</p>
-										<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p>
-										<div class="mask-bg shortage-tips" @click.stop="showShop(food.name)" v-if="food.num == 0 && food.unlock == 1">
-											<i-button :size="buttonSize" type="success">购买</i-button>
-										</div>
-										<div class="mask-bg shortage-tips" v-if="food.unlock == 0" @click.stop="showUnlock(food.name)">
-											<i-button :size="buttonSize" type="warning">解锁</i-button>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
+						<tabs :animated="false">
+					        <tab-pane label="粮食" icon="md-ice-cream">
+					        	<div class="food-box">
+									<ul class="food-list">
+										<li v-for="(food, index) in foods" @click="feedClick(index)" :class="{ isMask: food.num == 0 || food.unlock == 0}">
+											<div class="food-item">
+												<p class="food-name">{{food.name}}</p>
+												<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
+												<p><span class="food-icon"><Icon type="ios-alarm-outline" /></span>{{food.eatTime | SecondToDate}}</p>
+												<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p>
+												<div class="mask-bg shortage-tips" @click.stop="showShop(food.name)" v-if="food.num == 0 && food.unlock == 1">
+													<i-button :size="buttonSize" type="success">购买</i-button>
+												</div>
+												<div class="mask-bg shortage-tips" v-if="food.unlock == 0" @click.stop="showUnlock(food.name)">
+													<i-button :size="buttonSize" type="warning">解锁</i-button>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+					        </tab-pane>
+					        <tab-pane label="物品" icon="ios-archive">
+					        	<p>444</p>
+					        </tab-pane>
+					    </tabs>
 					</div>
 				</div>
 			</div>		
