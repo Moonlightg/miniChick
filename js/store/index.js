@@ -6,11 +6,7 @@ const store = new Vuex.Store({
           money: 3000
         },
         // 物品，收获物品
-        goods: [{
-          id: 1,
-          name: 'egg',
-          num: 0
-        }],
+        goods: [],
         // 小鸡信息
         chick: {
           exp: 0,         // 经验值
@@ -210,14 +206,19 @@ const store = new Vuex.Store({
         // 收获物品
         HARVEST_EGG (state,good) {
           // 得到收取的物品
-          state.goods.forEach(obj => {
-            if (obj.name === good.name) {
-              state.currGood = obj;
-              state.currGood.num += good.num;
-              console.log("收获物品"+state.currGood.name+"一共"+good.num+"个");
-              state.chick.egg.num = 0;
-            }
-          })
+          if (state.goods.length == 0) {
+            state.goods.push(good);
+            state.chick.egg.num = 0;
+          } else {
+            state.goods.forEach(obj => {
+              if (obj.name === good.name) {
+                state.currGood = obj;
+                state.currGood.num += good.num;
+                console.log("收获物品"+state.currGood.name+"一共"+good.num+"个");
+                state.chick.egg.num = 0;
+              }
+            })
+          }
         },
         // 设置服装
         REPLACE_DRESS (state,price) {
@@ -272,6 +273,7 @@ const store = new Vuex.Store({
       // 收获物品
       harvestegg (context,value) {
         context.commit('HARVEST_EGG',value);
+        context.commit('SAVE_GAME');
       },
       // 设置服装
       replacedress (context,value) {

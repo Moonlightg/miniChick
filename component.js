@@ -166,8 +166,11 @@ Vue.component('c-egg', {
 	    	let eggNum = self.$store.state.chick.egg.num;
 	    	console.log("可收获的鸡蛋："+self.$store.state.chick.egg.num);
 	    	if (eggNum > 0) {
-	    		self.$store.dispatch('harvestegg',{"name":'egg',"num":eggNum});
-	    		//self.success('收获了'+eggNum+"个鸡蛋！");
+	    		var obj = {
+	    			name: 'egg',
+	    			num: eggNum
+	    		}
+	    		self.$store.dispatch('harvestegg',obj);
 	    	}
 	    }
 	},
