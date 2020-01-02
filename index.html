@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-	<div id="app" style="opacity: 1">
+	<div id="app" style="opacity: .1">
 		<div class="container" :class="{ beingskin: skinBox }">
 			<div class="user-box" @click="showUser">
 				<div class="user-logo">
@@ -224,7 +224,7 @@
 					        <tab-pane label="物品" icon="ios-archive">
 					        	<div class="food-box">
 									<ul class="food-list">
-										<li v-for="(good, index) in goods" v-if="good.num != 0">
+										<li v-for="(good, index) in goods" v-if="good.num != 0" @click="showGood(good.name)">
 											<div class="food-item">
 												<p class="food-name">{{good.name}}</p>
 												<p>{{good.num}}</p>
@@ -284,6 +284,18 @@
 			</div>
 	    </Modal>
 
+	    <!-- 查看物品详情 -->
+		<Modal :value="modalGood"
+			:footer-hide="false"
+			@on-cancel="hideGood">
+			<div class="modal-box">
+				<p>物品名称：{{currGood.name}}</p>
+				<p>拥有数量：{{currGood.num}}</p>
+				<p>出售价值：{{currGood.price}}</p>
+				<i-button type="primary" @click="commitGood">出售</i-button>
+			</div>
+	    </Modal>
+
 	    <!-- 解锁商品确认 -->
 		<Modal :value="modalUnlock" 
 			@on-ok="commitUnlock"
@@ -309,6 +321,7 @@
 	            skinBox: false,
 	            modalShop: false,
 	            modalUnlock: false,
+	            modalGood: false,
 	            skin: 'skin',
 	            shop: 'shop',
 	            bag: 'bag',
@@ -403,7 +416,7 @@
 					// 判断是否在进食
 					if (this.$store.state.chick.eat) return
 					if (this.$store.state.currFood.num > 0) {
-		              	console.log("本鸡饿了，快给我吃的1");
+		              	console.log("本鸡饿了，快给我吃的");
 		              	let startDate = new Date().getTime();
             			let endDate = startDate + this.$store.state.currFood.eatTime;
 		              	this.$store.commit('FEED_CLICK',endDate);
@@ -456,7 +469,7 @@
 		                  		// 喂食结束
 		                  		self.$store.dispatch('endeat');
 		                  		// 弹出鸡蛋加成
-		                  		self.$refs.paper.popAdd(self.$store.state.chick.egg.addEggExps);
+		                  		self.$refs.paper.popAdd(self.$store.state.chick.egg.addEggExps+'%');
 		                	}
 		              	},1000)
 		            }
@@ -473,6 +486,19 @@
 				},
 				shopAdd: function() {
 					this.shoppingNum++;
+				},
+				showGood: function(name) {
+					this.$store.dispatch('shopGood',name);
+					this.modalGood = true;
+				},
+				hideGood: function() {
+					this.modalGood = false;
+				},
+				commitGood: function() {
+					var price = this.$store.state.currGood.price*this.$store.state.currGood.num;
+					this.success('出售了'+this.$store.state.currGood.num+'个'+this.$store.state.currGood.name);
+					this.$store.dispatch('sellgood',price);
+					this.modalGood = false;
 				},
 				showUnlock: function(name) {
 					this.$store.commit('shopFood',name);
@@ -495,10 +521,6 @@
 					}
 					this.hideUnlock();
 				},
-				// 升级弹窗确认按钮，确认后再检测是否可以继续升级
-				ok () {
-					this.$store.commit('popupLevel');
-	          	},
 	          	// 打开功能菜单弹窗
 		        showPopup: function (val) {
 		            this.skinBox = true;
@@ -531,8 +553,13 @@
 		        keepUser: function() {
 		        	this.$store.dispatch('keepuser');
 		        },
+		        // 升级弹窗确认按钮，确认后再检测是否可以继续升级
 		        levelUser: function() {
-		        	this.$store.commit('popupLevel');
+		        	var self = this;
+					self.$store.state.modalLevel = false;
+					setTimeout (function() {
+		              self.$store.dispatch('settlelevel', self.$store.state.chick.exp);
+		            },500);
 		        },
 		        shopSettle: function() {
 		        	var num = this.shoppingNum;

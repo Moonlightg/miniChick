@@ -155,7 +155,7 @@ Vue.component('c-egg', {
 	    	let self = this;
 	      	let popDom = document.createElement('div');// 创建dom
 	      	popDom.classList.add('pop-money');// 给dom添加class
-	      	popDom.innerHTML = "+"+addEggExps+"%";
+	      	popDom.innerHTML = "+"+addEggExps;
 	      	self.$refs.eggexp.appendChild(popDom);// 在ref="eggexp"元素内添加dom
 	      	setTimeout(() => {
 	        	popDom.remove()
@@ -164,13 +164,16 @@ Vue.component('c-egg', {
 	    harvestEgg() {
 	    	let self = this;
 	    	let eggNum = self.$store.state.chick.egg.num;
+	    	let eggPrice = self.$store.state.chick.egg.price;
 	    	console.log("可收获的鸡蛋："+self.$store.state.chick.egg.num);
 	    	if (eggNum > 0) {
 	    		var obj = {
-	    			name: 'egg',
-	    			num: eggNum
+	    			name: '精美鸡蛋',
+	    			num: eggNum,
+	    			price: eggPrice
 	    		}
 	    		self.$store.dispatch('harvestegg',obj);
+	    		self.popAdd(eggNum+"鸡蛋");
 	    	}
 	    }
 	},
