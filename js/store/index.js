@@ -43,8 +43,8 @@ const store = new Vuex.Store({
           id: 2,
           name: '香蕉',
           price: 100,
-          eatTime: 4000,
-          exp: 8000,
+          eatTime: 10000,
+          exp: 600,
           num: 0,
           unlock: 0,
           unlockPrice: 100
