@@ -2656,5 +2656,10 @@ top: 10px;
   text-align: center;
 }
 
+/*iview*/
+.hide-footer .ivu-modal-footer {
+  display: none;
+}
+
 
 

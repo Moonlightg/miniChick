@@ -43,8 +43,8 @@ const store = new Vuex.Store({
           id: 2,
           name: '香蕉',
           price: 100,
-          eatTime: 10000,
-          exp: 400,
+          eatTime: 4000,
+          exp: 8000,
           num: 0,
           unlock: 0,
           unlockPrice: 100
@@ -141,9 +141,19 @@ const store = new Vuex.Store({
             }
           });
         },
-        SELL_GOOD (state,price) {
-          state.currGood.num = 0;
-          state.user.money += price;
+        SELL_GOOD (state,num) {
+          state.user.money += state.currGood.price * num;
+          state.currGood.num = state.currGood.num - num;
+          console.log(state.user.money);
+          console.log(state.currGood.num);
+          if (state.currGood.num == 0) {
+            // 出售完后删除
+            state.goods.forEach((obj,index) => {
+              if (obj.name === state.currGood.name) {
+                state.goods.splice(state.goods.indexOf(index),1);
+              }
+            });
+          }
         },
         UNLOCK_FOOD (state,price) {
           state.currFood.unlock = 1;
@@ -212,8 +222,10 @@ const store = new Vuex.Store({
         },
         // 收获物品
         HARVEST_EGG (state,good) {
+          console.log(good);
           // 得到收取的物品
           if (state.goods.length == 0) {
+            console.log(state.goods);
             state.goods.push(good);
             state.chick.egg.num = 0;
           } else {

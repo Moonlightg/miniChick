@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-	<div id="app" style="opacity: .1">
+	<div id="app"">
 		<div class="container" :class="{ beingskin: skinBox }">
 			<div class="user-box" @click="showUser">
 				<div class="user-logo">
@@ -231,6 +231,7 @@
 											</div>
 										</li>
 									</ul>
+									<div v-show="goods.length == 0">暂无物品</div>
 								</div>
 					        </tab-pane>
 					    </tabs>
@@ -286,13 +287,23 @@
 
 	    <!-- 查看物品详情 -->
 		<Modal :value="modalGood"
-			:footer-hide="false"
+			class-name="hide-footer"
 			@on-cancel="hideGood">
-			<div class="modal-box">
+			<div class="modal-box" v-if="!goodDetails">
 				<p>物品名称：{{currGood.name}}</p>
 				<p>拥有数量：{{currGood.num}}</p>
 				<p>出售价值：{{currGood.price}}</p>
-				<i-button type="primary" @click="commitGood">出售</i-button>
+				<i-button type="primary" @click="setSell">出售</i-button>
+			</div>
+			<div class="shopping-box" v-if="goodDetails">
+				<p>{{currGood.name}}</p>
+				<div class="num-form">
+					<div class="shop-btn" @click="sellReduce"><span>-</span></div>
+					<div class="shop-input"><i-input type="text" v-model="sellNum" placeholder="数量"></i-input></div>
+					<div class="shop-btn" @click="sellAdd"><Icon type="md-add-circle" /></div>
+				</div>
+				<p>出售总价：${{currGood.price * sellNum}}</p>
+				<i-button type="primary" @click="commitSell">出售</i-button>
 			</div>
 	    </Modal>
 
@@ -322,6 +333,8 @@
 	            modalShop: false,
 	            modalUnlock: false,
 	            modalGood: false,
+	            goodDetails: false,
+	            sellNum: 1, // 物品出售默认值
 	            skin: 'skin',
 	            shop: 'shop',
 	            bag: 'bag',
@@ -494,10 +507,30 @@
 				hideGood: function() {
 					this.modalGood = false;
 				},
-				commitGood: function() {
-					var price = this.$store.state.currGood.price*this.$store.state.currGood.num;
+				setSell: function() {
+					this.goodDetails = !this.goodDetails;
+				},
+				sellAdd: function() {
+					if (this.sellNum == this.$store.state.currGood.num) {
+						this.error('不能再加了');
+						return;
+					} else {
+						this.sellNum++;
+					}
+				},
+				sellReduce: function() {
+					if (this.sellNum == 1) {
+						this.error('不能再减了');
+						return;
+					} else {
+						this.sellNum--;
+					}
+				},
+				commitSell: function() {
+					this.goodDetails = !this.goodDetails;
+					//var price = this.$store.state.currGood.price*this.selNum;
 					this.success('出售了'+this.$store.state.currGood.num+'个'+this.$store.state.currGood.name);
-					this.$store.dispatch('sellgood',price);
+					this.$store.dispatch('sellgood',this.sellNum);
 					this.modalGood = false;
 				},
 				showUnlock: function(name) {
