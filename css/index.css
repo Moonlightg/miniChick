@@ -2743,6 +2743,28 @@ top: 10px;
 .shop-input input {
   text-align: center;
 }
+/*modal*/
+.c-modal__title {
+  font-size: 18px;
+  text-align: center;
+  color: #805c4e;
+  font-weight: 600;
+}
+.c-modal__label{
+  display: inline-block;
+  background: #ffe3c8;
+  border: 2px solid #e88d35;
+  padding: 8px 20px;
+  border-radius: 30px;
+  color: #ff9800;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  font-size: 15px;
+  line-height: 1;
+  transform: translateX(-50%);
+  font-weight: 600;
+}
 
 /*iview*/
 .hide-footer .ivu-modal-footer {
