@@ -17,7 +17,7 @@
 			<div class="user-box" @click="showUser">
 				<div class="user-logo">
 					<div class="user-level">{{chick.level}}</div>
-					<Icon type="md-contact" />
+					<span class="portrait-item portrait0"></span>
 				</div>
 				<div class="user-info">
 					<div class="user-name">{{user.name}}</div>
@@ -252,14 +252,44 @@
 		</transition>
 
 		<!-- 用户信息 -->
-		<Modal v-model="modal12" @on-ok="keepUser">
+		<Modal v-model="modal12" 
+			class-name="hide-footer"
+			@on-ok="keepUser">
 			<div class="user-form">
-				<i-form :model="user" :label-width="80">
+				<div class="head-portrait">
+					<span class="portrait-item portrait0"></span>
+				</div>
+				<div class="user-name">
+					{{user.name}}<Icon type="ios-create" />
+				</div>
+				<div class="user-zl">
+					<Row>
+				        <i-col span="12">
+				        	<div class="uz-i"><Icon type="ios-podium" class="c-green" /></div>
+				        	<div class="uz-i">等级：{{chick.level}}</div>
+				        </i-col>
+				        <i-col span="12">
+				        	<div class="uz-i"><Icon type="ios-heart" class="c-red"/></div>
+				        	<div class="uz-i">粉丝：0</div>
+				        </i-col>
+				    </Row>
+				    <Row>
+				        <i-col span="12">
+				        	<div class="uz-i"><Icon type="md-pricetags" class="c-blue"/></div>
+				        	<div class="uz-i">积分：0</div>
+				        </i-col>
+				        <i-col span="12">
+				        	<div class="uz-i"><Icon type="ios-medal" class="c-orange"/></div>
+				        	<div class="uz-i">段位：0</div>
+				        </i-col>
+				    </Row>
+			    </div>
+				<!-- <i-form :model="user" :label-width="80">
 			        <form-item label="用户名称">
 			            <i-input v-model="user.name" placeholder="设置用户名称..."></i-input>
 			        </form-item>
 			    </i-form>
-		        <div><p>等级：{{chick.level}}级，经验：{{chick.exp}}，升级所需：{{chick.upgradeExp}}</p></div>
+		        <div><p>等级：{{chick.level}}级，经验：{{chick.exp}}，升级所需：{{chick.upgradeExp}}</p></div> -->
 	        </div>
 	    </Modal>
 

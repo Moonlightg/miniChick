@@ -2490,7 +2490,7 @@ top: 10px;
   padding: .25rem .75rem .25rem .25rem;
   background: rgba(255, 255, 255, 0.75);
   border-radius: 3rem;
-  padding-left: 2.4rem;
+  padding-left: 50px;
 }
 .user-logo {
   margin-right: .25rem;
@@ -2506,16 +2506,22 @@ top: 10px;
   position: absolute;
   left: 0;
 }
+.user-logo .portrait-item {
+  border: none; 
+  box-shadow: none;
+  width: 40px;
+  height: 40px;
+}
 .user-level {
   position: absolute;
   bottom: -3px;
   left: 50%;
   color: #fff;
-  background: #F90;
+  background: #8c352f;
   font-size: .65rem;
   padding: 0 6px;
-  border-radius: 10px;
-  border: 1px solid #8c362f;
+  border-radius: 5px;
+  border: 1px solid #fbddb1;
   transform: translateX(-50%);
 }
 .user-money {
@@ -2536,8 +2542,76 @@ top: 10px;
   vertical-align: middle;
   margin-top: -1px;
 }
-.user-form {
-  margin-top: 30px;
+.user-form .user-name {
+  text-align: center;
+  font-size: 1rem;
+}
+.user-form .user-name i {
+  color: #926625;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -3px;
+  margin-left: 7px;
+}
+.user-zl {
+  width: 80%;
+  margin: 15px auto 0;
+}
+.uz-i {
+  padding: 5px;
+  display: inline-block;
+  color: #865d20;
+}
+/* 颜色 */
+.c-red {
+  color: #F44336;
+} 
+.c-green {
+  color: #8bca43;
+}
+.c-orange {
+  color: #FF9800;
+}
+.c-blue {
+  color: #40aaff;
+}
+/* 头像 */
+.head-portrait {
+  padding: 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.portrait-item {
+  display: block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #f7e1cb;
+  box-shadow: 0 0 3px #7d4f3e;
+  background: url(../images/portrait0.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+.portrait-item.sm {
+  width: 60px;
+  height: 60px;
+}
+.portrait-item.lg {
+  width: 100px;
+  height: 100px;
+}
+.portrait0 {
+  background: url(../images/portrait0.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+.portrait1 {
+  background: url(../images/portrait1.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+.portrait2 {
+  background: url(../images/portrait2.jpg) no-repeat;
+  background-size: 100% 100%;
 }
 
 /* 倒计时组件 */
@@ -2660,6 +2734,62 @@ top: 10px;
 .hide-footer .ivu-modal-footer {
   display: none;
 }
-
-
+.ivu-modal {
+  border-radius: 10px;
+  background: #673f30;
+  padding: 2px;
+}
+.ivu-modal-content {
+  border: 5px solid #845d4f;
+  background-color: #ead0b7;
+  border-radius: 10px;
+}
+.ivu-modal-close {
+  right: -15px;
+  top: -15px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #e88d35;
+  border-radius: 50%;
+  border: 3px solid #795548;
+  color: #ffffff;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ivu-modal-close .ivu-icon-ios-close {
+  font-size: 24px;
+  color: #edd6aa;
+  transition: color .2s ease;
+  position: relative;
+  top: 1px;
+  font-weight: 600;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -3px;
+}
+.ivu-modal-footer {
+  border-top: 1px solid #ceaf92;
+  padding: 12px 18px;
+  text-align: right;
+  background: #e8dedb;
+}
+.ivu-btn-primary {
+  color: #fff;
+  background-color: #805c4f;
+  border-color: #6b4c41;
+}
+.ivu-btn-primary:hover {
+  color: #fff;
+  background-color: #634236;
+  border-color: #4a3129;
+}
+@media (max-width: 576px){
+  .ivu-modal {
+      width: auto!important;
+      margin: 15px;
+  }
+}
 
