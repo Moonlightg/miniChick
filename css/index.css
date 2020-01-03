@@ -435,6 +435,7 @@
   border-radius: .8rem;
   background-color: #ea292c;
 }
+.chick>div{ position: absolute; }
 .chick-body{
   position: absolute;
   top: 0;
@@ -447,8 +448,8 @@
   background-color: #f2e3cb;
   border-radius: 66% 66% 66% 66% / 80% 80% 50% 50%;
   z-index: 5;
-  -webkit-animation:chickbody 1.5s ease-in infinite;
-  animation:chickbody 1.5s ease-in infinite;
+/*  -webkit-animation:chickbody 1.5s ease-in infinite;
+  animation:chickbody 1.5s ease-in infinite;*/
   overflow: hidden;
 }
 .chick-body:before{
@@ -460,11 +461,10 @@
   background-image:-webkit-linear-gradient(-180deg, #fff, #fff, #f9e5e6); 
   background-image: linear-gradient(-180deg, #fff, #fff, #f9e5e6);
   border-radius: 66% 66% 66% 66% / 80% 80% 50% 50%;
-  -webkit-animation:chickbody-before 1.5s ease-in infinite;
-  animation:chickbody-before 1.5s ease-in infinite;
+/*  -webkit-animation:chickbody-before 1.5s ease-in infinite;
+  animation:chickbody-before 1.5s ease-in infinite;*/
 
 }
-.chick>div{ position: absolute; }
 .eye{
   top: 1.5rem;
   left: 1.3rem;
