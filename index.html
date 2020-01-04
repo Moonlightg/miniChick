@@ -206,10 +206,13 @@
 									<ul class="food-list">
 										<li v-for="(food, index) in foods" @click="feedClick(index)" :class="{ isMask: food.num == 0 || food.unlock == 0}">
 											<div class="food-item">
-												<p class="food-name">{{food.name}}</p>
-												<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
+												<div style="text-align: center;">
+													<img :src="food.url">
+												</div>
+												<p class="food-name">{{food.name}}-{{food.num}}</p>
+											<!-- 	<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
 												<p><span class="food-icon"><Icon type="ios-alarm-outline" /></span>{{food.eatTime | SecondToDate}}</p>
-												<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p>
+												<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p> -->
 												<div class="mask-bg shortage-tips" @click.stop="showShop(food.name)" v-if="food.num == 0 && food.unlock == 1">
 													<i-button :size="buttonSize" type="success">购买</i-button>
 												</div>
@@ -433,11 +436,18 @@
 				init () {
 					this.$nextTick(function () {
 						var self = this;
+						//var time = new date();
 					  	// 页面加载读取缓存
 					  	self.$store.dispatch('loadgame');
+					  	// 判断是否是新的一天
+					  	//self.isNewDay(time);
+					  	// 判断是否在进食
 					  	self.chickIsEat();
 					});
 					this.hideLoading();
+				},
+				isNewDay: function(time) {
+
 				},
 				// 判断是否正在进食
 		        chickIsEat: function() {

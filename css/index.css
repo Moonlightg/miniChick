@@ -2694,13 +2694,17 @@ top: 10px;
   border-radius: 5px;
   border: 1px solid #ddd;
 }
+.food-img {
+  text-align: center;
+}
+.food-img img {
+  
+}
 .food-name {
   text-align: center;
   margin-bottom: .5rem;
   font-size: 1rem;
   font-weight: 600;
-  border-bottom: 1px solid #f3f3f3;
-  padding-bottom: .5rem;
 }
 .food-icon {
   margin-right: .5rem;
