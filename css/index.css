@@ -2685,7 +2685,7 @@ top: 10px;
   padding: .25rem;
 }
 .food-list li {
-  width: 33.333%;
+  width: 25%;
   padding: .25rem;
 }
 .food-item {
@@ -2698,13 +2698,19 @@ top: 10px;
   text-align: center;
 }
 .food-img img {
-  
+  width: 100%;
 }
 .food-name {
-  text-align: center;
+  text-align: left;
   margin-bottom: .5rem;
-  font-size: 1rem;
+  font-size: .7rem;
   font-weight: 600;
+}
+.food-num {
+  position: absolute;
+  bottom: 1rem;
+  right: .5rem;
+  font-size: .7rem;
 }
 .food-icon {
   margin-right: .5rem;

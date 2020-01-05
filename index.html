@@ -206,10 +206,11 @@
 									<ul class="food-list">
 										<li v-for="(food, index) in foods" @click="feedClick(index)" :class="{ isMask: food.num == 0 || food.unlock == 0}">
 											<div class="food-item">
-												<div style="text-align: center;">
+												<div class="food-img">
 													<img :src="food.url">
 												</div>
-												<p class="food-name">{{food.name}}-{{food.num}}</p>
+												<p class="food-name">{{food.name}}</p>
+												<span class="food-num" v-if="food.num !== 0">{{food.num}}</span>
 											<!-- 	<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
 												<p><span class="food-icon"><Icon type="ios-alarm-outline" /></span>{{food.eatTime | SecondToDate}}</p>
 												<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p> -->
@@ -318,7 +319,7 @@
 			</div>
 	    </Modal>
 
-	    <!-- 查看物品详情 -->
+	    <!-- 查看出售物品详情 -->
 		<Modal :value="modalGood"
 			class-name="hide-footer"
 			@on-cancel="hideGood">
