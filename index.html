@@ -204,16 +204,13 @@
 					        <tab-pane label="粮食" icon="md-ice-cream">
 					        	<div class="food-box">
 									<ul class="food-list">
-										<li v-for="(food, index) in foods" @click="feedClick(index)" :class="{ isMask: food.num == 0 || food.unlock == 0}">
+										<li v-for="(food, index) in foods" @click="showFood(index)" :class="{ isMask: food.num == 0 || food.unlock == 0}">
 											<div class="food-item">
 												<div class="food-img">
 													<img :src="food.url">
 												</div>
 												<p class="food-name">{{food.name}}</p>
 												<span class="food-num" v-if="food.num !== 0">{{food.num}}</span>
-											<!-- 	<p><span class="food-icon"><Icon type="ios-calculator-outline" /></span>{{food.num}}</p>
-												<p><span class="food-icon"><Icon type="ios-alarm-outline" /></span>{{food.eatTime | SecondToDate}}</p>
-												<p><span class="food-icon"><Icon type="ios-nutrition" /></span>{{food.exp}}</p> -->
 												<div class="mask-bg shortage-tips" @click.stop="showShop(food.name)" v-if="food.num == 0 && food.unlock == 1">
 													<i-button :size="buttonSize" type="success">购买</i-button>
 												</div>
@@ -319,6 +316,22 @@
 			</div>
 	    </Modal>
 
+	    <!-- 查看食物详情 -->
+		<Modal :value="modalFood"
+			class-name="hide-footer"
+			@on-cancel="hideFood">
+			<div class="modal-box">
+				<div class="food-img">
+					<img :src="currFood.url">
+				</div>
+				<p>物品名称：{{currFood.name}}</p>
+				<p>拥有数量：{{currFood.num}}</p>
+				<p>进食时长：{{currFood.eatTime | SecondToDate}}</p>
+				<p>获得经验：{{currFood.exp}}</p> 
+				<i-button type="primary" @click="feedClick">喂食</i-button>
+			</div>
+	    </Modal>
+
 	    <!-- 查看出售物品详情 -->
 		<Modal :value="modalGood"
 			class-name="hide-footer"
@@ -366,6 +379,7 @@
 	            skinBox: false,
 	            modalShop: false,
 	            modalUnlock: false,
+	            modalFood: false,
 	            modalGood: false,
 	            goodDetails: false,
 	            sellNum: 1, // 物品出售默认值
@@ -464,13 +478,20 @@
 		                return;
 		            }
 		        },
+		        hideFood: function() {
+		        	this.modalFood = !this.modalFood;
+		        },
+		        showFood: function(index) {
+		        	this.modalFood = !this.modalFood;
+		        	this.$store.state.currFood = this.$store.state.foods[index];
+		        },
 				// 点击食物进行喂食
-				feedClick: function (index) {
-					this.$store.state.currFood = this.$store.state.foods[index];
+				feedClick: function () {
 					// 判断是否在进食
-					if (this.$store.state.chick.eat) return
-					if (this.$store.state.currFood.num > 0) {
-		              	console.log("本鸡饿了，快给我吃的");
+					if (this.$store.state.chick.eat) {
+						this.error("我还在吃着呢。");
+						return
+					} else if (this.$store.state.currFood.num > 0) {
 		              	let startDate = new Date().getTime();
             			let endDate = startDate + this.$store.state.currFood.eatTime;
 		              	this.$store.commit('FEED_CLICK',endDate);
@@ -478,6 +499,7 @@
 		            } else {
 		            	this.error("你没有"+this.state.currFood.name+"食物了");
 		            }
+		            this.hideFood();
 					this.hidePopup();
 					this.success('喂食成功！');
 				},
