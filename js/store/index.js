@@ -24,7 +24,7 @@ const store = new Vuex.Store({
             num: 0,       // 鸡蛋待拾取数量
             allNum: 0,    // 库存鸡蛋总量
             progress: 0, // 鸡蛋进度条
-            price: 1000,  // 鸡蛋价格
+            price: 2500,  // 鸡蛋价格
             eggBase: 50,  // 鸡蛋生成基数值：鸡蛋个数*基数 = 生成鸡蛋增加的数值
             addEggExps: 0 // 每次增加的鸡蛋经验
           }
