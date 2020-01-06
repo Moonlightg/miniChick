@@ -253,15 +253,15 @@
 		</transition>
 
 		<!-- 用户信息 -->
-		<Modal v-model="modal12" 
+		<Modal v-model="modalUser" 
 			class-name="hide-footer"
 			@on-ok="keepUser">
-			<div class="user-form">
+			<div class="user-form" v-if="!editUserName">
 				<div class="head-portrait">
 					<span class="portrait-item portrait0"></span>
 				</div>
 				<div class="user-name">
-					{{user.name}}<Icon type="ios-create" />
+					{{user.name}}<Icon type="ios-create" @click="editUser"/>
 				</div>
 				<div class="user-zl">
 					<Row>
@@ -291,6 +291,14 @@
 			        </form-item>
 			    </i-form>
 		        <div><p>等级：{{chick.level}}级，经验：{{chick.exp}}，升级所需：{{chick.upgradeExp}}</p></div> -->
+	        </div>
+	        <div class="user-form" v-if="editUserName">
+	        	<i-form :model="user" :label-width="80">
+			        <form-item label="用户名称">
+			            <i-input v-model="user.name" placeholder="设置用户名称..."></i-input>
+			        </form-item>
+			        <i-button type="primary" @click="saveUser">保存</i-button>
+			    </i-form>
 	        </div>
 	    </Modal>
 
@@ -375,7 +383,8 @@
 	        	troughTitle: '鸡碗',
 	        	effects: 2,
 	        	isLoad: true,
-	        	modal12: false,
+	        	editUserName: false,
+	        	modalUser: false,
 	            skinBox: false,
 	            modalShop: false,
 	            modalUnlock: false,
@@ -489,7 +498,7 @@
 				feedClick: function () {
 					// 判断是否在进食
 					if (this.$store.state.chick.eat) {
-						this.error("我还在吃着呢。");
+						this.error("我还在吃着呢");
 						return
 					} else if (this.$store.state.currFood.num > 0) {
 		              	let startDate = new Date().getTime();
@@ -640,7 +649,15 @@
 		        },
 		        // 打开用户信息面板
 		        showUser: function () {
-		        	this.modal12 = true;
+		        	this.modalUser = true;
+		        },
+		        editUser: function() {
+		        	this.editUserName = !this.editUserName;
+		        },
+		        saveUser: function() {
+		        	this.success('修改成功');
+		        	this.editUserName = !this.editUserName;
+		        	this.$store.dispatch('savegame');
 		        },
 		        // 设置服装
 		        replaceDress: function(type,pid) {

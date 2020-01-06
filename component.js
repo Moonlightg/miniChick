@@ -251,4 +251,3 @@ Vue.component('c-fence', {
 	`
 });
 
-
