@@ -3,7 +3,8 @@ const store = new Vuex.Store({
         user: {
           firstGame: 0, // 
           name: '养鸡大户006',
-          money: 3000
+          money: 3000,
+          achievementNum: 0, // 获得成就总数
         },
         // 物品，收获物品
         goods: [],
@@ -101,6 +102,36 @@ const store = new Vuex.Store({
           unlockPrice: 1500,
           url: 'images/food7.png'
         }],
+        // 勋章列表
+        achievement: [{
+          id: 1,
+          title: '投喂如此简单',    // 勋章名称
+          desc: '投喂1次小鸡',      // 描述
+          profit: '奖励金币500',    // 奖励
+          complete: false,          // 是否完成
+          completeTypeId: 1,        // 成就类别，1=投喂次数；2=获得金币数；3=解锁粮食数
+          completeCurrCount: 0,     // 当前已完成数量 - 进度
+          completeNeedCount: 1,     // 满足条件的数量
+          oncomplete(state, achievement) {
+            console.log('获得成就'+achievement.title);
+            state.user.money += 500;
+            state.user.achievementNum++;
+          }
+        },{
+          id: 2,
+          title: '再次投喂了呀',    // 勋章名称
+          desc: '投喂2次小鸡',      // 描述
+          profit: '奖励金币1000',    // 奖励
+          complete: false,          // 是否完成
+          completeTypeId: 1,        // 成就类别，1=投喂次数；2=获得金币数；3=解锁粮食数
+          completeCurrCount: 0,     // 当前已完成数量 - 进度
+          completeNeedCount: 2,     // 满足条件的数量
+          oncomplete(state, achievement) {
+            console.log('获得成就'+achievement.title);
+            state.user.money += 1000;
+            state.user.achievementNum++;
+          }
+        }],
         startDate: '',    // 开始时间
         endDate: '',      // 结束时间
         content: '',      // 倒计时
@@ -137,6 +168,7 @@ const store = new Vuex.Store({
             state.endDate = endDate;
             state.currFood.num--;  // 扣除食物数量
             state.chick.eat = true;
+            this.commit('checkAchievemnt', 1);
             this.commit('SAVE_GAME');
             
         },
@@ -271,9 +303,37 @@ const store = new Vuex.Store({
             state.chick.componentClothes = 'clothes-' + price.pid;
           }
         },
+        // 获得成就方法
+        checkAchievemnt(state, id) {
+          // 寻找目标一致且未完成的成就
+          let targetList = state.achievement.filter(obj => obj.completeTypeId === id && !obj.complete);
+          console.log(targetList);
+          // 寻找目标植物
+          //let targetPlant = state.plants.find(obj => obj.id === id);
+          // 执行目标的奖励方式
+          targetList.forEach(obj => {
+            if (obj.completeCurrCount <= obj.completeNeedCount) {
+              obj.completeCurrCount += 1;
+              if (obj.completeCurrCount >= obj.completeNeedCount) {
+                obj.complete = true;
+                if (typeof obj.oncomplete === 'function') {
+                  obj.oncomplete(state, obj);
+                }
+              }
+            }
+          })
+        },
         // 存档
         SAVE_GAME (state) {
+            let achievement = state.achievement.map(obj => {
+              return {
+                id: obj.id,
+                count: obj.completeCurrCount,
+                complete: obj.complete
+              }
+            });
             let data = {
+              achievement,
               endDate: state.endDate,
               currFood: state.currFood,
               currGood: state.currGood,
@@ -288,6 +348,14 @@ const store = new Vuex.Store({
         LOAD_GAME (state) {
             let data = JSON.parse(localStorage.getItem('farmDate'))
             if (!data) return
+            state.achievement.forEach(oldAchievement => {
+              data.achievement.forEach(newAchievement => {
+                if (oldAchievement.id === newAchievement.id) {
+                  oldAchievement.completeCurrCount = newAchievement.count;
+                  oldAchievement.complete = newAchievement.complete;
+                }
+              });
+            });
             state.endDate = data.endDate,
             state.currFood = data.currFood,
             state.currGood = data.currGood,

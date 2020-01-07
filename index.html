@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-	<div id="app">
+	<div id="app" style="opacity: .1">
 		<div class="container" :class="{ beingskin: skinBox }">
 			<div class="user-box" @click="showUser">
 				<div class="user-logo">
@@ -436,22 +436,57 @@
 	            shoppingNum: 0 // 购物数量
 	        },
 	        store, // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
-	        computed: Vuex.mapState([
-		          // 映射 this.setTime 为 store.state.setTime
-		          'user',
-		          'chick',
-		          'foods',
-		          'goods',
-		          'eat',
-		          'setTime',
-		          'startDate',
-		          'endDate',
-		          'content',
-		          'currFood',
-		          'currGood',
-		          'modalLevel',
-		          'value'
-		    ]),
+	        watch:{
+	        	// 监听解锁成就总数提示
+				achievementNum(curval,oldval){ 
+					// console.log(`最新值${curval}--旧值${oldval}`);
+					this.success('恭喜您解锁了第'+curval+'个成就！');
+				}
+			},
+	        computed: {
+	        	achievementNum() {
+	        		return this.$store.state.user.achievementNum;
+	        	},
+	        	user() {
+	        		return this.$store.state.user;
+	        	},
+	        	chick() {
+	        		return this.$store.state.chick;
+	        	},
+	        	foods() {
+	        		return this.$store.state.foods;
+	        	},
+	        	goods() {
+	        		return this.$store.state.goods;
+	        	},
+	        	eat() {
+	        		return this.$store.state.eat;
+	        	},
+	        	setTime() {
+	        		return this.$store.state.setTime;
+	        	},
+	        	startDate() {
+	        		return this.$store.state.startDate;
+	        	},
+	        	endDate() {
+	        		return this.$store.state.endDate;
+	        	},
+	        	content() {
+	        		return this.$store.state.content;
+	        	},
+	        	currFood() {
+	        		return this.$store.state.currFood;
+	        	},
+	        	currGood() {
+	        		return this.$store.state.currGood;
+	        	},
+	        	modalLevel() {
+	        		return this.$store.state.modalLevel;
+	        	},
+	        	value() {
+	        		return this.$store.state.value;
+	        	}
+	        },
 	        mounted () {
 	          this.init() // 初始化
 	        },
