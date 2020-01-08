@@ -79,6 +79,41 @@
         transform: translate(-25%, -100%);
     }
 }
+.pop-Up {
+    top: 0;
+    width: 80%;
+    left: 10%;
+    padding: .5rem;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: .5rem;
+    font-size: 15px;
+    opacity: 1;
+    color: #fff;
+    z-index: 9999;
+    text-align: center;
+    position: absolute;
+    transform: translate(0, 15%);
+    animation: fadeOutUp 500ms ease-out;
+}
+.pop-title {
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+    font-size: 16px;
+    font-weight: 600;
+    color: #8BC34A;
+}
+.pop-content {
+  margin-bottom: .5rem;
+}
+
+@keyframes fadeOutUp {
+    0% {
+        transform: translate(0, -100%);
+    }
+    100% {
+        transform: translate(0, 15%);
+    }
+}
 /*加载*/
 .loading{
   position: fixed;

@@ -1,3 +1,21 @@
+function popUp(title,val) {
+  let popDom = document.createElement('div');     // 创建弹窗dom
+  let popTitle = document.createElement('div');   // 创建弹窗标题
+  let popContent = document.createElement('div'); // 创建弹窗内容
+  popDom.classList.add('pop-Up');            // 给dom添加class
+  popTitle.classList.add('pop-title');
+  popTitle.innerHTML = title;
+  popContent.classList.add('pop-content');
+  popContent.innerHTML = val;
+  popDom.appendChild(popTitle);
+  popDom.appendChild(popContent);
+  document.getElementById("app").appendChild(popDom);// 在ref="eggexp"元素内添加dom
+  //console.log('解锁成就了');
+  setTimeout(() => {
+    popDom.remove()
+  }, 1500);
+};
+
 const store = new Vuex.Store({
     state: {
         user: {
@@ -113,9 +131,9 @@ const store = new Vuex.Store({
           completeCurrCount: 0,     // 当前已完成数量 - 进度
           completeNeedCount: 1,     // 满足条件的数量
           oncomplete(state, achievement) {
+            popUp('解锁成就',achievement.title);
             console.log('获得成就'+achievement.title);
             state.user.money += 500;
-            state.user.achievementNum++;
           }
         },{
           id: 2,
@@ -127,9 +145,9 @@ const store = new Vuex.Store({
           completeCurrCount: 0,     // 当前已完成数量 - 进度
           completeNeedCount: 2,     // 满足条件的数量
           oncomplete(state, achievement) {
-            console.log('获得成就'+achievement.title);
+            popUp('解锁成就',achievement.title);
+            onsole.log('获得成就'+achievement.title);
             state.user.money += 1000;
-            state.user.achievementNum++;
           }
         }],
         startDate: '',    // 开始时间
@@ -318,6 +336,7 @@ const store = new Vuex.Store({
                 obj.complete = true;
                 if (typeof obj.oncomplete === 'function') {
                   obj.oncomplete(state, obj);
+                  state.user.achievementNum++;
                 }
               }
             }

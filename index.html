@@ -32,6 +32,7 @@
 				<li @click="showPopup(skin)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-shirt"></i></span><span class="nav-name">换装</span></li>
 				<li @click="showPopup(shop)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-basket"></i></span><span class="nav-name">商店</span></li>
 				<li @click="showPopup(bag)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-filing"></i></span><span class="nav-name">背包</span></li>
+				<li @click="showAchievement"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-filing"></i></span><span class="nav-name">勋章</span></li>
 			</ul>
 			<div class="content">
 				<!-- 太阳光 -->
@@ -362,6 +363,22 @@
 			</div>
 	    </Modal>
 
+	    <!-- 勋章列表 -->
+		<Modal v-model="modalAchievement" class-name="hide-footer" @on-cancel="hideAchievement">
+			<ul class="a-list">
+				<li v-for="(item, index) in achievement" :class="{ active: item.complete}">
+					<div>
+						<p>{{item.title}}</p>
+						<p>{{item.desc}}</p>
+						<p>{{item.profit}}</p>
+					</div>
+					<div v-if="item.complete">
+						<i-button type="primary">领取奖励</i-button>
+					</div>
+				</li>
+			</ul>
+	    </Modal>
+
 	    <!-- 解锁商品确认 -->
 		<Modal :value="modalUnlock" 
 			@on-ok="commitUnlock"
@@ -386,6 +403,7 @@
 	        	editUserName: false,
 	        	modalUser: false,
 	            skinBox: false,
+	            modalAchievement: false,
 	            modalShop: false,
 	            modalUnlock: false,
 	            modalFood: false,
@@ -436,17 +454,7 @@
 	            shoppingNum: 0 // 购物数量
 	        },
 	        store, // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
-	        watch:{
-	        	// 监听解锁成就总数提示
-				achievementNum(curval,oldval){ 
-					// console.log(`最新值${curval}--旧值${oldval}`);
-					this.success('恭喜您解锁了第'+curval+'个成就！');
-				}
-			},
 	        computed: {
-	        	achievementNum() {
-	        		return this.$store.state.user.achievementNum;
-	        	},
 	        	user() {
 	        		return this.$store.state.user;
 	        	},
@@ -660,6 +668,14 @@
 						this.success('成功解锁了'+food);
 					}
 					this.hideUnlock();
+				},
+				showAchievement: function() {
+					console.log(11);
+					this.modalAchievement = true;
+					console.log(22);
+				},
+				hideAchievement: function() {
+					this.modalAchievement = false;
 				},
 	          	// 打开功能菜单弹窗
 		        showPopup: function (val) {
