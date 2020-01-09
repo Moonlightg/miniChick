@@ -125,7 +125,7 @@ const store = new Vuex.Store({
           id: 1,
           title: '投喂如此简单',    // 勋章名称
           desc: '投喂1次小鸡',      // 描述
-          profit: '奖励金币500',    // 奖励
+          profit: '500',    // 奖励
           complete: false,          // 是否完成
           completeTypeId: 1,        // 成就类别，1=投喂次数；2=获得金币数；3=解锁粮食数
           completeCurrCount: 0,     // 当前已完成数量 - 进度
@@ -139,7 +139,7 @@ const store = new Vuex.Store({
           id: 2,
           title: '再次投喂了呀',    // 勋章名称
           desc: '投喂2次小鸡',      // 描述
-          profit: '奖励金币1000',    // 奖励
+          profit: '1000',    // 奖励
           complete: false,          // 是否完成
           completeTypeId: 1,        // 成就类别，1=投喂次数；2=获得金币数；3=解锁粮食数
           completeCurrCount: 0,     // 当前已完成数量 - 进度

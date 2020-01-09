@@ -2873,4 +2873,32 @@ top: 10px;
       margin: 15px;
   }
 }
+.fr {
+  float: right;
+}
+.a-list li {
+    display: flex;
+    padding: .5rem;
+    border: 2px solid #9a9590;
+    border-radius: .5rem;
+    background: #dad9d8;
+}
+.a-list li + li {
+  margin-top: .5rem;
+}
+.a-info {
+  flex: 1;
+  color: #666;
+}
+.a-right {
+  flex: 0 0 auto;
+  padding-left: .5rem;
+}
+.a-list li.active {
+    border: 2px solid #835d4f;
+    background: #ecc096;
+}
+.a-list li.active .a-info {
+  color: #8e6150;
+}
 

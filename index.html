@@ -32,7 +32,7 @@
 				<li @click="showPopup(skin)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-shirt"></i></span><span class="nav-name">换装</span></li>
 				<li @click="showPopup(shop)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-basket"></i></span><span class="nav-name">商店</span></li>
 				<li @click="showPopup(bag)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-filing"></i></span><span class="nav-name">背包</span></li>
-				<li @click="showAchievement"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-filing"></i></span><span class="nav-name">勋章</span></li>
+				<li @click="showAchievement()"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-filing"></i></span><span class="nav-name">勋章</span></li>
 			</ul>
 			<div class="content">
 				<!-- 太阳光 -->
@@ -367,12 +367,12 @@
 		<Modal v-model="modalAchievement" class-name="hide-footer" @on-cancel="hideAchievement">
 			<ul class="a-list">
 				<li v-for="(item, index) in achievement" :class="{ active: item.complete}">
-					<div>
+					<div class="a-info">
 						<p>{{item.title}}</p>
-						<p>{{item.desc}}</p>
-						<p>{{item.profit}}</p>
+						<p>{{item.desc}}<span class="fr">+${{item.profit}}</span></p>
+						<p></p>
 					</div>
-					<div v-if="item.complete">
+					<div class="a-right" v-if="item.complete">
 						<i-button type="primary">领取奖励</i-button>
 					</div>
 				</li>
@@ -675,7 +675,6 @@
 				showAchievement: function() {
 					console.log(11);
 					this.modalAchievement = true;
-					console.log(22);
 				},
 				hideAchievement: function() {
 					this.modalAchievement = false;
