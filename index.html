@@ -372,7 +372,7 @@
 						<p>{{item.desc}}<span class="fr">+${{item.profit}}</span></p>
 						<p></p>
 					</div>
-					<div class="a-right" v-if="item.complete">
+					<div class="a-right" v-if="item.complete" @click="receiveAwards(item.profit)">
 						<i-button type="primary">领取奖励</i-button>
 					</div>
 				</li>
@@ -678,6 +678,10 @@
 				},
 				hideAchievement: function() {
 					this.modalAchievement = false;
+				},
+				// 领取成就奖励
+				receiveAwards: function(val) {
+					this.$store.dispatch('receiveawards',val);
 				},
 	          	// 打开功能菜单弹窗
 		        showPopup: function (val) {

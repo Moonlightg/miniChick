@@ -342,6 +342,9 @@ const store = new Vuex.Store({
             }
           })
         },
+        RECIVE_AWARDS (state,val) {
+          state.user.money += parseInt(val);
+        },
         // 存档
         SAVE_GAME (state) {
             let achievement = state.achievement.map(obj => {
@@ -423,6 +426,11 @@ const store = new Vuex.Store({
       // 解锁商品
       unlockfood (context,value) {
         context.commit("UNLOCK_FOOD",value);
+        context.commit('SAVE_GAME');
+      },
+      // 领取成就奖励
+      receiveawards (context,value) {
+        context.commit("RECIVE_AWARDS",value);
         context.commit('SAVE_GAME');
       },
       // 读档
