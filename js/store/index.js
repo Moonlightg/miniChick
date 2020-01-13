@@ -155,6 +155,7 @@ const store = new Vuex.Store({
         content: '',      // 倒计时
         currFood: {},     // 当前选中的食物
         currGood: {},     // 当前收获的物品
+        currAchievement: {},     // 当前领取的成就
         modalLevel: false,
         // 进度条
         value: 0
@@ -343,7 +344,13 @@ const store = new Vuex.Store({
           })
         },
         RECIVE_AWARDS (state,val) {
-          state.user.money += parseInt(val);
+          state.achievement.forEach(obj => {
+            if (obj.title === val) {
+              state.currAchievement = obj;
+              state.user.money += parseInt(obj.profit);
+              obj.complete = false;
+            }
+          })
         },
         // 存档
         SAVE_GAME (state) {
