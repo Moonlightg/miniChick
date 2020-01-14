@@ -2901,4 +2901,17 @@ top: 10px;
 .a-list li.active .a-info {
   color: #8e6150;
 }
+.a-list li.onin{
+    background: #989898;
+    border: 2px solid #827d79;
+}
+.a-list li.onin .a-info {
+  color: #6d6d6d;
+}
+.a-list li.onin .ivu-btn-primary,
+.a-list li.onin .ivu-btn-primary:hover {
+    color: #fff;
+    background-color: #6d6d6d;
+    border-color: #696969;
+}
 

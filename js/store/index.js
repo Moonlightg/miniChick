@@ -127,6 +127,7 @@ const store = new Vuex.Store({
           desc: '投喂1次小鸡',      // 描述
           profit: '500',    // 奖励
           complete: false,          // 是否完成
+          completeID: 0,            // 未完成0，已完成1
           completeTypeId: 1,        // 成就类别，1=投喂次数；2=获得金币数；3=解锁粮食数
           completeCurrCount: 0,     // 当前已完成数量 - 进度
           completeNeedCount: 1,     // 满足条件的数量
@@ -141,12 +142,13 @@ const store = new Vuex.Store({
           desc: '投喂2次小鸡',      // 描述
           profit: '1000',    // 奖励
           complete: false,          // 是否完成
+          completeID: 0, 
           completeTypeId: 1,        // 成就类别，1=投喂次数；2=获得金币数；3=解锁粮食数
           completeCurrCount: 0,     // 当前已完成数量 - 进度
           completeNeedCount: 2,     // 满足条件的数量
           oncomplete(state, achievement) {
             popUp('解锁成就',achievement.title);
-            onsole.log('获得成就'+achievement.title);
+            console.log('获得成就'+achievement.title);
             state.user.money += 1000;
           }
         }],
@@ -349,6 +351,7 @@ const store = new Vuex.Store({
               state.currAchievement = obj;
               state.user.money += parseInt(obj.profit);
               obj.complete = false;
+              obj.completeID = 1;
             }
           })
         },
@@ -358,7 +361,8 @@ const store = new Vuex.Store({
               return {
                 id: obj.id,
                 count: obj.completeCurrCount,
-                complete: obj.complete
+                complete: obj.complete,
+                completeID: obj.completeID
               }
             });
             let data = {
@@ -382,6 +386,7 @@ const store = new Vuex.Store({
                 if (oldAchievement.id === newAchievement.id) {
                   oldAchievement.completeCurrCount = newAchievement.count;
                   oldAchievement.complete = newAchievement.complete;
+                  oldAchievement.completeID = newAchievement.completeID;
                 }
               });
             });

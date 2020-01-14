@@ -366,14 +366,17 @@
 	    <!-- 勋章列表 -->
 		<Modal v-model="modalAchievement" class-name="hide-footer" @on-cancel="hideAchievement">
 			<ul class="a-list">
-				<li v-for="(item, index) in achievement" :class="{ active: item.complete}">
+				<li v-for="(item, index) in achievement" :class="{ active: item.complete, onin: item.completeID == 1 }">
 					<div class="a-info">
 						<p>{{item.title}}</p>
 						<p>{{item.desc}}<span class="fr">+${{item.profit}}</span></p>
 						<p></p>
 					</div>
-					<div class="a-right" v-if="item.complete" @click="receiveAwards(item.title)">
+					<div class="a-right" v-if="item.complete && item.completeID == 0" @click="receiveAwards(item.title)">
 						<i-button type="primary">领取奖励</i-button>
+					</div>
+					<div class="a-right" v-if="item.completeID == 1">
+						<i-button type="primary">已完成</i-button>
 					</div>
 				</li>
 			</ul>
