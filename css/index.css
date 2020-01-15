@@ -2129,7 +2129,7 @@ top: 10px;
   position: absolute;
   top: 15px;
   right: 15px;
-  z-index: 9;
+  z-index: 21;
 }
 .nav-list li {
   position: relative;
@@ -2735,6 +2735,22 @@ top: 10px;
 .food-img img {
   width: 100%;
 }
+.modal-box .food-img {
+    width: 6rem;
+    margin: 0 auto;
+}
+.food-t {
+  padding: 0 1rem;
+  width: 14rem;
+  margin: 0 auto;
+}
+.food-t-btn {
+  margin-top: 1rem;
+  text-align: center;
+}
+.food-t-btn button {
+  width: 100%;
+}
 .food-name {
   text-align: left;
   margin-bottom: .5rem;
@@ -2774,16 +2790,20 @@ top: 10px;
 .num-form {
   width: 8rem;
   display: flex;
-  margin: 0 auto;
+  margin: .5rem auto;
 }
 .shop-btn {
   flex: 0 0 2rem;
   text-align: center;
   width: 2rem;
   height: 2rem;
+  font-size: 1.6rem;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.shop-input {
+  margin: 0 .4rem;
 }
 .shop-input input {
   text-align: center;

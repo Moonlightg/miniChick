@@ -317,7 +317,7 @@
 				<p>{{currFood.name}}</p>
 				<p>单价：${{currFood.price}}/个</p>
 				<div class="num-form">
-					<div class="shop-btn" @click="shopReduce"><span>-</span></div>
+					<div class="shop-btn" @click="shopReduce"><Icon type="md-remove-circle" /></div>
 					<div class="shop-input"><i-input type="text" v-model="shoppingNum" placeholder="数量"></i-input></div>
 					<div class="shop-btn" @click="shopAdd"><Icon type="md-add-circle" /></div>
 				</div>
@@ -333,11 +333,15 @@
 				<div class="food-img">
 					<img :src="currFood.url">
 				</div>
-				<p>物品名称：{{currFood.name}}</p>
-				<p>拥有数量：{{currFood.num}}</p>
-				<p>进食时长：{{currFood.eatTime | SecondToDate}}</p>
-				<p>获得经验：{{currFood.exp}}</p> 
-				<i-button type="primary" @click="feedClick">喂食</i-button>
+				<div class="food-t">
+					<p>物品名称：{{currFood.name}}</p>
+					<p>拥有数量：{{currFood.num}}</p>
+					<p>进食时长：{{currFood.eatTime | SecondToDate}}</p>
+					<p>获得经验：{{currFood.exp}}</p> 
+					<div class="food-t-btn">
+						<i-button type="primary" @click="feedClick">喂食</i-button>
+					</div>
+				</div>
 			</div>
 	    </Modal>
 
