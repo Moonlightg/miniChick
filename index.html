@@ -374,7 +374,7 @@
 					<div class="a-info">
 						<p>{{item.title}}</p>
 						<p>{{item.desc}}<span class="fr">+${{item.profit}}</span></p>
-						<p></p>
+						<p>{{item.completeCurrCount}}/{{item.completeNeedCount}}</p>
 					</div>
 					<div class="a-right" v-if="item.complete && item.completeID == 0" @click="receiveAwards(item.title)">
 						<i-button type="primary">领取奖励</i-button>
@@ -399,6 +399,7 @@
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="lib/vuex/vuex.min.js"></script>
 	<script src="component.js"></script>
+	<script src="js/store/stateAchievement.js"></script>
 	<script src="js/store/index.js"></script>
 	<script>
 		new Vue({
@@ -680,7 +681,6 @@
 					this.hideUnlock();
 				},
 				showAchievement: function() {
-					console.log(11);
 					this.modalAchievement = true;
 				},
 				hideAchievement: function() {

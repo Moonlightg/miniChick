@@ -121,37 +121,7 @@ const store = new Vuex.Store({
           url: 'images/food7.png'
         }],
         // 勋章列表
-        achievement: [{
-          id: 1,
-          title: '投喂如此简单',    // 勋章名称
-          desc: '投喂1次小鸡',      // 描述
-          profit: '500',    // 奖励
-          complete: false,          // 是否完成
-          completeID: 0,            // 未完成0，已完成1
-          completeTypeId: 1,        // 成就类别，1=投喂次数；2=获得金币数；3=解锁粮食数
-          completeCurrCount: 0,     // 当前已完成数量 - 进度
-          completeNeedCount: 1,     // 满足条件的数量
-          oncomplete(state, achievement) {
-            popUp('解锁成就',achievement.title);
-            console.log('获得成就'+achievement.title);
-            state.user.money += 500;
-          }
-        },{
-          id: 2,
-          title: '再次投喂了呀',    // 勋章名称
-          desc: '投喂2次小鸡',      // 描述
-          profit: '1000',    // 奖励
-          complete: false,          // 是否完成
-          completeID: 0, 
-          completeTypeId: 1,        // 成就类别，1=投喂次数；2=获得金币数；3=解锁粮食数
-          completeCurrCount: 0,     // 当前已完成数量 - 进度
-          completeNeedCount: 2,     // 满足条件的数量
-          oncomplete(state, achievement) {
-            popUp('解锁成就',achievement.title);
-            console.log('获得成就'+achievement.title);
-            state.user.money += 1000;
-          }
-        }],
+        achievement: achievements,
         startDate: '',    // 开始时间
         endDate: '',      // 结束时间
         content: '',      // 倒计时
@@ -333,7 +303,7 @@ const store = new Vuex.Store({
           //let targetPlant = state.plants.find(obj => obj.id === id);
           // 执行目标的奖励方式
           targetList.forEach(obj => {
-            if (obj.completeCurrCount <= obj.completeNeedCount) {
+            if (obj.completeCurrCount < obj.completeNeedCount) {
               obj.completeCurrCount += 1;
               if (obj.completeCurrCount >= obj.completeNeedCount) {
                 obj.complete = true;
