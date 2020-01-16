@@ -233,7 +233,7 @@
 											</div>
 										</li>
 									</ul>
-									<div v-show="goods.length == 0">暂无物品</div>
+									<div class="no-data" v-show="goods.length == 0">暂无物品</div>
 								</div>
 					        </tab-pane>
 					    </tabs>
@@ -369,12 +369,16 @@
 
 	    <!-- 勋章列表 -->
 		<Modal v-model="modalAchievement" class-name="hide-footer" @on-cancel="hideAchievement">
+			<p style="margin-bottom: 10px;">成就数量：<span>{{targetList}}</span>/{{achievement.length}}</p>
 			<ul class="a-list">
 				<li v-for="(item, index) in achievement" :class="{ active: item.complete, onin: item.completeID == 1 }">
 					<div class="a-info">
-						<p>{{item.title}}</p>
-						<p>{{item.desc}}<span class="fr">+${{item.profit}}</span></p>
-						<p>{{item.completeCurrCount}}/{{item.completeNeedCount}}</p>
+						<p>{{item.title}}<span class="fr">{{item.completeCurrCount}}/{{item.completeNeedCount}}</span></p>
+							<div class="reward" v-if="item.completeID == 0">
+								<div class="reward-icon"><Icon type="logo-usd" /></div>
+								<span class="reward-profit">{{item.profit}}</span>
+							</div>
+						</div>
 					</div>
 					<div class="a-right" v-if="item.complete && item.completeID == 0" @click="receiveAwards(item.title)">
 						<i-button type="primary">领取奖励</i-button>
@@ -399,6 +403,7 @@
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="lib/vuex/vuex.min.js"></script>
 	<script src="component.js"></script>
+	<script src="js/store/stateFoods.js"></script>
 	<script src="js/store/stateAchievement.js"></script>
 	<script src="js/store/index.js"></script>
 	<script>
@@ -463,6 +468,12 @@
 	        },
 	        store, // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
 	        computed: {
+	        	// 计算已完成成就的数量
+	        	targetList() {
+	        		let target = this.$store.state.achievement.filter(obj => obj.complete);
+	        		console.log("target:"+target);
+	        		return target.length;
+	        	},
 	        	user() {
 	        		return this.$store.state.user;
 	        	},
@@ -564,7 +575,7 @@
 		            }
 		            this.hideFood();
 					this.hidePopup();
-					this.success('喂食成功！');
+					this.success('喂食成功');
 				},
 				// 喂食倒计时方法
 		        countdown (startdate) {

@@ -2896,6 +2896,12 @@ top: 10px;
 .fr {
   float: right;
 }
+.a-list {
+  height: 58vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.a-list::-webkit-scrollbar {display: none;}
 .a-list li {
     display: flex;
     padding: .5rem;
@@ -2933,5 +2939,21 @@ top: 10px;
     color: #fff;
     background-color: #6d6d6d;
     border-color: #696969;
+}
+.reward {
+    float: right;
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    height: 20px;
+    padding: 0 .1rem;
+    background: #f1cf6a;
+    border: 1px solid #e2bb47;
+    color: #d28003;
+    border-radius: 4px;
+}
+.no-data {
+  padding-top: 50px;
+  text-align: center;
 }
 

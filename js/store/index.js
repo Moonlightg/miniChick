@@ -1,21 +1,3 @@
-function popUp(title,val) {
-  let popDom = document.createElement('div');     // 创建弹窗dom
-  let popTitle = document.createElement('div');   // 创建弹窗标题
-  let popContent = document.createElement('div'); // 创建弹窗内容
-  popDom.classList.add('pop-Up');            // 给dom添加class
-  popTitle.classList.add('pop-title');
-  popTitle.innerHTML = title;
-  popContent.classList.add('pop-content');
-  popContent.innerHTML = val;
-  popDom.appendChild(popTitle);
-  popDom.appendChild(popContent);
-  document.getElementById("app").appendChild(popDom);// 在ref="eggexp"元素内添加dom
-  //console.log('解锁成就了');
-  setTimeout(() => {
-    popDom.remove()
-  }, 1500);
-};
-
 const store = new Vuex.Store({
     state: {
         user: {
@@ -49,77 +31,7 @@ const store = new Vuex.Store({
           }
         },
         // 食物信息
-        foods: [{
-          id: 1,
-          name: '小麦',    // 食物名称
-          price: 10,      // 单价
-          eatTime: 5000,  // 进食时间 (单位毫秒)
-          exp: 100,       // 增加小鸡经验
-          num: 2,         // 库存数量
-          unlock: 1,      // 0为待解锁，1为已解锁
-          unlockPrice: 1, // 解锁金额
-          url: 'images/food1.png' // 图片
-        },{
-          id: 2,
-          name: '三叶草',
-          price: 100,
-          eatTime: 10000,
-          exp: 600,
-          num: 0,
-          unlock: 0,
-          unlockPrice: 100,
-          url: 'images/food2.png'
-        },{
-          id: 3,
-          name: '橄榄',
-          price: 150,
-          eatTime: 120000,
-          exp: 800,
-          num: 0,
-          unlock: 0,
-          unlockPrice: 500,
-          url: 'images/food3.png'
-        },{
-          id: 4,
-          name: '面包',
-          price: 450,
-          eatTime: 160000,
-          exp: 1000,
-          num: 0,
-          unlock: 0,
-          unlockPrice: 1000,
-          url: 'images/food4.png'
-        },{
-          id: 5,
-          name: '葡萄',
-          price: 650,
-          eatTime: 170000,
-          exp: 1100,
-          num: 0,
-          unlock: 0,
-          unlockPrice: 1300,
-          url: 'images/food5.png'
-        },{
-          id: 6,
-          name: '豆腐',
-          price: 750,
-          eatTime: 180000,
-          exp: 1200,
-          num: 0,
-          unlock: 0,
-          unlockPrice: 1500,
-          url: 'images/food6.png'
-        },{
-          id: 7,
-          name: '大包菜',
-          price: 750,
-          eatTime: 180000,
-          exp: 1200,
-          num: 0,
-          unlock: 0,
-          unlockPrice: 1500,
-          url: 'images/food7.png'
-        }],
+        foods: foodList,
         // 勋章列表
         achievement: achievements,
         startDate: '',    // 开始时间
@@ -320,7 +232,8 @@ const store = new Vuex.Store({
             if (obj.title === val) {
               state.currAchievement = obj;
               state.user.money += parseInt(obj.profit);
-              obj.complete = false;
+              popUp('获得金币','+'+parseInt(obj.profit));
+              //obj.complete = false;
               obj.completeID = 1;
             }
           })
