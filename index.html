@@ -374,6 +374,7 @@
 				<li v-for="(item, index) in achievement" :class="{ active: item.complete, onin: item.completeID == 1 }">
 					<div class="a-info">
 						<p>{{item.title}}<span class="fr">{{item.completeCurrCount}}/{{item.completeNeedCount}}</span></p>
+						<div>{{item.desc}}
 							<div class="reward" v-if="item.completeID == 0">
 								<div class="reward-icon"><Icon type="logo-usd" /></div>
 								<span class="reward-profit">{{item.profit}}</span>
