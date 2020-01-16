@@ -2698,10 +2698,10 @@ top: 10px;
 }
 .progress {
     width: 100%;
-    height: 10px;
+    height: 4px;
     border-radius: 5px;
     margin-top: 10px;
-    background-color: #ddd;
+    background-color: #d1b8ff;
     z-index: 1;
     position: relative;
     overflow: hidden;
@@ -2710,7 +2710,7 @@ top: 10px;
 .progress .progress-content {
     width: 0%;
     height: 100%;
-    background-color: #ffa446;
+    background-color: #673AB7;
 }
 
 /* 背包列表。*/

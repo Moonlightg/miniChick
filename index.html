@@ -181,8 +181,8 @@
 					        		</li>
 					        	</ul>
 					        </tab-pane>
-					        <tab-pane label="" icon="md-rose">标签4的内容</tab-pane>
-					        <tab-pane label="" icon="md-glasses">标签5的内容</tab-pane>
+					        <tab-pane label="" icon="md-rose"><p style="padding-top: 40px; text-align: center;">首饰饰品开发中...</p></tab-pane>
+					        <tab-pane label="" icon="md-glasses"><p style="padding-top: 40px; text-align: center;">眼睛饰品开发中...</p></tab-pane>
 					    </tabs>
 					</div>
 				</div>
@@ -192,7 +192,7 @@
 						<i class="ivu-icon ivu-icon-md-close-circle" @click="hidePopup"></i>
 					</div>
 					<div class="popup-content">
-						<p>商店</p>
+						<p style="padding-top: 50px; text-align: center;">商店功能开发中...</p>
 					</div>
 				</div>
 				<div class="popup-item" v-show="isBag">
@@ -582,12 +582,14 @@
 		        countdown (startdate) {
 		            let self = this;
 		            let es = self.$store.state.endDate - startdate;
-		            let delay = Math.ceil(100/self.$store.state.currFood.eatTime*1000); // 计算每秒走的进度
+		            let delay = 100/self.$store.state.currFood.eatTime*1000; // 计算每秒走的进度
+		            console.log("计算每秒走的进度:"+delay+"%");
 		            if (es > 0) {
 		              	let timer = setInterval (function() {
 			                let nowTime = new Date().getTime();
 			                let t = self.$store.state.endDate - nowTime;
 			                let value = (self.$store.state.currFood.eatTime - t)/1000 * delay; // 计算进度条
+			                console.log("计算进度条:"+value+"%");
 			                if (value <= 100) {
 			                  	self.$store.state.value = value
 			                } else {
