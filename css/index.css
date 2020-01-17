@@ -2735,6 +2735,10 @@ top: 10px;
 .food-img img {
   width: 100%;
 }
+.food-img.egg-img {
+  width: 70%;
+  margin: 0 auto .5rem;
+}
 .modal-box .food-img {
     width: 6rem;
     margin: 0 auto;

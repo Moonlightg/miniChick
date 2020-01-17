@@ -170,7 +170,8 @@ Vue.component('c-egg', {
 	    		var obj = {
 	    			name: '精美鸡蛋',
 	    			num: eggNum,
-	    			price: eggPrice
+	    			price: eggPrice,
+	    			img: 'images/egg.png',
 	    		}
 	    		self.$store.dispatch('harvestegg',obj);
 	    		self.popAdd(eggNum+"鸡蛋");

@@ -228,8 +228,11 @@
 									<ul class="food-list">
 										<li v-for="(good, index) in goods" v-if="good.num != 0" @click="showGood(good.name)">
 											<div class="food-item">
+												<div class="food-img egg-img">
+													<img :src="good.img">
+												</div>
 												<p class="food-name">{{good.name}}</p>
-												<p>{{good.num}}</p>
+												<span class="food-num">{{good.num}}</span>
 											</div>
 										</li>
 									</ul>
@@ -350,10 +353,17 @@
 			class-name="hide-footer"
 			@on-cancel="hideGood">
 			<div class="modal-box" v-if="!goodDetails">
-				<p>物品名称：{{currGood.name}}</p>
-				<p>拥有数量：{{currGood.num}}</p>
-				<p>出售价值：{{currGood.price}}</p>
-				<i-button type="primary" @click="setSell">出售</i-button>
+				<div class="food-img">
+					<img :src="currGood.img">
+				</div>
+				<div class="food-t">
+					<p>物品名称：{{currGood.name}}</p>
+					<p>拥有数量：{{currGood.num}}</p>
+					<p>出售价值：{{currGood.price}}</p>
+					<div class="food-t-btn">
+						<i-button type="primary" @click="setSell">出售</i-button>
+					</div>
+				</div>
 			</div>
 			<div class="shopping-box" v-if="goodDetails">
 				<p>{{currGood.name}}</p>
