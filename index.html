@@ -33,6 +33,7 @@
 				<li @click="showPopup(shop)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-basket"></i></span><span class="nav-name">商店</span></li>
 				<li @click="showPopup(bag)"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-filing"></i></span><span class="nav-name">背包</span></li>
 				<li @click="showAchievement()"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-filing"></i></span><span class="nav-name">勋章</span></li>
+				<li @click="showPopup(study)" class="n-green"><span class="nav-icon"><i class="ivu-icon ivu-icon-ios-flask"></i></span><span class="nav-name">学习</span></li>
 			</ul>
 			<div class="content">
 				<!-- 太阳光 -->
@@ -242,6 +243,15 @@
 					    </tabs>
 					</div>
 				</div>
+				<div class="popup-item" v-show="isStudy">
+					<div class="popup-head border-bottom-1px">
+						<span class="popup-title fl">学习</span>
+						<i class="ivu-icon ivu-icon-md-close-circle" @click="hidePopup"></i>
+					</div>
+					<div class="popup-content">
+						<p style="padding-top: 50px; text-align: center;">学习功能开发中...</p>
+					</div>
+				</div>
 			</div>		
 		</div>
 		<transition name="fade">
@@ -437,9 +447,11 @@
 	            skin: 'skin',
 	            shop: 'shop',
 	            bag: 'bag',
+	            study: 'study',
 	            isSkin: false,
 	            isShop: false,
 	            isBag: false,
+	            isStudy: false,
 	            buttonSize: 'small',
 	            formUser: { // 用户信息填写表单
 	            	name: ''
@@ -721,6 +733,8 @@
 		            	this.isSkin = true;
 		            } else if (val == 'shop') {
 		            	this.isShop = true;
+		            } else if (val == 'study') {
+		            	this.isStudy = true;
 		            } else {
 		            	this.isBag = true;
 		            }
@@ -733,6 +747,7 @@
 						that.isSkin = false;
 						that.isShop = false;
 						that.isBag = false;
+						that.isStudy = false;
 					}, 400);
 		        },
 		        // 打开用户信息面板

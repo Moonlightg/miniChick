@@ -2131,6 +2131,12 @@ top: 10px;
   right: 15px;
   z-index: 21;
 }
+.nav-list {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 21;
+}
 .nav-list li {
   position: relative;
   width: 50px;
@@ -2139,6 +2145,17 @@ top: 10px;
   border-radius: 50%;
   background: #ffb300;
   border: 2px solid #8c3530;
+}
+.nav-list li.n-green {
+  background: #8BC34A;
+  border: 2px solid #639629;
+}
+.nav-list li.n-green .nav-icon {
+  color: #f4ff85;
+  text-shadow: none;
+}
+.nav-list li.n-green .nav-name{
+  background: #64962a;
 }
 .nav-icon {
   width: 100%;
