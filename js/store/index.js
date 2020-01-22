@@ -190,6 +190,11 @@ const store = new Vuex.Store({
             })
           }
         },
+        // 设置新用户名称
+        SET_USER_NAME (state,val) {
+          state.user.name = val;
+          state.user.money -= 1000;
+        },
         // 设置服装
         REPLACE_DRESS (state,price) {
           if (price.type == 0) {
@@ -283,6 +288,11 @@ const store = new Vuex.Store({
         }
     },
     actions: {
+      // 设置新的用户名
+      setusername (context, value) {
+        context.commit('SET_USER_NAME',value);
+        context.commit('SAVE_GAME');
+      },
       // 保存修改用户信息
       keepuser (context) {
         context.commit('SAVE_GAME');

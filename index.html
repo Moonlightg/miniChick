@@ -307,9 +307,10 @@
 		        <div><p>等级：{{chick.level}}级，经验：{{chick.exp}}，升级所需：{{chick.upgradeExp}}</p></div> -->
 	        </div>
 	        <div class="user-form" v-if="editUserName">
-	        	<i-form :model="user" :label-width="80">
-			        <form-item label="用户名称">
-			            <i-input v-model="user.name" placeholder="设置用户名称..."></i-input>
+	        	<i-form :model="user">
+	        		<p class="pl-title">修改用户名需要1000金币</p>
+			        <form-item>
+			            <i-input v-model="newUserName" placeholder="设置用户名称..."></i-input>
 			        </form-item>
 			        <i-button type="primary" @click="saveUser">保存</i-button>
 			    </i-form>
@@ -453,9 +454,9 @@
 	            isBag: false,
 	            isStudy: false,
 	            buttonSize: 'small',
+	            newUserName:'',
 	            formUser: { // 用户信息填写表单
 	            	name: ''
-
 	            },
 	            clothes: [ // 衣服列表
 	            	{
@@ -758,9 +759,16 @@
 		        	this.editUserName = !this.editUserName;
 		        },
 		        saveUser: function() {
-		        	this.success('修改成功');
-		        	this.editUserName = !this.editUserName;
-		        	this.$store.dispatch('savegame');
+		        	if (this.newUserName == '') {
+		        		console.log('请输入用户名称');
+		        		this.error('请输入用户名称');
+		        		return false;
+		        	} else {
+		        		this.success('修改成功');
+			        	this.editUserName = !this.editUserName;
+			        	this.$store.dispatch('setusername', this.newUserName);
+			        	//this.$store.dispatch('savegame');
+		        	}
 		        },
 		        // 设置服装
 		        replaceDress: function(type,pid) {

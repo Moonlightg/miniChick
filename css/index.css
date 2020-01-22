@@ -2142,7 +2142,7 @@ top: 10px;
 
 
 .nav{
-  
+
 }
 .nav-list li {
   position: relative;
@@ -2615,6 +2615,14 @@ top: 10px;
   vertical-align: middle;
   margin-top: -1px;
 }
+.user-form {
+  width: 80%;
+  margin: 0 auto;
+}
+.user-form button {
+  display: block;
+  margin: 0 auto;
+}
 .user-form .user-name {
   text-align: center;
   font-size: 1rem;
@@ -2626,6 +2634,7 @@ top: 10px;
   margin-top: -3px;
   margin-left: 7px;
 }
+.user-form 
 .user-zl {
   width: 80%;
   margin: 15px auto 0;
@@ -2634,6 +2643,10 @@ top: 10px;
   padding: 5px;
   display: inline-block;
   color: #865d20;
+}
+.pl-title {
+  margin: 1rem 0 .5rem;
+  color: #F44336;
 }
 /* 颜色 */
 .c-red {
