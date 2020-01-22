@@ -34,6 +34,8 @@ const store = new Vuex.Store({
         foods: foodList,
         // 勋章列表
         achievement: achievements,
+        // 学习题目
+        subjectList: subjects,
         startDate: '',    // 开始时间
         endDate: '',      // 结束时间
         content: '',      // 倒计时
@@ -261,7 +263,8 @@ const store = new Vuex.Store({
               chick: state.chick,
               user: state.user,
               foods: state.foods,
-              goods: state.goods
+              goods: state.goods,
+              subjectList: state.subjectList
             };
             localStorage.setItem('farmDate', JSON.stringify(data))
         },
@@ -284,7 +287,8 @@ const store = new Vuex.Store({
             state.chick = data.chick,
             state.user = data.user,
             state.foods = data.foods,
-            state.goods = data.goods
+            state.goods = data.goods,
+            state.subjectList = data.subjectList
         }
     },
     actions: {

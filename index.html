@@ -249,7 +249,19 @@
 						<i class="ivu-icon ivu-icon-md-close-circle" @click="hidePopup"></i>
 					</div>
 					<div class="popup-content">
-						<p style="padding-top: 50px; text-align: center;">学习功能开发中...</p>
+						<tabs :animated="false">
+					        <tab-pane v-for="(subject, index) in subjectList" :label="subject.type" :icon="subject.icon" :key="subject.type">
+					        	<ul class="subject-list">
+									<li v-for="item in subject.list" :key="item.name">
+										<div class="subject-img">
+											<img :src="item.img">
+										</div>
+										<p class="subject-name">{{item.name}}</p>
+									</li>
+								</ul>
+					        </tab-pane>
+					    </tabs>
+						<p style="padding-top: 50px; text-align: center; display: none;">学习功能开发中...</p>
 					</div>
 				</div>
 			</div>		
@@ -427,6 +439,7 @@
 	<script src="component.js"></script>
 	<script src="js/store/stateFoods.js"></script>
 	<script src="js/store/stateAchievement.js"></script>
+	<script src="js/store/subject.js"></script>
 	<script src="js/store/index.js"></script>
 	<script>
 		new Vue({
@@ -509,6 +522,9 @@
 	        	},
 	        	goods() {
 	        		return this.$store.state.goods;
+	        	},
+	        	subjectList() {
+	        		return this.$store.state.subjectList
 	        	},
 	        	eat() {
 	        		return this.$store.state.eat;
