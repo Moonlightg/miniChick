@@ -252,8 +252,12 @@
 						<tabs :animated="false">
 					        <tab-pane v-for="(subject, index) in subjectList" :label="subject.type" :icon="subject.icon" :key="subject.type">
 					        	<ul class="subject-list">
-									<li v-for="item in subject.list" :key="item.name">
+									<li v-for="item in subject.list" :key="item.name" :class="{on:item.learning == 1}">
 										<div class="subject-img">
+											<div class="learning-label">
+												<span v-if="item.learning == 0">未学习</span>
+												<span v-if="item.learning == 1">学习中</span>
+											</div>
 											<img :src="item.img">
 										</div>
 										<p class="subject-name">{{item.name}}</p>
