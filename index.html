@@ -248,6 +248,7 @@
 						<span class="popup-title fl">学习</span>
 						<i class="ivu-icon ivu-icon-md-close-circle" @click="hidePopup"></i>
 					</div>
+					
 					<div class="popup-content">
 						<tabs :animated="false">
 					        <tab-pane v-for="(subject, index) in subjectList" :label="subject.type" :icon="subject.icon" :key="subject.type">

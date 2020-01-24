@@ -3028,6 +3028,12 @@ top: 10px;
   border: 1px solid #b9aead;
   box-shadow: 0 2px 0px #d2d2d2;
 }
+.subject-img img{
+  display: block;
+  width: 100%;
+  border: 1px solid #b9aead;
+  box-shadow: 0 2px 0px #d2d2d2;
+}
 .subject-name {
   height: 30px;
   line-height: 30px;
