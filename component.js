@@ -252,3 +252,13 @@ Vue.component('c-fence', {
 	`
 });
 
+// 做题组件
+Vue.component('c-subject', {
+	props: ['showSubject'],
+	template: `
+		<div class="subject-wrap">
+			<span>做题组件</span>
+		</div>
+	`
+});
+

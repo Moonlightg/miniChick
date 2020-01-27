@@ -41,6 +41,7 @@ const store = new Vuex.Store({
         content: '',      // 倒计时
         currFood: {},     // 当前选中的食物
         currGood: {},     // 当前收获的物品
+        currSubject: {},  // 当前学习课程
         currAchievement: {},     // 当前领取的成就
         modalLevel: false,
         // 进度条
@@ -245,6 +246,28 @@ const store = new Vuex.Store({
             }
           })
         },
+        START_SUBJECT (state, val) {
+          var name = state.currSubject.name;
+          var pid = ''
+          state.subjectList[val].list.forEach((obj,index) => {
+            if (obj.name == name) {
+              pid = index;
+            }
+          });
+          if (pid>0) {
+            var prveItem = state.subjectList[val].list[pid-1].learning;
+            if (prveItem == 2) {
+              state.currSubject.learning = 1;
+              popUp('激活课程',state.currSubject.name);
+            } else {
+              popUp('请按顺序学习','');
+              return false;
+            }
+          } else {
+            state.currSubject.learning = 1;
+            popUp('激活课程',state.currSubject.name);
+          }
+        },
         // 存档
         SAVE_GAME (state) {
             let achievement = state.achievement.map(obj => {
@@ -260,6 +283,7 @@ const store = new Vuex.Store({
               endDate: state.endDate,
               currFood: state.currFood,
               currGood: state.currGood,
+              currSubject: state.currSubject,
               chick: state.chick,
               user: state.user,
               foods: state.foods,
@@ -284,6 +308,7 @@ const store = new Vuex.Store({
             state.endDate = data.endDate,
             state.currFood = data.currFood,
             state.currGood = data.currGood,
+            state.currSubject = data.currSubject,
             state.chick = data.chick,
             state.user = data.user,
             state.foods = data.foods,
@@ -336,6 +361,10 @@ const store = new Vuex.Store({
       unlockfood (context,value) {
         context.commit("UNLOCK_FOOD",value);
         context.commit('SAVE_GAME');
+      },
+      // 激活学习课程 
+      startsubject (context,value) {
+        context.commit("START_SUBJECT",value);
       },
       // 领取成就奖励
       receiveawards (context,value) {

@@ -7,7 +7,7 @@ var subjects = [{
     id: 10011,
     name: '一年级(上册)',
     img: 'images/subject/AA1.jpg',
-    learning: 1 // 0:未学习，1:学习中，2:已毕业
+    learning: 0 // 0:未学习，1:学习中，2:已毕业
   },{
     id: 10012,
     name: '一年级(下册)',
@@ -128,7 +128,8 @@ var subjects = [{
     name: '六年级(下册)',
     img: 'images/subject/BF2.jpg',
     learning: 0 
-  },{
+  }]
+},{
   id: 3,
   type: '英语',
   icon: 'md-ice-cream',

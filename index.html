@@ -13,7 +13,7 @@
 </head>
 <body>
 	<div id="app">
-		<div class="container" :class="{ beingskin: skinBox }">
+		<div class="container" :class="{ beingskin: skinBox, onSubject: isSubject}">
 			<div class="user-box" @click="showUser">
 				<div class="user-logo">
 					<div class="user-level">{{chick.level}}</div>
@@ -248,16 +248,17 @@
 						<span class="popup-title fl">学习</span>
 						<i class="ivu-icon ivu-icon-md-close-circle" @click="hidePopup"></i>
 					</div>
-					
+
 					<div class="popup-content">
 						<tabs :animated="false">
-					        <tab-pane v-for="(subject, index) in subjectList" :label="subject.type" :icon="subject.icon" :key="subject.type">
+					        <tab-pane v-for="(subject, index1) in subjectList" :label="subject.type" :icon="subject.icon" :key="subject.type">
 					        	<ul class="subject-list">
-									<li v-for="item in subject.list" :key="item.name" :class="{on:item.learning == 1}">
+									<li v-for="item in subject.list" :key="item.name" :class="{on:item.learning == 1, over:item.learning == 2}" @click="onSubject(item,index1)">
 										<div class="subject-img">
 											<div class="learning-label">
 												<span v-if="item.learning == 0">未学习</span>
 												<span v-if="item.learning == 1">学习中</span>
+												<span v-if="item.learning == 2">已学完</span>
 											</div>
 											<img :src="item.img">
 										</div>
@@ -438,6 +439,9 @@
 				<p>解锁需要：${{currFood.unlockPrice}}</p>
 			</div>
 	    </Modal>
+
+	    <!-- 做题组件 -->
+	    <c-subject :showSubject="isSubject" v-if="isSubject"></c-subject>
 	</div>
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="lib/vuex/vuex.min.js"></script>
@@ -462,6 +466,7 @@
 	            modalFood: false,
 	            modalGood: false,
 	            goodDetails: false,
+	            isSubject: false,
 	            sellNum: 1, // 物品出售默认值
 	            skin: 'skin',
 	            shop: 'shop',
@@ -747,6 +752,21 @@
 				// 领取成就奖励
 				receiveAwards: function(val) {
 					this.$store.dispatch('receiveawards',val);
+				},
+				// 点击学习课程
+				onSubject: function (val, pid) {
+					console.log("pid:"+pid);
+					this.$store.state.currSubject = val;
+					if (val.learning == 0) {
+						console.log(val.name+"-未开始学习");
+						this.$store.dispatch('startsubject',pid);
+					} else if (val.learning == 2) {
+						console.log(val.name+"-已学习完成");	
+					} else {
+						console.log(val.name+"-正在学习");
+						this.isSubject = true;
+					}
+					console.log(this.$store.state.currSubject);
 				},
 	          	// 打开功能菜单弹窗
 		        showPopup: function (val) {
