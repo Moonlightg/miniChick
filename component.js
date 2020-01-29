@@ -257,6 +257,7 @@ Vue.component('c-subject', {
 	props: ['showSubject'],
 	template: `
 		<div class="subject-wrap">
+			<div class="subject-head" @click="hideSubject">返回</div>
 			<span>做题组件</span>
 		</div>
 	`

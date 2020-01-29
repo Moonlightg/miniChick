@@ -3071,7 +3071,7 @@ top: 10px;
   width: 45px;
   background: #4CAF50;
 }
-.container.onSubject {
+.onSubject .container {
     transform: translate(-100%, 0);
 }
 .subject-wrap {
@@ -3084,6 +3084,6 @@ top: 10px;
     transform: translate(100%, 0);
     transition: all .6s;
 }
-.container.onSubject .subject-wrap {
+.onSubject .subject-wrap {
     transform: translate(0, 0);
 }
