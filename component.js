@@ -254,10 +254,15 @@ Vue.component('c-fence', {
 
 // 做题组件
 Vue.component('c-subject', {
-	props: ['showSubject'],
+	props: ['showsubject'],
+	methods: {
+		hideSubject() {
+			this.$emit('outsubject',false)
+		}
+	},
 	template: `
 		<div class="subject-wrap">
-			<div class="subject-head" @click="hideSubject">返回</div>
+			<div class="subject-head" @click="hideSubject"><i class="ivu-icon ivu-icon-ios-arrow-back"></i>返回</div>
 			<span>做题组件</span>
 		</div>
 	`

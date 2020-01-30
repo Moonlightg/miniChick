@@ -441,7 +441,7 @@
 	    </Modal>
 
 	    <!-- 做题组件 -->
-	    <c-subject :showSubject="isSubject" v-if="isSubject"></c-subject>
+	    <c-subject @outsubject="hideSubject" :showsubject="isSubject"></c-subject>
 	</div>
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="lib/vuex/vuex.min.js"></script>
@@ -767,6 +767,10 @@
 						this.isSubject = true;
 					}
 					console.log(this.$store.state.currSubject);
+				},
+				// 关闭题目界面
+				hideSubject: function(val) {
+					this.isSubject = val;
 				},
 	          	// 打开功能菜单弹窗
 		        showPopup: function (val) {
