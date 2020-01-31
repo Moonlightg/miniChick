@@ -255,6 +255,14 @@ Vue.component('c-fence', {
 // 做题组件
 Vue.component('c-subject', {
 	props: ['showsubject'],
+	data: function () {
+	    return {
+	      	count: {}
+	    }
+	},
+	mounted () {
+      this.count = this.$store.state.currSubject
+    },
 	methods: {
 		hideSubject() {
 			this.$emit('outsubject',false)
@@ -263,7 +271,17 @@ Vue.component('c-subject', {
 	template: `
 		<div class="subject-wrap">
 			<div class="subject-head" @click="hideSubject"><i class="ivu-icon ivu-icon-ios-arrow-back"></i>返回</div>
-			<span>做题组件</span>
+			<ul>
+				<li>
+					{{count.id}}
+				</li>
+				<li>
+					{{count.name}}
+				</li>
+				<li>
+					{{count.img}}
+				</li>
+			</ul>
 		</div>
 	`
 });

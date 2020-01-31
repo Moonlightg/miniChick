@@ -252,6 +252,7 @@ const store = new Vuex.Store({
           state.subjectList[val].list.forEach((obj,index) => {
             if (obj.name == name) {
               pid = index;
+              state.currSubject = obj;
             }
           });
           if (pid>0) {
@@ -365,6 +366,7 @@ const store = new Vuex.Store({
       // 激活学习课程 
       startsubject (context,value) {
         context.commit("START_SUBJECT",value);
+        context.commit('SAVE_GAME');
       },
       // 领取成就奖励
       receiveawards (context,value) {
