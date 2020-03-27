@@ -3,6 +3,6 @@
 # 在线预览
 [在线预览](https://www.17sucai.com/preview/177065/2020-02-04/miniChick/index.html)
 # 效果图
-![效果图](https://img.17sucai.com/upload/177065/2020-02-04/3c8914c6fe9d1e53e508d8c738ecda24.png?x-oss-process=style/big)
+![效果图]()
 
 
